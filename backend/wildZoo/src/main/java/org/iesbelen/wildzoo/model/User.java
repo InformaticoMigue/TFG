@@ -42,4 +42,8 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})
     private List<Adoption> adoptions;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})
+    private List<PackageSales> packageSales;
 }
