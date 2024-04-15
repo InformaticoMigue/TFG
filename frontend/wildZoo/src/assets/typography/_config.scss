@@ -1,0 +1,5 @@
+@use '../../../node_modules/@angular/material/' as mat;
+
+$mat-typography: mat.define-typography-config(
+  $font-family: 'Quicksand',
+);

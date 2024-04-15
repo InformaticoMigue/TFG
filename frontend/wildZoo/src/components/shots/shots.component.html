@@ -1,0 +1,22 @@
+    <mat-grid-list data-aos="zoom-out-up" data-aos-duration="2500" data-aos-easing="linear"
+    [rowHeight]="options.rowHeight" [cols]="responsive ? 1 : options.numberCols">
+    @for (animal of options.animals; track animal.id) {
+    <a href="">
+        <mat-grid-tile [colspan]="responsive ? 1 : animal.cols" [rowspan]="responsive ? 1 : animal.rows">
+            <div class="animal-wrapper relative w-full h-full">
+                <div class="animal-bg absolute top-0 w-full h-full bg-cover bg-center transition-all duration-1000 ease-in-out"
+                    [style.background-image]="'url(' + animal.image + ')'">
+                    <div class="animal-bg-color transition-all duration-700 w-full h-full opacity-35">
+
+                    </div>
+                </div>
+
+                <div class="animal-content flex flex-col justify-end transition-all gap-2 duration-700 absolute bottom-0 w-full py-5 px-10">
+                    <p class="mat-body-1-bold text-primary">{{animal.class}}</p>
+                    <p class="mat-headline-3 text-white">{{animal.name}}</p>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </a>
+    }
+</mat-grid-list>

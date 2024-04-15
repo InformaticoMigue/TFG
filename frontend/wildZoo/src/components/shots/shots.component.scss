@@ -1,0 +1,17 @@
+@use '../../assets/custom-theme.scss' as theme;
+
+.animal-wrapper:hover .animal-bg {
+  transform: scale(1.2);
+}
+
+.animal-wrapper:hover .animal-content {
+  background-color: map-get(theme.$mat-theme-primary, default);
+}
+
+.animal-wrapper:hover .animal-content p{
+  color: map-get(theme.$mat-theme-primary, text);
+}
+
+.animal-wrapper:hover .animal-bg-color {
+  background-color: map-get(theme.$mat-theme-primary, default);
+}
