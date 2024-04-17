@@ -13,7 +13,8 @@ module.exports = {
     },
     screens: {
       'xs': '480px',
-      'normal': '769px'
+      'normal': '769px',
+      'portatil': '1024px'
     }
   },
   plugins: [],

@@ -9,13 +9,14 @@ import { ModalTicketsComponent } from '../modals/modal-tickets/modal-tickets.com
 import { TicketService } from '../../service/tickets/ticket.service';
 import { ModalFormLoginComponent } from '../modals/modal-form-login/modal-form-login.component';
 import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-navbar',
     standalone: true,
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss',
-    imports: [MatTooltipModule, MatDialogModule,FontAwesomeModule, CommonModule, MatSidenavModule, SidevarComponent]
+    imports: [MatTooltipModule, MatButtonModule, MatDialogModule,FontAwesomeModule, CommonModule, MatSidenavModule, SidevarComponent]
 })
 
 export class NavbarComponent implements OnInit {
@@ -35,10 +36,7 @@ export class NavbarComponent implements OnInit {
     this.dialog.open(ModalTicketsComponent, {
       data: {
         isLogin: this.logged ? true : false
-      },
-      width: '700px',
-      height: '500px',
-      panelClass: ['overflow-hidden','p-0']
+      }
     })
   }
 

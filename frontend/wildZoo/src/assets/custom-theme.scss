@@ -1,8 +1,4 @@
 @use '../../node_modules/@angular/material/' as mat;
-@use './typography/config' as typography;
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 // Be sure that you only ever include this mixin once!
 @include mat.core();
@@ -64,8 +60,6 @@ $mat-dark-theme-warn: mat.define-palette(
   $text: 100
 );
 
-$mat-typography: typography.$mat-typography;
-
 $mat-density: 0;
 // @include mat.elevation(
 //   $zValue: 12,
@@ -79,7 +73,6 @@ $mat-core-theme: mat.define-light-theme((
     accent: $mat-theme-accent,
     warn: $mat-theme-warn
   ),
-  typography: $mat-typography,
   density: $mat-density
 ));
 
@@ -89,12 +82,10 @@ $mat-dark-theme: mat.define-dark-theme((
     accent: $mat-dark-theme-accent,
     warn: $mat-dark-theme-warn,
   ),
-  typography: $mat-typography,
   density: $mat-density
 ));
 
 @include mat.all-component-themes($mat-core-theme);
-@include mat.typography-hierarchy($mat-typography);
 
 .dark-theme {
   @include mat.all-component-colors($mat-dark-theme);

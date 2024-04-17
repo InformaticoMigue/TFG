@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input, OnInit, inject } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { GalleryAnimal, GalleryAnimalsOptions } from '../../assets/types';
+import { TitleSectionComponent } from "../title-section/title-section.component";
 
 export type Tile = {
   id: number;
@@ -11,11 +12,11 @@ export type Tile = {
 }
 
 @Component({
-  selector: 'app-shots',
-  standalone: true,
-  imports: [MatGridListModule,CommonModule],
-  templateUrl: './shots.component.html',
-  styleUrl: './shots.component.scss'
+    selector: 'app-shots',
+    standalone: true,
+    templateUrl: './shots.component.html',
+    styleUrl: './shots.component.scss',
+    imports: [MatGridListModule, CommonModule, TitleSectionComponent]
 })
 export class ShotsComponent implements OnInit {
   private id = 0;

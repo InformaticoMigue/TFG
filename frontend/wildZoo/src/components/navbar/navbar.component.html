@@ -1,18 +1,18 @@
-<div class="z-50">
-    <div class="max-w-full">
+<div class="z-50 ">
+    <div class="max-w-full ">
         <div class="max-xs:px-10 px-20 flex max-xs:flex-col items-center justify-between">
             <div class="flex items-center gap-5">
-                <h1 class="mat-headline-2 font-bold">Wild</h1>
+                <h1 class="text-6xl font-bold">Wild</h1>
                 <img class="w-32" src="../../assets/img/logo.png" alt="" srcset="">
             </div>
             @if (!responsive) {
-            <div class="flex w-full items-center justify-end">
-                <div class="shadow-md rounded-sm duration-700 flex items-center justify-center w-40">
-                    <button mat-button matTooltip="Comprar entradas" (click)="openModalTicket()" class="text-xl border p-3 border-white w-full h-full">Entradas</button>
+            <div class="flex w-full items-center justify-end gap-5">
+                <div class="flex items-center justify-center w-40">
+                    <button matTooltip="Comprar entradas" (click)="openModalTicket()" mat-button color="primary">Entradas</button>
                 </div>
                 <div>
-                    <button mat-button matTooltip="Loguearse" [matTooltipPosition]="'before'"
-                    (click)="openModalLogin()" class="text-xl w-full h-full p-8"><fa-icon [icon]="iconUser"></fa-icon></button>
+                    <button matTooltip="Loguearse" [matTooltipPosition]="'below'"
+                    (click)="openModalLogin()" class="text-xl w-full h-full"><fa-icon [icon]="iconUser"></fa-icon></button>
                 </div>
             </div>
             }@else{
