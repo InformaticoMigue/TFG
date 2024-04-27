@@ -4,5 +4,5 @@ import org.iesbelen.wildzoo.model.AClass;
 
 import java.util.List;
 
-public record ResponseWrapperAClass(List<AClass> Classes) {
+public record ResponseWrapperAClass(List<AClass> data) {
 }

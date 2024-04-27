@@ -4,5 +4,5 @@ import org.iesbelen.wildzoo.model.Specie;
 
 import java.util.List;
 
-public record ResponseWrapperSpecie(List<Specie> species) {
+public record ResponseWrapperSpecie(List<Specie> data) {
 }

@@ -25,11 +25,6 @@ public class User {
     private String firstSurname;
     @Column(name = "second_surname")
     private String lastSurname;
-    private String street;
-    @Column(name = "postal_code")
-    private String postalCode;
-    private long floor;
-    private int phone;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})

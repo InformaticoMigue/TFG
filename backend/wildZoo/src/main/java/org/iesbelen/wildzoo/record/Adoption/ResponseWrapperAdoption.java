@@ -4,5 +4,5 @@ import org.iesbelen.wildzoo.model.Adoption;
 
 import java.util.List;
 
-public record ResponseWrapperAdoption(List<Adoption> adoptions) {
+public record ResponseWrapperAdoption(List<Adoption> data) {
 }

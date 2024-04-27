@@ -9,16 +9,14 @@ import org.iesbelen.wildzoo.service.SpecieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("species")
+@CrossOrigin("http://localhost:4200")
 public class SpecieController {
 
     @Autowired

@@ -4,5 +4,5 @@ import org.iesbelen.wildzoo.model.Animal;
 
 import java.util.List;
 
-public record ResponseWrapperAnimal(List<Animal> animals) {
+public record ResponseWrapperAnimal(List<Animal> data) {
 }

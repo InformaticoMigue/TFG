@@ -4,12 +4,15 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { provideHttpClient } from '@angular/common/http';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
+    provideHttpClient(),
+    provideOAuthClient()
   ]
 };

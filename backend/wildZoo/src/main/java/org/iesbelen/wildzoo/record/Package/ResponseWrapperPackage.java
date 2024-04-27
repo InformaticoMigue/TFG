@@ -4,5 +4,5 @@ import org.iesbelen.wildzoo.model.Package;
 
 import java.util.List;
 
-public record ResponseWrapperPackage(List<Package> packages) {
+public record ResponseWrapperPackage(List<Package> data) {
 }

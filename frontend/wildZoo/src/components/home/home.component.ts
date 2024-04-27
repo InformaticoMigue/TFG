@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ShotsComponent } from "../shots/shots.component";
-import { GalleryAnimal, GalleryAnimalsOptions } from '../../assets/types';
+import { Aclass, GalleryAnimal, GalleryAnimalsOptions, Specie } from '../../assets/types';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { HeaderHomeComponent } from "../header-home/header-home.component";
 import { OurAnimalsComponent } from "../our-animals/our-animals.component";
+import { ClassService } from '../../service/zoo/class.service';
+import { SpecieService } from '../../service/zoo/specie.service';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -14,9 +17,28 @@ import { OurAnimalsComponent } from "../our-animals/our-animals.component";
 })
 export class HomeComponent implements OnInit {
     public optionsGallery!:GalleryAnimalsOptions;
+    private AclassService:ClassService = inject(ClassService)
+    private specieService:SpecieService = inject(SpecieService)
+    public allSpecies!:Specie[]
+    public allClasses!:Aclass[]
 
     ngOnInit(): void {
-        this.initOptionsGallery()
+       this.initOptionsGallery()
+       this.initAllSuscriptions();
+    }
+
+    private initAllSuscriptions(){
+        const observableArray:Observable<any>[] = [
+            this.getAllClasses(),
+            this.getAllSpecies()
+        ]
+
+        forkJoin(observableArray).subscribe(responses => {
+            const allClasses = responses[0].data
+            const allSpecies = responses[1].data
+            this.allClasses = allClasses
+            this.allSpecies = allSpecies
+        })
     }
 
     initOptionsGallery(): void {
@@ -40,4 +62,11 @@ export class HomeComponent implements OnInit {
         ]
     }
 
+    getAllSpecies() {
+        return this.specieService.getAll()
+    }
+
+    getAllClasses() {
+        return this.AclassService.getAll()
+    }
 }

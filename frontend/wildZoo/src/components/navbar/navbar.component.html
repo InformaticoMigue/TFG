@@ -1,18 +1,51 @@
-<div class="z-50 ">
+<div class="z-50 relative">
     <div class="max-w-full ">
         <div class="max-xs:px-10 px-20 flex max-xs:flex-col items-center justify-between">
-            <div class="flex items-center gap-5">
+            <div class="flex w-full items-center">
                 <h1 class="text-6xl font-bold">Wild</h1>
-                <img class="w-32" src="../../assets/img/logo.png" alt="" srcset="">
+                <div class="w-32">
+                    <img src="../../assets/img/logo.png" alt="" srcset="">
+                </div>
             </div>
             @if (!responsive) {
-            <div class="flex w-full items-center justify-end gap-5">
-                <div class="flex items-center justify-center w-40">
-                    <button matTooltip="Comprar entradas" (click)="openModalTicket()" mat-button color="primary">Entradas</button>
+            <div class="flex w-full items-center justify-end gap-12">
+                <div class="flex gap-12 text-lg w-full">
+                    <button class="text-white transition-all duration-500 hover:text-primary">Home</button>
+                    <button (click)="toggleMenu('packages')" [matMenuTriggerFor]="packages" class="text-white transition-all duration-500 hover:text-primary">
+                        <div class="flex items-center gap-2">
+                            <span>Paquetes</span>
+                            <fa-icon [flip]="menuStates['packages'] ? 'horizontal' : 'vertical'" 
+                                [icon]="iconCollapse">
+                            </fa-icon>
+                        </div>
+                    </button>
+                    <mat-menu (closed)="menuStates['packages'] = false" #packages="matMenu">
+                        @for (package of allPackages; track package.id) {
+                            <button mat-menu-item>{{package.name}}</button>
+                        }
+                    </mat-menu>
+                    <button class="text-white transition-all duration-500 hover:text-primary">
+                        <div class="flex items-center gap-2">
+                            <span>Animales</span>
+                        </div>
+                    </button>
+                    <button class="text-white transition-all duration-500 hover:text-primary">Sobre nosotros</button>
+                    <button class="text-white transition-all duration-500 hover:text-primary">Contacto</button>
                 </div>
-                <div>
-                    <button matTooltip="Loguearse" [matTooltipPosition]="'below'"
-                    (click)="openModalLogin()" class="text-xl w-full h-full"><fa-icon [icon]="iconUser"></fa-icon></button>
+                
+                <div class="flex gap-12">
+                    <div class="flex items-center justify-center w-40">
+                        <button matTooltip="Comprar entradas" (click)="openModalTicket()" mat-button color="primary">Entradas</button>
+                    </div>
+                    @if (logged) {
+                        <div class="w-full">
+                            <button (click)="logout()" class="text-2xl w-full h-full"><fa-icon [icon]="iconLogOut"></fa-icon></button>
+                        </div>
+                    }@else {
+                        <div>
+                            <button (click)="openModalLogin()" class="text-xl w-full h-full"><fa-icon [icon]="iconUser"></fa-icon></button>
+                        </div>
+                    }
                 </div>
             </div>
             }@else{

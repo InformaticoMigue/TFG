@@ -4,13 +4,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { GalleryAnimal, GalleryAnimalsOptions } from '../../assets/types';
 import { TitleSectionComponent } from "../title-section/title-section.component";
 
-export type Tile = {
-  id: number;
-  urlImage: string;
-  cols: number;
-  rows: number;
-}
-
 @Component({
     selector: 'app-shots',
     standalone: true,

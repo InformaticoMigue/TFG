@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TitleSectionComponent } from "../title-section/title-section.component";
+import { Aclass } from '../..//assets/types';
 import { Specie } from '../../assets/types';
 
 @Component({
@@ -9,6 +10,13 @@ import { Specie } from '../../assets/types';
     styleUrl: './our-animals.component.scss',
     imports: [TitleSectionComponent]
 })
-export class OurAnimalsComponent {
+export class OurAnimalsComponent implements OnInit{
+  @Input() listClasses!:Aclass[]
   @Input() listSpecies!:Specie[]
+
+  ngOnInit(): void {
+    console.log(this.listClasses);
+    
+  }
+
 }
