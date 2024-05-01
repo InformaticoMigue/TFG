@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input, OnInit, inject } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { GalleryAnimal, GalleryAnimalsOptions } from '../../assets/types';
-import { TitleSectionComponent } from "../title-section/title-section.component";
+import { GalleryAnimal, GalleryAnimalsOptions } from '../../../assets/types';
+import { TitleSectionComponent } from "../../title-section/title-section.component";
 
 @Component({
     selector: 'app-shots',

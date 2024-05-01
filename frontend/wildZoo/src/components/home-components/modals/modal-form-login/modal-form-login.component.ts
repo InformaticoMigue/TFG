@@ -2,16 +2,16 @@ import {Component, EventEmitter, OnInit, inject} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { CardFlip } from '../../../constants/animations';
+import { CardFlip } from '../../../../constants/animations';
 import { MatButton } from '@angular/material/button';
-import { AuthGoogleServiceService } from '../../../service/auth/authGoogleService.service';
+import { AuthGoogleServiceService } from '../../../../service/auth/authGoogleService.service';
 import { CommonModule } from '@angular/common';
 import { Observable, forkJoin } from 'rxjs';
-import { UserService } from '../../../service/zoo/user.service';
-import { User } from '../../../assets/types';
+import { UserService } from '../../../../service/zoo/user.service';
+import { User } from '../../../../assets/types';
 import { MatDialogRef } from '@angular/material/dialog';
-import { EncryptService } from '../../../service/encrypt/encrypt.service';
-import { StorageService } from '../../../service/storage/storage.service';
+import { EncryptService } from '../../../../service/encrypt/encrypt.service';
+import { StorageService } from '../../../../service/storage/storage.service';
 
 @Component({
   selector: 'app-modal-form-login',

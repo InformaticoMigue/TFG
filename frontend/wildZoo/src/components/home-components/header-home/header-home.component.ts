@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../../navbar/navbar.component';
 import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-header-home',

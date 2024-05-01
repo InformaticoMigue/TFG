@@ -5,16 +5,15 @@ import { faBars,faUser,faAngleUp, faRightFromBracket } from '@fortawesome/free-s
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidevarComponent } from "../sidevar/sidevar.component";
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { ModalTicketsComponent } from '../modals/modal-tickets/modal-tickets.component';
-import { ModalFormLoginComponent } from '../modals/modal-form-login/modal-form-login.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { ClassService } from '../../service/zoo/class.service';
 import { Observable, forkJoin } from 'rxjs';
 import { Aclass, Package } from '../../assets/types';
 import { PackageService } from '../../service/zoo/package.service';
 import { StorageService } from '../../service/storage/storage.service';
+import { ModalTicketsComponent } from '../home-components/modals/modal-tickets/modal-tickets.component';
+import { ModalFormLoginComponent } from '../home-components/modals/modal-form-login/modal-form-login.component';
 
 
 @Component({

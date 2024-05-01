@@ -10,6 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TitleSectionComponent implements OnInit {
   @Input() preTitle!: string;
   @Input() title!: string;
+  @Input() wrap!: boolean;
   public firstPosition!: string;
   public restTitle!: string;
 

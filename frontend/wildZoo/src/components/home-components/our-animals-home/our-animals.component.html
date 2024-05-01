@@ -1,0 +1,27 @@
+<section class="px-20">
+    <article class="max-portatil:flex max-portatil:flex-col max-portatil:gap-12 grid grid-cols-2">
+        <div class="flex flex-col gap-10">
+            <app-title-section [title]="'MARAVILLOSOS ANIMALES EN WILDZOO'" [preTitle]="'NUESTROS ANIMALES'"></app-title-section>
+            <p class="gray">En nuestro zoológico, encontrarás una variedad fascinante de animales que te dejarán maravillado. Desde las formas únicas de nadar hasta las criaturas que vuelan sin esfuerzo, cada especie es una maravilla de la naturaleza. Sumérgete en el mundo de la vida silvestre y descubre la diversidad de formas, colores y comportamientos que habitan en nuestro zoológico.</p>        
+        </div>
+        <div class="flex items-center justify-center flex-wrap gap-14 text-text">
+            @for (count of allCountUp; track count.id) {
+                <div class="flex flex-col gap-5 text-center">
+                    <h1 class="max-normal:text-xl text-2xl font-bold">{{count.name}}</h1>
+                    <app-count-up class="font-semibold max-normal:text-2xl text-3xl" [number]="count.number" [options]="count.options"></app-count-up>
+                </div>
+            }
+        </div>
+    </article>
+    <article>
+        <div class="flex flex-wrap gap-12 justify-center mt-20">
+            @for (class of listClasses; track class.id; let idx = $index) {
+                <div data-aos="fade-right" [attr.data-aos-duration]="class.dataAosDuration">
+                    <div [ngClass]="setColorOurAnimal(idx).bg" class="shadow-sm duration-500 w-[150px] h-[150px] transition-all cursor-pointer hover:-translate-y-12">
+                        <app-our-animals-card [className]="setColorOurAnimal(idx).text" [Aclass]="class"></app-our-animals-card>
+                    </div>        
+                </div>
+            }
+        </div>
+    </article>
+</section>

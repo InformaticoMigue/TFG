@@ -1,26 +1,32 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ShotsComponent } from "../shots/shots.component";
-import { Aclass, GalleryAnimal, GalleryAnimalsOptions, Specie } from '../../assets/types';
+import { ShotsComponent } from "../home-components/shots-home/shots.component";
+import { Aclass, Animal, GalleryAnimal, GalleryAnimalsOptions, Specie } from '../../assets/types';
 import { NavbarComponent } from "../navbar/navbar.component";
-import { HeaderHomeComponent } from "../header-home/header-home.component";
-import { OurAnimalsComponent } from "../our-animals/our-animals.component";
+import { HeaderHomeComponent } from "../home-components/header-home/header-home.component";
+import { OurAnimalsComponent } from "../home-components/our-animals-home/our-animals.component";
 import { ClassService } from '../../service/zoo/class.service';
 import { SpecieService } from '../../service/zoo/specie.service';
 import { Observable, forkJoin } from 'rxjs';
+import { AnimalService } from '../../service/zoo/animal.service';
+import { ServicesZooComponent } from '../home-components/services-zoo-home/services-zoo.component';
+import { EventsHomeComponent } from "../home-components/events-home/events-home.component";
+
 
 @Component({
     selector: 'app-home',
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
-    imports: [ShotsComponent, NavbarComponent, HeaderHomeComponent, OurAnimalsComponent]
+    imports: [ServicesZooComponent, ShotsComponent, NavbarComponent, HeaderHomeComponent, OurAnimalsComponent, EventsHomeComponent]
 })
 export class HomeComponent implements OnInit {
     public optionsGallery!:GalleryAnimalsOptions;
     private AclassService:ClassService = inject(ClassService)
     private specieService:SpecieService = inject(SpecieService)
+    private animalService:AnimalService = inject(AnimalService)
     public allSpecies!:Specie[]
     public allClasses!:Aclass[]
+    public allAnimals!:Animal[]
 
     ngOnInit(): void {
        this.initOptionsGallery()
@@ -30,14 +36,17 @@ export class HomeComponent implements OnInit {
     private initAllSuscriptions(){
         const observableArray:Observable<any>[] = [
             this.getAllClasses(),
-            this.getAllSpecies()
+            this.getAllSpecies(),
+            this.getAllAnimals()
         ]
 
         forkJoin(observableArray).subscribe(responses => {
             const allClasses = responses[0].data
             const allSpecies = responses[1].data
+            const allAnimals = responses[2].data
             this.allClasses = allClasses
             this.allSpecies = allSpecies
+            this.allAnimals = allAnimals
         })
     }
 
@@ -68,5 +77,9 @@ export class HomeComponent implements OnInit {
 
     getAllClasses() {
         return this.AclassService.getAll()
+    }
+    
+    getAllAnimals() {
+        return this.animalService.getAnimals()
     }
 }

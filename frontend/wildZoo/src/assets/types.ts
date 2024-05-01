@@ -108,38 +108,45 @@ export type User = {
     packageSales:   any[];
 }
 
-export interface Adoption {
+export type Adoption = {
     id:             number;
     date:           Date;
     adoptionAnimal: AdoptionAnimal;
     animal:         Animal;
 }
 
-export interface AdoptionAnimal {
+export type AdoptionAnimal = {
     id:    number;
     price: number;
 }
 
-export interface CreditCardList {
+export type CreditCardList = {
     id:             number;
     number:         number;
     expirationDate: string;
     cvv:            number;
 }
 
-export interface Ticket {
+export type Ticket = {
     id:         number;
     date:       Date;
     typeTicket: TypeTicket;
 }
 
-export interface TypeTicket {
+export type TypeTicket = {
     id:    number;
     name:  string;
     price: number;
 }
 
-export interface ApiResponse<T> {
+
+export type Service = {
+    id:    number;
+    name:  string;
+    description: string;
+}
+
+export type ApiResponse<T> = {
     data: T[];
 }
 
@@ -150,3 +157,4 @@ export type ContinentResponse = ApiResponse<Continent[]>;
 export type PackageResponse = ApiResponse<Package[]>;
 export type EventResponse = ApiResponse<Event[]>;
 export type UserResponse = ApiResponse<User[]>;
+export type ServiceResponse = ApiResponse<Service[]>;

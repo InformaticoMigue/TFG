@@ -1,5 +1,9 @@
 <section class="flex flex-col gap-20">
     <app-header-home></app-header-home>
-    <app-our-animals [listClasses]="allClasses" [listSpecies]="allSpecies"></app-our-animals>
-    <app-shots [options]="optionsGallery"></app-shots>    
+    @if (allClasses && allSpecies) {
+        <app-our-animals [listAnimals]="allAnimals" [listClasses]="allClasses" [listSpecies]="allSpecies"></app-our-animals>
+    }
+    <app-shots [options]="optionsGallery"></app-shots>  
+    <app-services-zoo></app-services-zoo>  
+    <app-events-home></app-events-home>
 </section>
