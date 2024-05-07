@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ApiUrl } from '../../constants/api.url';
-import { ServiceResponse } from '../../assets/types';
 import { Observable } from 'rxjs';
+import { ApiResponse, EntityResponseArray, Service } from '../../assets/types';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class ZooServiceService {
 
   private http:HttpClient = inject(HttpClient)
 
-  public getAll():Observable<ServiceResponse> {
-    return this.http.get<ServiceResponse>(ApiUrl.GET_ALL_SERVICES)
+  public getAll() {
+    return this.http.get<ApiResponse<Service>>(ApiUrl.GET_ALL_SERVICES)
   }
   
 }

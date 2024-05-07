@@ -10,7 +10,7 @@
             @if (!responsive) {
             <div class="flex w-full items-center justify-end gap-12">
                 <div class="flex gap-12 text-lg w-full">
-                    <button class="text-white transition-all duration-500 hover:text-primary">Home</button>
+                    <button [routerLink]="''" class="text-white transition-all duration-500 hover:text-primary">Home</button>
                     <button (click)="toggleMenu('packages')" [matMenuTriggerFor]="packages" class="text-white transition-all duration-500 hover:text-primary">
                         <div class="flex items-center gap-2">
                             <span>Paquetes</span>
@@ -24,7 +24,7 @@
                             <button mat-menu-item>{{package.name}}</button>
                         }
                     </mat-menu>
-                    <button class="text-white transition-all duration-500 hover:text-primary">
+                    <button  [routerLink]="'/animales'" class="text-white transition-all duration-500 hover:text-primary">
                         <div class="flex items-center gap-2">
                             <span>Animales</span>
                         </div>
@@ -35,7 +35,7 @@
                 
                 <div class="flex gap-12">
                     <div class="flex items-center justify-center w-40">
-                        <button matTooltip="Comprar entradas" (click)="openModalTicket()" mat-button color="primary">Entradas</button>
+                        <button class="border border-primary text-xl rounded-md w-full h-16 transition-all duration-500 hover:bg-primary hover:text-text" matTooltip="Comprar entradas">Entradas</button>
                     </div>
                     @if (logged) {
                         <div class="w-full">

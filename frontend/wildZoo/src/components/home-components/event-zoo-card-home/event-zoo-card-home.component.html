@@ -1,1 +1,21 @@
-<p>event-zoo-card-home works!</p>
+<div class="flex max-xs:flex-col bg-white shadow-lg">
+    <div class="w-1/4 max-xs:w-full">
+        <img class="h-full" [src]="'../../../assets/img/zoo-images/events/' + event.name + '.jpg'" alt="">
+    </div>
+    <div class="w-3/4 max-normal:flex-col max-xs:w-full max-xs:px-3 max-normal:gap-2 max px-10 flex items-center justify-between">
+        <div class="flex flex-col gap-4">
+            <button (click)="handleClickEvent()" class="text-lg font-semibold hover:text-gray-600" href="#">{{event.name}}</button>
+        </div>
+        <div class="flex flex-col">
+            <div class="flex gap-2 text-lg">
+                <span>{{event.initialHour}}</span>
+                <span>-</span>
+                <span>{{event.finishHour}} {{event.timeSistem}}</span>
+            </div>
+            <div class="flex justify-center gap-2 text-gray-400">
+                <span>{{event.dateInfo.dayMonth}}</span>
+                <span>{{event.dateInfo.nameMonth}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-title-section',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './title-section.component.html',
   styleUrl: './title-section.component.scss'
 })
@@ -11,6 +12,7 @@ export class TitleSectionComponent implements OnInit {
   @Input() preTitle!: string;
   @Input() title!: string;
   @Input() wrap!: boolean;
+  @Input() white!: boolean;
   public firstPosition!: string;
   public restTitle!: string;
 

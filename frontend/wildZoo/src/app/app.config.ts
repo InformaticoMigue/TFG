@@ -1,4 +1,5 @@
-import { ApplicationConfig } from '@angular/core';
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -9,10 +10,12 @@ import { provideOAuthClient } from 'angular-oauth2-oidc';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), 
+        provideAnimations(),
+        provideRouter(routes), 
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
     provideHttpClient(),
     provideOAuthClient()
   ]
+  
 };

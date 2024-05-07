@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdoptionAnimalServiceImpl implements AdoptionAnimalService {
     @Autowired
     AdoptionAnimalRepository AdoptionAnimalRepository;
+
     @Override
     public List<AdoptionAnimal> getAll() {
         List<AdoptionAnimal> animals = (List<AdoptionAnimal>) this.AdoptionAnimalRepository.findAll();
@@ -20,4 +22,9 @@ public class AdoptionAnimalServiceImpl implements AdoptionAnimalService {
                 .filter(adoptionAnimal -> adoptionAnimal.getAdoption() == null)
                 .toList();
     }
+
+    public Optional<AdoptionAnimal> getAdoptionAnimalByAnimalId(long animalId) {
+        return this.AdoptionAnimalRepository.findByAnimalId(animalId);
+    }
+
 }

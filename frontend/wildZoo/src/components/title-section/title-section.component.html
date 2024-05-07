@@ -1,9 +1,14 @@
-<div class="flex flex-col gap-6 ">
+<div [ngClass]="{'text-white': white, 'text-zinc-700': !white}" class="flex flex-col gap-6 ">
     <div class="max-normal:justify-center max-normal:text-center flex gap-2 items-center">
         <hr class="bg-primary h-[2.225px] w-10">
         <span class="font-semibold text-xs">{{preTitle}}</span>
     </div>
-    <div [className]="wrap ? 'flex-col' : ''" class="max-normal:justify-center max-normal:text-center max-normal:flex-col flex gap-5 items-center">
+    <div [ngClass]="{
+        'flex': wrap,
+        'flex-col': wrap,
+        'items-center': !wrap,
+        'gap-4': wrap,
+    }" class=" max-normal:justify-center max-normal:text-center max-normal:flex-col flex gap-5">
         <h1 class="text-4xl font-bold">{{firstPosition}}</h1>
         <h1 class="italic font-thin text-4xl">{{restTitle}}</h1>
     </div>

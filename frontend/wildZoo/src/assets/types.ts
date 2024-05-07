@@ -54,7 +54,7 @@ export type Continent = {
 export type Event = {
     id:          number;
     name:        string;
-    date:        Date;
+    date:        string;
     initialHour: number;
     finishHour:  number;
     description: string;
@@ -118,6 +118,7 @@ export type Adoption = {
 export type AdoptionAnimal = {
     id:    number;
     price: number;
+    animal: Animal;
 }
 
 export type CreditCardList = {
@@ -147,14 +148,24 @@ export type Service = {
 }
 
 export type ApiResponse<T> = {
+    data: T;
+}
+
+export type ApiResponseArray<T> = {
     data: T[];
 }
 
-export type SpecieResponse = ApiResponse<Specie[]>;
-export type AnimalResponse = ApiResponse<Animal[]>;
-export type AclassResponse = ApiResponse<Aclass[]>;
-export type ContinentResponse = ApiResponse<Continent[]>;
-export type PackageResponse = ApiResponse<Package[]>;
-export type EventResponse = ApiResponse<Event[]>;
-export type UserResponse = ApiResponse<User[]>;
-export type ServiceResponse = ApiResponse<Service[]>;
+// Definir tipos de respuesta para cada entidad
+type ResponseTypes = Specie | Animal | Aclass | Continent | Package | Event | User | Service;
+
+// Generar tipos de respuesta para cada entidad
+export type ApiResponseMap<T> = {
+    [K in keyof T]: ApiResponse<T[K]>;
+}
+
+export type ApiResponseArrayMap<T> = {
+    [K in keyof T]: ApiResponseArray<T[K]>;
+}
+
+export type EntityResponse = ApiResponseMap<ResponseTypes>;
+export type EntityResponseArray = ApiResponseArrayMap<ResponseTypes>;

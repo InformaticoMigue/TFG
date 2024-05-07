@@ -1,0 +1,24 @@
+.carousel {
+    perspective: 1000px;
+  }
+  
+  .carousel-inner {
+    position: relative;
+    width: 300%;
+    transition: transform 0.5s;
+  }
+  
+  .carousel-inner div {
+    position: absolute;
+    width: 33.33333%;
+    height: 100%;
+  }
+  
+  .active-slide {
+    transform: translateX(0) rotateY(0deg);
+  }
+  
+  .next-slide {
+    transform: translateX(100%) rotateY(-45deg);
+  }
+  

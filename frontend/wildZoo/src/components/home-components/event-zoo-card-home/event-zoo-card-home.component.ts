@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Event } from '../../../assets/types';
 
 @Component({
   selector: 'app-event-zoo-card-home',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './event-zoo-card-home.component.html',
   styleUrl: './event-zoo-card-home.component.scss'
 })
-export class EventZooCardHomeComponent {
+export class EventZooCardHomeComponent implements OnInit{
+  @Input() event!:any;
+  @Output() private handleClickButton:EventEmitter<Event> = new EventEmitter();
 
+  ngOnInit(): void {
+  }
+    
+  handleClickEvent() {
+    this.handleClickButton.emit(this.event)
+  }
 }

@@ -25,10 +25,13 @@
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@tinkoff/ng-dompurify": "4.0.0",
     "angular-oauth2-oidc": "^17.0.2",
     "aos": "^2.3.4",
     "crypto-js": "^4.2.0",
+    "dompurify": "3.0.6",
     "ngx-countup": "^13.1.0",
+    "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
@@ -39,6 +42,7 @@
     "@angular/compiler-cli": "^17.0.0",
     "@types/aos": "^3.0.7",
     "@types/crypto-js": "^4.2.2",
+    "@types/dompurify": "3.0.5",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.19",
     "jasmine-core": "~5.1.0",
@@ -48,6 +52,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.4.38",
+    "tailwind-clip-path": "^1.0.0",
     "tailwindcss": "^3.4.3",
     "typescript": "~5.2.2"
   }

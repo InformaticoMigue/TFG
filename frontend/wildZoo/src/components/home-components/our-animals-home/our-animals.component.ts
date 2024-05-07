@@ -6,13 +6,14 @@ import { CountUpComponent } from '../../count-up/count-up.component';
 import { OurAnimalsCardComponent } from "../our-animals-card-home/our-animals-card.component";
 import { CommonModule } from '@angular/common';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-our-animals',
     standalone: true,
     templateUrl: './our-animals.component.html',
     styleUrl: './our-animals.component.scss',
-    imports: [CommonModule, CountUpComponent, TitleSectionComponent, OurAnimalsCardComponent]
+    imports: [RouterLink, CommonModule, CountUpComponent, TitleSectionComponent, OurAnimalsCardComponent]
 })
 export class OurAnimalsComponent implements OnInit{
   @Input() listClasses!:any[]

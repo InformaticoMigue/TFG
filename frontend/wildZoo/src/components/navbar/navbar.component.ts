@@ -14,6 +14,7 @@ import { PackageService } from '../../service/zoo/package.service';
 import { StorageService } from '../../service/storage/storage.service';
 import { ModalTicketsComponent } from '../home-components/modals/modal-tickets/modal-tickets.component';
 import { ModalFormLoginComponent } from '../home-components/modals/modal-form-login/modal-form-login.component';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { ModalFormLoginComponent } from '../home-components/modals/modal-form-lo
     standalone: true,
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss',
-    imports: [MatMenuModule,MatTooltipModule, MatButtonModule, MatDialogModule,FontAwesomeModule, CommonModule, MatSidenavModule, SidevarComponent]
+    imports: [RouterLink, MatMenuModule,MatTooltipModule, MatButtonModule, MatDialogModule,FontAwesomeModule, CommonModule, MatSidenavModule, SidevarComponent]
 })
 
 export class NavbarComponent implements OnInit {
