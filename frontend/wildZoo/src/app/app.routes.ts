@@ -5,6 +5,8 @@ import { EventDetailsComponent } from '../components/content-web-components/even
 import { AnimalsComponent } from '../components/content-web-components/animals/animals.component';
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { AnimalDetailsComponent } from '../components/content-web-components/animal-details/animal-details.component';
+import { PackageDetailsComponent } from '../components/content-web-components/package-details/package-details.component';
+import { UserConfigurationComponent } from '../components/user-configuration-all/user-configuration/user-configuration.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,5 +16,7 @@ export const routes: Routes = [
     { path: 'animales', component: AnimalsComponent },
     { path: 'animales/clase/:id', component: AnimalsComponent },
     { path: 'animales/:id', component: AnimalDetailsComponent },
+    { path: 'paquete/:id', component: PackageDetailsComponent },
+    { path: 'user/configuracion/:token', component: UserConfigurationComponent },
     { path: '**', component: PageNotFoundComponent }
 ];

@@ -23,7 +23,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "animals")
-@CrossOrigin("http://localhost:4200")
 public class AnimalController {
 
     @Autowired

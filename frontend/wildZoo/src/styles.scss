@@ -10,4 +10,16 @@ body {
     overflow-x: hidden;
 }
 
+.custom-dialog-transparent .mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
 
+.mdc-notched-outline__notch {
+    border-right: none !important; 
+}
+
+.mat-mdc-snack-bar-container.snackbar-type-fill-error .mdc-snackbar__surface {
+    @apply bg-red-500;
+    @apply p-3;
+}

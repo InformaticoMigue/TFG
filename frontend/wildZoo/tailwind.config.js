@@ -7,6 +7,9 @@ module.exports = {
   
   theme: {
     extend: {
+      perspective: {
+        '3000': '3000px',
+      },
       colors: {
         primary: "#fdd340",
         text: "#333",
@@ -14,6 +17,13 @@ module.exports = {
       },
       backgroundImage: {
         'header': "url('../src/assets/img/bg-home-top.jpg')",
+      },
+      transitionProperty: {
+        'opacity': 'opacity'
+      },
+      transitionDuration: {
+        '700': '700ms',
+        '1000': '1000ms'
       }
     },
     screens: {

@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("species")
-@CrossOrigin("http://localhost:4200")
 public class SpecieController {
 
     @Autowired

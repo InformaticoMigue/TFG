@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Table(name = "Adoption")
 @Data
 @NoArgsConstructor
+
 public class Adoption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,0 +1,13 @@
+<div class="relative overflow-hidden w-full h-[600px]">
+  <div *ngFor="let image of images; let i = index" class="absolute inset-0 transition-opacity duration-1000"
+       [ngClass]="{'opacity-100': currentIndex === i, 'opacity-0': currentIndex !== i}">
+    <img [src]="image" alt="Carousel Image {{i}}" class="w-full h-full object-cover">
+  </div>
+  <div class="absolute bottom-0 w-full text-center py-2">
+    <span *ngFor="let image of images; let i = index" 
+          class="cursor-pointer inline-block text-2xl mx-1 select-none"
+          [class.text-primary]="i === currentIndex"
+          [class.text-primarySub]="i !== currentIndex"
+          (click)="selectIndex(i)">&#9679;</span>
+  </div>
+</div>

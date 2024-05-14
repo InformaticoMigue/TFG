@@ -9,9 +9,8 @@ import { NavbarComponent } from "../../navbar/navbar.component";
     imports: [NavbarComponent]
 })
 export class HeaderComponent implements OnInit {
-
   @Input() title!: string;
-
+  
   ngOnInit() {
   }
 

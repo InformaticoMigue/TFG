@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
+
 
 @Entity
 @Data
 @Table(name = "User")
 @NoArgsConstructor
+@ToString(exclude = {"creditCard", "tickets", "adoptions", "packageSales"})
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -25,10 +27,11 @@ public class User {
     private String firstSurname;
     @Column(name = "second_surname")
     private String lastSurname;
+    private String username;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})
-    private List<CreditCard> creditCardList;
+    private CreditCard creditCard;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})
@@ -40,5 +43,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})
-    private List<PackageSales> packageSales;
+    private List<PackageSale> packageSales;
 }

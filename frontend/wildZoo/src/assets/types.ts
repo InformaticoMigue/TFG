@@ -97,12 +97,13 @@ export type TypeTour = {
 
 export type User = {
     id:             number;
+    username:       string;
     email:          string;
     password:       string;
     name:           string;
     firstSurname:   string;
     lastSurname:    string;
-    creditCardList: CreditCardList[];
+    creditCard: CreditCard;
     tickets:        Ticket[];
     adoptions:      Adoption[];
     packageSales:   any[];
@@ -121,9 +122,11 @@ export type AdoptionAnimal = {
     animal: Animal;
 }
 
-export type CreditCardList = {
+export type CreditCard = {
+    titular:        string;
     id:             number;
     number:         number;
+    balance:        number;
     expirationDate: string;
     cvv:            number;
 }

@@ -6,6 +6,7 @@ import { Observable, catchError, forkJoin, map, of, switchMap, take } from 'rxjs
 import { AnimalService } from '../../../service/zoo/animal.service';
 import { AdoptionService } from '../../../service/zoo/adoption.service';
 import { CommonModule } from '@angular/common';
+import { faAddressCard, faCakeCandles, faCalendarCheck, faHome, faWeightHanging, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-animal-details',
@@ -16,9 +17,10 @@ import { CommonModule } from '@angular/common';
 })
 export class AnimalDetailsComponent implements OnInit {
   public animal!: any;
+  public title!:string;
   private animalService: AnimalService = inject(AnimalService);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private adoptionService: AdoptionService = inject(AdoptionService)
+  private adoptionService: AdoptionService = inject(AdoptionService)  
 
   ngOnInit(): void {
     this.initAllSuscriptions();
@@ -43,6 +45,7 @@ export class AnimalDetailsComponent implements OnInit {
       })
     ).subscribe((result: any) => {
       this.animal = result.animal.data;
+      this.title = this.animal.name
       this.animal.isAvailableForAdoption = result.isAvailable;
       console.log(this.animal);
       

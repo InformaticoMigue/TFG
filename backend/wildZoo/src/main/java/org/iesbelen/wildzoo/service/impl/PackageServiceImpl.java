@@ -1,10 +1,13 @@
 package org.iesbelen.wildzoo.service.impl;
 
 import org.iesbelen.wildzoo.model.Package;
+import org.iesbelen.wildzoo.model.PackageSale;
 import org.iesbelen.wildzoo.repository.PackageRepository;
+import org.iesbelen.wildzoo.repository.PackageSalesRepository;
 import org.iesbelen.wildzoo.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +17,8 @@ public class PackageServiceImpl implements PackageService {
     @Autowired
     PackageRepository packageRepository;
 
+    @Autowired
+    PackageSalesRepository packageSalesRepository;
 
     @Override
     public List<Package> getAll() {
@@ -22,7 +27,7 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Optional<Package> find(long id) {
-        return Optional.empty();
+        return this.packageRepository.findById(id);
     }
 
     @Override
@@ -33,5 +38,10 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public Package update(Package pack) {
         return null;
+    }
+    @Override
+    @Transactional
+    public PackageSale createPackageSale(PackageSale packageSale) {
+        return this.packageSalesRepository.save(packageSale);
     }
 }

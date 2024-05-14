@@ -6,6 +6,7 @@ import org.iesbelen.wildzoo.repository.UserRepository;
 import org.iesbelen.wildzoo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Specie update(User user) {
+    public User update(User user) {
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public User authenticate(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && password.equals(user.getPassword())) {
+            return user;
+        }
         return null;
+    }
+
+    public User findByUserName(String username) {
+        return this.userRepository.findByUsername(username);
     }
 }

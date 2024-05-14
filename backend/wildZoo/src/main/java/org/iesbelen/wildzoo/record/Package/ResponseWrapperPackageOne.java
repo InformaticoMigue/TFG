@@ -2,5 +2,5 @@ package org.iesbelen.wildzoo.record.Package;
 
 import org.iesbelen.wildzoo.model.Package;
 
-public record ResponseWrapperOnePackage(Package data) {
+public record ResponseWrapperPackageOne(Package data) {
 }

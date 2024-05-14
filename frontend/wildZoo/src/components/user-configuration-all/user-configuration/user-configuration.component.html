@@ -1,0 +1,33 @@
+<section class="flex flex-col gap-20 mb-20">
+  <article class="text-white">
+    <app-header [title]="title"></app-header>
+  </article>
+  <article class="px-40 flex w-full">
+    <div class="w-1/5 flex gap-3">
+      <div class="flex flex-col">
+        <button (click)="loadComponent(componentesView.userDetails)" class="flex p-4 hover:bg-zinc-200 transition-all duration-500 gap-3 items-center">
+          <fa-icon class="text-2xl" [icon]="userIcon"></fa-icon>
+          <span>Detalles usuario</span>
+        </button>
+        <button (click)="loadComponent(componentesView.creditCard, this.user.creditCard)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+          <fa-icon class="text-2xl" [icon]="creditCardIcon"></fa-icon>
+          <span>Tarjeta de crédito</span>
+        </button>
+        <button (click)="loadComponent(componentesView.changePassword)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+          <fa-icon class="text-2xl" [icon]="passwordIcon"></fa-icon>
+          <span>Cambiar contraseña</span>
+        </button>
+        <button (click)="loadComponent(componentesView.payments)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+          <fa-icon class="text-2xl" [icon]="paymentIcon"></fa-icon>
+          <span>Pagos realizados</span>
+        </button>
+      </div>
+      <hr class="bg-primary h-96 w-[1px]">
+    </div>  
+    <div class="flex-grow">
+      <div #dynamicContainer class="w-full">
+
+      </div>
+    </div>
+  </article>
+</section>

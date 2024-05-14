@@ -38,4 +38,8 @@ public class Package {
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer, packages"})
     private List<PackageService> packageServices;
+
+    @OneToMany(mappedBy = "aPackage", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"hibernateLazyInitializer, aPackage"})
+    private List<PackageSale> packageSales;
 }

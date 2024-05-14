@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBars,faUser,faAngleUp, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBars,faUser,faAngleUp, faRightFromBracket, faUserCircle, faCog, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidevarComponent } from "../sidevar/sidevar.component";
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -14,7 +14,8 @@ import { PackageService } from '../../service/zoo/package.service';
 import { StorageService } from '../../service/storage/storage.service';
 import { ModalTicketsComponent } from '../home-components/modals/modal-tickets/modal-tickets.component';
 import { ModalFormLoginComponent } from '../home-components/modals/modal-form-login/modal-form-login.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../service/auth/auth.service';
 
 
 @Component({
@@ -31,6 +32,9 @@ export class NavbarComponent implements OnInit {
   public iconUser = faUser;
   public iconCollapse = faAngleUp;
   public iconLogOut = faRightFromBracket;
+  public faUserCircle = faUserCircle;
+  public faCog = faCog;
+  public faSignOutAlt = faSignInAlt;
   public responsive: boolean = false;
   public allClasses: Aclass[] = [];
   public allPackages: Package[] = [];
@@ -39,13 +43,12 @@ export class NavbarComponent implements OnInit {
   public menuStates: {[key: string]: boolean} = {
     packages: false,
   };
-  private storageService = inject(StorageService);
+  private authService:AuthService = inject(AuthService);
+  public storageService:StorageService = inject(StorageService);
+  private router:Router = inject(Router);
 
   ngOnInit(): void {
-    this.logged = !!this.storageService.getData("tokenUser");
-    this.storageService.isLogged.subscribe((loggedIn: boolean) => {
-      this.logged = loggedIn;
-    });
+    this.getActuallyUser();
     this.initAllSuscriptions();
     this.onResize();
   }
@@ -74,15 +77,15 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(){
-    this.storageService.removeData("tokenUser")
-    this.storageService.isLogged.emit(false)
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 
   openModalLogin(): void {
     this.dialog.open(ModalFormLoginComponent, {
-      width: '1000px',
-      height: '500px',
-      panelClass: ['overflow-hidden','p-0']
+      width: '1200px',
+      height: '525px',
+      panelClass: ['custom-dialog-transparent','overflow-hidden','p-0']
     })
   }
 
@@ -97,5 +100,10 @@ export class NavbarComponent implements OnInit {
   public getAllPackages() {
     return this.packageService.getAll();    
   }
-
+  
+  getActuallyUser(){
+    this.authService.isLoggedIn$.subscribe(log => {
+      this.logged = log;
+    });
+  }
 }

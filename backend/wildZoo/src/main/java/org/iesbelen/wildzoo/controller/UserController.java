@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
-@CrossOrigin("http://localhost:4200")
 public class UserController {
     @Autowired
     UserService userService;
@@ -33,4 +32,17 @@ public class UserController {
             return new ResponseEntity<>(new ResponseWrapperUserOne(user.get()),HttpStatus.OK);
         }
     }
+
+    @GetMapping("check/{username}")
+    public ResponseEntity<ResponseWrapperUserOne> checkUserUsername(@PathVariable String username){
+        return new ResponseEntity<>(
+                new ResponseWrapperUserOne(this.userService.findByUserName(username)),
+                HttpStatus.OK);
+    }
+
+    @PostMapping("update")
+    public User update(@RequestBody User user) {
+        return this.userService.update(user);
+    }
+
 }

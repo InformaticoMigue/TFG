@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("adoptions")
-@CrossOrigin("http://localhost:4200")
 public class AdoptionController {
 
     @Autowired
