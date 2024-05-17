@@ -42,10 +42,24 @@ public class PackageController {
         }
     }
 
-    @PostMapping("create")
+    @PostMapping("createpackagesale")
     public ResponseEntity<PackageSale> createPackageSale(@RequestBody PackageSale packageSale) {
         PackageSale created = packageService.createPackageSale(packageSale);
         return ResponseEntity.ok(created);
+    }
+
+    @DeleteMapping("delete/packagesale/{id}")
+    public ResponseEntity<?> deletePackageSale(@PathVariable long id) {
+        try {
+            boolean deleted = this.packageService.deletePackageSale(id);
+            if (deleted) {
+                return ResponseEntity.ok().build();
+            } else {
+                throw new NotFoundException(new ErrorNotFound("Package sale not found", LocalDate.now()));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

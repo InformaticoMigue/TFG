@@ -1,5 +1,6 @@
 package org.iesbelen.wildzoo.service.impl;
 
+import org.iesbelen.wildzoo.model.CreditCard;
 import org.iesbelen.wildzoo.model.Package;
 import org.iesbelen.wildzoo.model.PackageSale;
 import org.iesbelen.wildzoo.repository.PackageRepository;
@@ -44,4 +45,12 @@ public class PackageServiceImpl implements PackageService {
     public PackageSale createPackageSale(PackageSale packageSale) {
         return this.packageSalesRepository.save(packageSale);
     }
+    @Override
+    public boolean deletePackageSale(long id) {
+        Optional<PackageSale> creditCard = this.packageSalesRepository.findById(id);
+        if (creditCard.isPresent()) {
+            this.packageSalesRepository.delete(creditCard.get());
+            return true;
+        }
+        return false;    }
 }

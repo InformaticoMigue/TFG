@@ -27,8 +27,14 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     public boolean delete(long id) {
+        Optional<CreditCard> creditCard = this.creditCardRepository.findById(id);
+        if (creditCard.isPresent()) {
+            this.creditCardRepository.delete(creditCard.get());
+            return true;
+        }
         return false;
     }
+
 
     @Override
     public CreditCard update(CreditCard creditCard) {

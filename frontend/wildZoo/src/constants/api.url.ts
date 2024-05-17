@@ -9,7 +9,10 @@ export class ApiUrl {
     public static GET_PACKAGE_BY_ID(id: number) {
         return `http://localhost:8080/packages/${id}`;
     }
-    public static BUY_PACKAGE_POST = `http://localhost:8080/packages/create`
+    public static BUY_PACKAGE_POST = `http://localhost:8080/packages/createpackagesale`
+    public static DELETED_PACKAGE_SALE(id:number){
+        return `http://localhost:8080/packages/delete/packagesale/${id}`
+    }
     public static GET_ALL_CONTINENTS = `http://localhost:8080/continents`
     public static GET_ALL_EVENTS = `http://localhost:8080/events`
     public static GET_EVENT_BY_ID(id: number) {
@@ -28,6 +31,9 @@ export class ApiUrl {
     }
     public static UPDATE_USER_POST = `http://localhost:8080/users/update`;
     public static UPDATE_CREDIT_CARD_POST = `http://localhost:8080/creditcard/update`
+    public static DELETE_CREDIT_CARD(id:number){
+        return `http://localhost:8080/creditcard/delete/${id}`;
+    }
     public static GET_ALL_SERVICES = `http://localhost:8080/services`
        
 }

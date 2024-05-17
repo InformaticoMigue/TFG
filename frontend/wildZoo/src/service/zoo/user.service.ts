@@ -23,6 +23,10 @@ export class UserService {
     return this.http.post<ApiResponse<CreditCard>>(ApiUrl.UPDATE_CREDIT_CARD_POST,data)    
   }
 
+  public deleteCreditCard(id:number){
+    return this.http.delete<boolean>(ApiUrl.DELETE_CREDIT_CARD(id))    
+  }
+
   public updateUser(data:any){
     return this.http.post<ApiResponse<User>>(ApiUrl.UPDATE_USER_POST,data)
   }

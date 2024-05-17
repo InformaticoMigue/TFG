@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -39,5 +41,9 @@ public class Event {
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "events"})
     private List<Animal> animals;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<EventSale> eventSales;
 
 }

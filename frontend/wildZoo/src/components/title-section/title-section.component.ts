@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-title-section',
@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './title-section.component.html',
   styleUrl: './title-section.component.scss'
 })
-export class TitleSectionComponent implements OnInit {
+export class TitleSectionComponent implements OnInit,OnChanges {
   @Input() preTitle!: string;
   @Input() title!: string;
   @Input() wrap!: boolean;
@@ -19,6 +19,12 @@ export class TitleSectionComponent implements OnInit {
   ngOnInit(): void {
     this.formatTitle(this.title)
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.title = changes['title'].currentValue;
+    this.formatTitle(this.title);    
+  }
+
 
   private formatTitle(title: string) {
     const positionFirst =  title.split(" ")[0].toUpperCase()

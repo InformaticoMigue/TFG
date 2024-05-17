@@ -93,7 +93,6 @@ export class AnimalsComponent implements OnInit {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.pagedAnimals = this.animals.slice(startIndex, endIndex);
-    
   }  
 
   setPage(page: number): void {

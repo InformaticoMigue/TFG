@@ -16,13 +16,15 @@ import { StorageService } from '../../../service/storage/storage.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../../service/auth/auth.service';
 import { UserService } from '../../../service/zoo/user.service';
+import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-package-details',
   standalone: true,
   templateUrl: './package-details.component.html',
   styleUrls: ['./package-details.component.scss'],
-  imports: [HeaderComponent, MatSnackBarModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, CarouselComponent, FontAwesomeModule, FormsModule]
+  imports: [HeaderComponent, CommonModule, MatSnackBarModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, CarouselComponent, FontAwesomeModule, FormsModule]
 })
 export class PackageDetailsComponent implements OnInit {
   public title!: string;
@@ -41,8 +43,7 @@ export class PackageDetailsComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private userService: UserService = inject(UserService);
   private user!: User;
-
-  constructor(private _snackBar: MatSnackBar) { }
+  private snackbarService:CustomSnackbarService = inject(CustomSnackbarService)
 
   ngOnInit() {
     this.getActuallyUser();
@@ -72,43 +73,35 @@ export class PackageDetailsComponent implements OnInit {
   }
 
   public buyPackage() {
-    if (this.user == null) {
-      this.openSnackBar('Necesita estar logueado para comprar un paquete', 5000, 'fill', 'error')
+    if (!this.user) {
+      this.snackbarService.openErrorSnackbar('Necesita estar logueado para comprar un paquete', 'Cerrar')
       return;
     }
-
-    const princeFinal = +this.formBuyPackage.get('guests')!.value * this.package.packageType.price_per_person
-    const canBuyPackage = this.user.creditCard.balance >= princeFinal
-
-
-    if (canBuyPackage) {
+    if (!this.user.creditCard) {
+      this.snackbarService.openErrorSnackbar('Necesita tener una tarjeta de crédito para comprar', 'Cerrar')
+      return;
+    }
+    
       this.packageService.buyPackage({
+        id:null,
         date: new Date(this.formBuyPackage.get('date')!.value),
         user: this.user,
         guests: +this.formBuyPackage.get('guests')!.value,
         apackage: this.package
-      }).subscribe((data) => {
-        if (data) {
-          console.log(data);
+      }).subscribe({
+        next: (data) => {
+          if (data) {
+            this.snackbarService.openSucessSnackbar("Paquete comprado correctamente", "Cerrar")
+          }else{
+            this.snackbarService.openErrorSnackbar("Error desconocido", "Cerrar")
+          }
+        },
+        error: (error) => {
+          this.snackbarService.openErrorSnackbar("Error con el servidor", "Cerrar")
+          console.error('Error at buy de package', error)
         }
+        
       })
-    } else {
-      this.openSnackBar(`No tiene suficiente saldo 💲💲 en ninguna de sus tarjetas de credito`, 5000, 'fill', 'error')
-    }
-  }
-
-  openSnackBar(message: string,
-    duration: number = 5000,
-    appearance: 'fill' | 'outline' | 'soft' = 'fill',
-    type: 'info' | 'success' | 'error' = 'info'): void {
-
-    const config: MatSnackBarConfig = {
-      duration: duration,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: [`snackbar-type-${appearance}-${type}`]
-    };
-    this._snackBar.open(message, '', config);
   }
 
   public getPackageById(packageId: number) {

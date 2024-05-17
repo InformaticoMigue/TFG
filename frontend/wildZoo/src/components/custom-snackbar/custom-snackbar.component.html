@@ -1,0 +1,5 @@
+<div class="flex gap-5 items-center">
+  <fa-icon class="text-3xl" [icon]="data?.icon"></fa-icon>
+  <span class="text-white">{{data?.message}}</span>
+  <button class="text-white ml-5" (click)="closeSnackbar()">{{data?.action}}</button>
+</div>

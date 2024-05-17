@@ -26,8 +26,6 @@ public class CreditCard {
     @Column(name = "expiration_date", length = 5)
     private String expirationDate;
     private long cvv;
-    private BigDecimal balance;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

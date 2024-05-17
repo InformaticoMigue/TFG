@@ -9,8 +9,8 @@
                             <p class="font-light">
                                 Nombre
                             </p>
-                            <input placeholder="Pepito pepote pepon" formControlName="titular" [value]="formCreditCard.get('titular')!.value"
-                                class="font-medium tracking-widest bg-transparent">
+                            <input  placeholder="Pepito pepote pepon" formControlName="titular" [value]="formCreditCard.get('titular')!.value"
+                                class="focus:outline-none focus:border-none font-medium tracking-widest bg-transparent">
                         </div>
                         <img class="w-14 h-14" src="https://i.imgur.com/bbPHJVe.png">
                     </div>
@@ -19,8 +19,8 @@
                             Numero de la tarjeta
                         </p>
                         <input formControlName="number" [value]="formCreditCard.get('number')!.value"
-                            placeholder="1234 5678 9101 1121" (input)="handleInput($event, 'number')"
-                            class="font-medium tracking-widest bg-transparent">
+                            placeholder="1234 5678 9101 1121" (blur)="handleInput($event, 'number')"
+                            class="font-medium tracking-widest bg-transparent focus:outline-none focus:border-none">
                     </div>
                     <div class="pt-6 pr-6">
                         <div class="flex justify-between">
@@ -29,15 +29,15 @@
                                     Fecha de expiración
                                 </p>
                                 <input formControlName="dateOfExpiry" placeholder="MM/YY"
-                                    class="font-medium text-sm tracking-widest bg-transparent"
-                                    (input)="handleInput($event, 'dateOfExpiry')">
+                                    class="font-medium text-sm tracking-widest bg-transparent focus:outline-none focus:border-none"
+                                    (blur)="handleInput($event, 'dateOfExpiry')">
                             </div>
                             <div class="">
                                 <p class="font-light text-xs">
                                     CVV
                                 </p>
                                 <input formControlName="cvv" [value]="formCreditCard.get('cvv')!.value"
-                                    class="font-bold bg-transparent w-7 tracking-more-wider text-sm" placeholder="123">
+                                    class="font-bold bg-transparent w-7 tracking-more-wider text-sm focus:outline-none focus:border-none" placeholder="123">
                             </div>
                         </div>
                     </div>
@@ -45,9 +45,16 @@
             </div>
         </div>
     </div>
-    <div class="text-center mt-10">
+    <div class=" flex justify-center gap-5 mt-10">
         <button
-            [ngClass]="formCreditCard.invalid ? 'text-gray-400 w-44 h-14' : 'border border-primary rounded-md w-44 h-14 transition-all duration-500 hover:bg-primary hover:text-text'"
+            [ngClass]="!formCreditCard.invalid ? 'transition-all duration-500 hover:bg-primary' : ''"
+            class="disabled:text-gray-400 disabled:border-primary disabled:border w-32 h-14"
             (click)="save()" [disabled]="formCreditCard.invalid">Guardar</button>
+        
+            <button
+            class="w-32 h-14"
+            [ngClass]="!isAvailableToDelete() ? 'text-gray-400' : 'transition-all duration-500 hover:bg-red-500 hover:text-white'"
+            (click)="delete()" [disabled]="!isAvailableToDelete()">Eliminar</button>
+
     </div>
 </form>

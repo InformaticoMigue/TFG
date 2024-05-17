@@ -12,4 +12,5 @@ public interface PackageService {
     public boolean delete(long id);
     public Package update(Package pack);
     public PackageSale createPackageSale(PackageSale packageSale);
+    public boolean deletePackageSale(long id);
 }

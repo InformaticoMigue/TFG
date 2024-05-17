@@ -58,7 +58,7 @@ export type Event = {
     initialHour: number;
     finishHour:  number;
     description: string;
-    animals: Animal[]
+    animals: Animal[];
 }
 
 export type Tile = {
@@ -107,6 +107,14 @@ export type User = {
     tickets:        Ticket[];
     adoptions:      Adoption[];
     packageSales:   any[];
+    registrationEvents: RegistrationEvent[];
+}
+
+export type RegistrationEvent = {
+    id: number;
+    user:User;
+    date: Date;
+    event:Event;
 }
 
 export type Adoption = {
@@ -126,7 +134,6 @@ export type CreditCard = {
     titular:        string;
     id:             number;
     number:         number;
-    balance:        number;
     expirationDate: string;
     cvv:            number;
 }

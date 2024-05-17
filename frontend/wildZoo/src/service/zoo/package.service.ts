@@ -19,9 +19,10 @@ export class PackageService {
   }
 
   public buyPackage(data:any){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-    return this.http.post(ApiUrl.BUY_PACKAGE_POST,data,{headers:headers})
+    return this.http.post(ApiUrl.BUY_PACKAGE_POST,data)
+  }
+
+  public deletePackageSale(id:number){
+    return this.http.delete(ApiUrl.DELETED_PACKAGE_SALE(id))
   }
 }

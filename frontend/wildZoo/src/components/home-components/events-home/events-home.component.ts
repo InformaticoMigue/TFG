@@ -82,6 +82,7 @@ export class EventsHomeComponent implements OnInit {
   }
 
   showNewEvent($event:Event){
+    console.log($event);
     this.eventDetails = $event;
   }
 

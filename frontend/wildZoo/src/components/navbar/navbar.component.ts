@@ -12,7 +12,6 @@ import { Observable, forkJoin } from 'rxjs';
 import { Aclass, Package } from '../../assets/types';
 import { PackageService } from '../../service/zoo/package.service';
 import { StorageService } from '../../service/storage/storage.service';
-import { ModalTicketsComponent } from '../home-components/modals/modal-tickets/modal-tickets.component';
 import { ModalFormLoginComponent } from '../home-components/modals/modal-form-login/modal-form-login.component';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
@@ -68,14 +67,6 @@ export class NavbarComponent implements OnInit {
     this.menuStates[menu] = !this.menuStates[menu];
   }
 
-  openModalTicket(): void {
-    this.dialog.open(ModalTicketsComponent, {
-      data: {
-        isLogin: this.logged ? true : false
-      }
-    })
-  }
-
   logout(){
     this.authService.logout();
     this.router.navigate(['/home']);
@@ -84,7 +75,7 @@ export class NavbarComponent implements OnInit {
   openModalLogin(): void {
     this.dialog.open(ModalFormLoginComponent, {
       width: '1200px',
-      height: '525px',
+      height: '625px',
       panelClass: ['custom-dialog-transparent','overflow-hidden','p-0']
     })
   }

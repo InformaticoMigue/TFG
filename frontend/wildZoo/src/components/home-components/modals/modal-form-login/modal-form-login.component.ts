@@ -13,6 +13,7 @@ import { EncryptService } from '../../../../service/encrypt/encrypt.service';
 import { StorageService } from '../../../../service/storage/storage.service';
 import { AuthService } from '../../../../service/auth/auth.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { CustomSnackbarService } from '../../../../service/snackbar/custom-snackbar.service';
 
 @Component({
   selector: 'app-modal-form-login',
@@ -28,31 +29,19 @@ export class ModalFormLoginComponent implements OnInit {
   private formBuilder = inject(FormBuilder)
   public formLogin: any;
   private userService: UserService = inject(UserService);
-  private allUsers: User[] = [];
   public usernameExists: boolean = true;
   public passwordExists: boolean = true;
   private encryptedService: EncryptService = inject(EncryptService);
   private authService: AuthService = inject(AuthService)
   public registerForm: FormGroup = new FormGroup({});
+  private snackbarService:CustomSnackbarService = inject(CustomSnackbarService)
 
   constructor(public dialogRef: MatDialogRef<ModalFormLoginComponent>,
-    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.initFormLogin()
     this.initiFormRegister()
-    this.initAllSuscriptions();
-  }
-
-  initAllSuscriptions() {
-    const observableArray: Observable<any>[] = [
-      this.getAllUsers()
-    ]
-
-    forkJoin(observableArray).subscribe((responses) => {
-      this.allUsers = responses[0].data
-    })
   }
 
   initFormLogin(): void {
@@ -74,7 +63,7 @@ export class ModalFormLoginComponent implements OnInit {
   }
 
   cardClicked() {
-    this.flip = (this.flip == 'inactive') ? 'active' : 'inactive';
+     this.flip = this.flip == 'inactive' ? 'active' : 'inactive';
   }
 
   login() {
@@ -87,18 +76,20 @@ export class ModalFormLoginComponent implements OnInit {
           const encryptedPassword = this.encryptedService.encryptData(password);
           this.authService.login(username, encryptedPassword).subscribe({
             next: (value) => {
-              console.info("tokenUser" + value);
+              this.snackbarService.openSucessSnackbar("Usuario logueado correctamente", "Cerrar")
               this.dialogRef.close();
             },
             error: (error) => {
+              this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
               console.error("Login failed", error);
             }
           });
         } else {
-          this.openSnackBar('Error, no existe nadie con es nombre de usuario', 3000, 'fill', 'error')
+          this.snackbarService.openErrorSnackbar('Error, no existe nadie con es nombre de usuario', 'Cerrar')
         }
       },
       error: (error) => {
+        this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
         console.error("Error checking username availability", error);
       }
     });
@@ -122,35 +113,28 @@ export class ModalFormLoginComponent implements OnInit {
 
     this.userService.checkUsernameAvailability(this.registerForm.get('username')?.value).subscribe((res) => {
       if (!res.data) {
-        this.userService.updateUser(objectToRequest).subscribe((res) => {
-          this.authService.login(this.registerForm.get('username')?.value, this.encryptedService.encryptData(this.registerForm.get('password')?.value)).subscribe(value => {
-            console.info("tokenUser" + value)
-            this.dialogRef.close()
-          })
+        this.userService.updateUser(objectToRequest).subscribe({
+          next: () => {
+            this.authService.login(this.registerForm.get('username')?.value, this.encryptedService.encryptData(this.registerForm.get('password')?.value)).subscribe({
+              next:() => {
+                this.snackbarService.openSucessSnackbar("Usuario logueado correctamente", "Cerrar")
+                this.dialogRef.close()
+              },
+              error:(error) => {
+                this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
+                console.log('Error to authenticate user',error)    
+              }
+            })
+          },
+          error: (error) => {
+            this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
+            console.log('Error to update user',error)
+          }  
         })
       } else {
-        this.openSnackBar('Error, Ya existe alguien con ese usuario', 3000, 'fill', 'error')
+        this.snackbarService.openErrorSnackbar('Error, Ya existe alguien con ese usuario', 'Cerrar')
       }
     })
 
-  }
-
-  openSnackBar(message: string,
-    duration: number = 5000,
-    appearance: 'fill' | 'outline' | 'soft' = 'fill',
-    type: 'info' | 'success' | 'error' = 'info'): void {
-
-    const config: MatSnackBarConfig = {
-      duration: duration,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: [`snackbar-type-${appearance}-${type}`]
-    };
-    this._snackBar.open(message, '', config);
-  }
-
-
-  getAllUsers() {
-    return this.userService.getAllUsers()
   }
 }

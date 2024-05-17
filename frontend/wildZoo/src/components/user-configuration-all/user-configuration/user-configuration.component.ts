@@ -19,7 +19,7 @@ import { UserPaymentsComponent } from '../user-payments/user-payments.component'
   templateUrl: './user-configuration.component.html',
   styleUrls: ['./user-configuration.component.scss']
 })
-export class UserConfigurationComponent implements OnInit,AfterViewInit {
+export class UserConfigurationComponent implements OnInit {
   public title: any;
   private authService: AuthService = inject(AuthService);
   private userService: UserService = inject(UserService);
@@ -40,10 +40,7 @@ export class UserConfigurationComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     this.initAllSuscriptions();
   }
-  
-  ngAfterViewInit(): void {
-    this.loadComponent(UserDetailsComponent)
-  }
+
 
   loadComponent(component: any, data?: any){
     this.container.clear();
@@ -52,9 +49,14 @@ export class UserConfigurationComponent implements OnInit,AfterViewInit {
   }
 
   addDataToComponent(component: any, data?:any){ 
-    component.instance.user = this.user;   
-    if (component.instance as UserCreditCardComponent && data) { 
-      (component.instance as UserCreditCardComponent).creditCardData = data;
+    console.log(this.user);
+    
+    component.instance.user = this.user;  
+    
+    if (component.instance instanceof UserCreditCardComponent && data) { 
+      component.instance.creditCardData = data;
+    }else if(component.instance instanceof UserPaymentsComponent && data) {
+      component.instance.paymentsData = data;
     }
   }
 
@@ -67,6 +69,8 @@ export class UserConfigurationComponent implements OnInit,AfterViewInit {
       const user = userData.data;
       this.user = user;      
       this.title = `Configuración de de usuario`
+      this.loadComponent(UserDetailsComponent)
+
     })
   }
   

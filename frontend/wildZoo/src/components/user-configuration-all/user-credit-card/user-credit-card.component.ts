@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { CreditCard, User } from '../../../assets/types';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserService } from '../../../service/zoo/user.service';
 import { AuthService } from '../../../service/auth/auth.service';
+import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
 
 @Component({
   selector: 'app-user-credit-card',
@@ -15,13 +16,13 @@ import { AuthService } from '../../../service/auth/auth.service';
 
 export class UserCreditCardComponent implements OnInit {
   public isFlipped = false;
-  @Input() creditCardData!: CreditCard;
-  @Input() user!:User;
+  public creditCardData!: CreditCard | null;
+  private user!: User;
   public numberFormated!: string;
   public formCreditCard: FormGroup = new FormGroup({});
   private formBuilder: FormBuilder = inject(FormBuilder);
   private userService: UserService = inject(UserService);
-  private authService: AuthService = inject(AuthService);
+  private snackbarService: CustomSnackbarService = inject(CustomSnackbarService);
 
   ngOnInit(): void {
     this.initForm()
@@ -32,7 +33,7 @@ export class UserCreditCardComponent implements OnInit {
       id: [''],
       titular: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\u00C0-\u00FF\s'.-]*$/)]],
       number: ['', [Validators.required, Validators.pattern(/^\d{4} \d{4} \d{4} \d{4}$/)]],
-      dateOfExpiry: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
+      dateOfExpiry: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/),this.monthYearGreaterThanCurrent()]],
       cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
     });
 
@@ -67,6 +68,37 @@ export class UserCreditCardComponent implements OnInit {
     this.formCreditCard.get(fieldName)?.setValue(formattedValue, { emitEvent: false });
   }
 
+  private monthYearGreaterThanCurrent(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+  
+      const parts = value.split('/');
+      if (parts.length !== 2) {
+        return { 'invalidFormat': true };
+      }
+  
+      const inputMonth = parseInt(parts[0], 10);
+      const inputYear = parseInt(parts[1], 10); 
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; 
+      const currentYear = currentDate.getFullYear() % 100;   
+
+      if (inputYear < currentYear) {
+        return { 'yearNotGreaterThanCurrent': true };
+      } else if (inputYear === currentYear) {
+        if (inputMonth <= currentMonth) {
+          return { 'monthNotGreaterThanCurrent': true };
+        }
+      }
+  
+      return null;
+    };
+  }
+  
+
   save() {
     const objectToRequest = {
       id: this.formCreditCard.get('id')?.value,
@@ -74,17 +106,49 @@ export class UserCreditCardComponent implements OnInit {
       number: +this.formCreditCard.get('number')?.value.replace(/\s+/g, ''), // Remove spaces for number
       expirationDate: this.formCreditCard.get('dateOfExpiry')?.value.replace('/', '-'), // Format date
       cvv: this.formCreditCard.get('cvv')?.value,
-      balance: 2000, 
       user: this.user
     };
 
     this.userService.updateCreditCard(objectToRequest).subscribe({
-      next: (response) => console.log('Updated Successfully:', response),
-      error: (error) => console.error('Update Failed:', error)
+      next: (response) => {
+        this.snackbarService.openSucessSnackbar("Tarjeta de credito actualizada", "Cerrar")
+        this.creditCardData = response.data                
+      },
+      error: (error) => {
+        this.snackbarService.openErrorSnackbar("Error del servidor", "Cerrar")
+      }
     });
   }
 
   flipCard() {
     this.isFlipped = !this.isFlipped;
+  }
+
+  isAvailableToDelete() {
+    return this.creditCardData
+  }
+
+  public resetForm() {
+    this.formCreditCard.patchValue({
+      id: '',
+      titular: '',
+      number: '',
+      dateOfExpiry: '',
+      cvv: '',
+    });
+  }
+
+  delete() {
+    this.userService.deleteCreditCard(this.creditCardData!.id).subscribe({
+      next: () => {
+        this.resetForm();        
+        this.snackbarService.openSucessSnackbar("Tarjeta de credito eliminada", "Cerrar")
+        this.creditCardData = null;
+      },
+      error: () => {
+        this.snackbarService.openErrorSnackbar("Error del servidor", "Cerrar")
+      }
+    });
+
   }
 }

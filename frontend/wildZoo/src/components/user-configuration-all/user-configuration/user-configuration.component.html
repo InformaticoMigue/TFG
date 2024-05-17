@@ -2,9 +2,9 @@
   <article class="text-white">
     <app-header [title]="title"></app-header>
   </article>
-  <article class="px-40 flex w-full">
-    <div class="w-1/5 flex gap-3">
-      <div class="flex flex-col">
+  <article class="pl-40 flex w-full">
+    <div class="flex">
+      <div class="">
         <button (click)="loadComponent(componentesView.userDetails)" class="flex p-4 hover:bg-zinc-200 transition-all duration-500 gap-3 items-center">
           <fa-icon class="text-2xl" [icon]="userIcon"></fa-icon>
           <span>Detalles usuario</span>
@@ -17,12 +17,12 @@
           <fa-icon class="text-2xl" [icon]="passwordIcon"></fa-icon>
           <span>Cambiar contraseña</span>
         </button>
-        <button (click)="loadComponent(componentesView.payments)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+        <button (click)="loadComponent(componentesView.payments, {ticketSales: user.tickets, packageSales: user.packageSales})" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
           <fa-icon class="text-2xl" [icon]="paymentIcon"></fa-icon>
           <span>Pagos realizados</span>
         </button>
       </div>
-      <hr class="bg-primary h-96 w-[1px]">
+      <hr class="bg-black h-96 w-[1px]">
     </div>  
     <div class="flex-grow">
       <div #dynamicContainer class="w-full">

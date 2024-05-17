@@ -1,70 +1,16 @@
-<section class="flex flex-col gap-20 mb-20">
+<section class="flex flex-col max-portatil:gap-10 gap-20 mb-20">
   <article class="text-white">
     <app-header [title]="title"></app-header>
   </article>
-  <article class="pl-40 pr-20 flex gap-20">
-    <div class="w-2/3 flex flex-col gap-10">
+  <article class="pl-40 max-normal:flex-wrap max-portatil:pl-5 max-portatil:pr-5 pr-20 flex gap-20">
+    <div class="w-2/3 max-normal:w-full flex flex-col gap-10">
       <app-carousel [images]="images" [interval]="8000"></app-carousel>
-      <article class="flex flex-col gap-12">
-        <div class="flex justify-between">
-          <div class="flex items-center gap-5">
-            <fa-icon class="text-3xl text-primarySub" [icon]="car"></fa-icon>
-            <div class="flex flex-col text-text">
-              <p class="font-semibold">Tipo del tour</p>
-              <p class="text-gray-400">{{package.typeTour.name}}</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-5">
-            <fa-icon class="text-3xl text-primarySub" [icon]="users"></fa-icon>
-            <div class="flex flex-col text-text">
-              <p class="font-semibold">Tamaño del grupo</p>
-              <p class="text-gray-400">Entre {{package.packageType.min_size}} y {{package.packageType.max_size}}</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-5">
-            <fa-icon class="text-3xl text-primarySub" [icon]="car"></fa-icon>
-            <div class="flex flex-col text-text">
-              <p class="font-semibold">Precio por persona</p>
-              <p class="text-gray-400">{{package.packageType.price_per_person}}€</p>
-            </div>
-          </div>
-        </div>
-        <hr>
-        <div class="flex flex-col gap-7">
-          <div class="flex gap-5 items-center">
-            <fa-icon class="text-3xl text-primarySub" [icon]="information"></fa-icon>
-            <h1 class="text-2xl font-semibold text-text">Sobre el paquete</h1>
-          </div>
-          <p>{{package.description}}</p>
-        </div>
-        <hr>
-        <div class="flex flex-col gap-10">
-          <div class="flex gap-5 items-center">
-            <fa-icon class="text-3xl text-primarySub" [icon]="userCheck"></fa-icon>
-            <h1 class="text-2xl font-semibold text-text">Incluido y excluido</h1>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            @for (servicePackage of package.packageServices; track servicePackage.id) {
-            <div class="flex gap-5 items-center">
-              @if (servicePackage.include) {
-              <fa-icon class="text-primary text-xl" [icon]="check"></fa-icon>
-              <p>{{servicePackage.name}}</p>
-              }@else {
-              <fa-icon class="text-primary text-xl" [icon]="mark"></fa-icon>
-              <p>{{servicePackage.name}}</p>
-              }
-            </div>
-            }
-          </div>
-        </div>
-      </article>
     </div>
-    <div class="flex flex-col gap-10 w-1/3">
+    <div class="flex flex-col gap-10 w-1/3 max-normal:w-full">
       <div class="flex flex-col gap-2">
         <div class="bg-primary p-4">
           <h1 class="text-3xl text-center text-text">Comprar el paquete {{package.name}}</h1>
         </div>
-        <p class="text-sm antialiased font-normal leading-normal text-gray-500 text-center">*Recuerda que los invitados deben estar entre {{package.packageType.min_size}} y {{package.packageType.max_size}} familiares</p>
       </div>
       <form [formGroup]="formBuyPackage" class="flex flex-col mx-auto">
         <mat-form-field appearance="outline" class="w-[270px]">
@@ -72,14 +18,80 @@
           <input matInput formControlName="date" [value]="formBuyPackage.get('date')!.value" [matDatepicker]="picker">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="formBuyPackage.get('date')?.errors?.['required']">
+            La fecha de asistencia es obligatoria.
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-[270px]">
           <mat-label>Número de invitados</mat-label>
-          <input matInput type="number" formControlName="guests" [max]="package.packageType.max_size" [min]="package.packageType.min_size">
-
+          <input matInput type="number" formControlName="guests" [max]="package.packageType.max_size"
+            [min]="package.packageType.min_size">
+          <mat-error *ngIf="formBuyPackage.get('guests')?.errors?.['required']">
+            El número de invitados es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formBuyPackage.get('guests')?.errors?.['min']">
+            El número mínimo de invitados es {{ package.packageType.min_size }}.
+          </mat-error>
+          <mat-error *ngIf="formBuyPackage.get('guests')?.errors?.['max']">
+            El número máximo de invitados es {{ package.packageType.max_size }}.
+          </mat-error>
         </mat-form-field>
-        <button (click)="buyPackage()" [disabled]="formBuyPackage.invalid" class="disabled:text-gray-400 disabled:hover:bg-transparent w-40 h-12 hover:bg-primary transition-all duration-500 mx-auto">Comprar</button>
+        <button (click)="buyPackage()" [disabled]="formBuyPackage.invalid"
+          class="mt-5 disabled:border disabled:border-primary disabled:text-gray-400 disabled:hover:bg-transparent w-40 h-12 hover:bg-primary transition-all duration-500 mx-auto">Comprar</button>
       </form>
+    </div>
+  </article>
+  <article class="w-2/3 max-normal:w-full pl-40 max-portatil:pl-20 max-portatil:pr-10 pr-20 flex flex-col gap-12">
+    <div class="flex flex-wrap gap-7 max-portatil:justify-center justify-between">
+      <div class="flex items-center gap-5">
+        <fa-icon class="text-3xl text-primarySub" [icon]="car"></fa-icon>
+        <div class="flex flex-col text-text">
+          <p class="font-semibold">Tipo del tour</p>
+          <p class="text-gray-400">{{package.typeTour.name}}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-5">
+        <fa-icon class="text-3xl text-primarySub" [icon]="users"></fa-icon>
+        <div class="flex flex-col text-text">
+          <p class="font-semibold">Tamaño del grupo</p>
+          <p class="text-gray-400">Entre {{package.packageType.min_size}} y {{package.packageType.max_size}}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-5">
+        <fa-icon class="text-3xl text-primarySub" [icon]="car"></fa-icon>
+        <div class="flex flex-col text-text">
+          <p class="font-semibold">Precio por persona</p>
+          <p class="text-gray-400">{{package.packageType.price_per_person}}€</p>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="flex flex-col gap-7">
+      <div class="flex gap-5 items-center">
+        <fa-icon class="text-3xl text-primarySub" [icon]="information"></fa-icon>
+        <h1 class="text-2xl font-semibold text-text">Sobre el paquete</h1>
+      </div>
+      <p>{{package.description}}</p>
+    </div>
+    <hr>
+    <div class="flex flex-col gap-10">
+      <div class="flex gap-5 items-center">
+        <fa-icon class="text-3xl text-primarySub" [icon]="userCheck"></fa-icon>
+        <h1 class="text-2xl font-semibold text-text">Incluido y excluido</h1>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        @for (servicePackage of package.packageServices; track servicePackage.id) {
+        <div class="flex gap-5 items-center">
+          @if (servicePackage.include) {
+          <fa-icon class="text-primary text-xl" [icon]="check"></fa-icon>
+          <p>{{servicePackage.name}}</p>
+          }@else {
+          <fa-icon class="text-primary text-xl" [icon]="mark"></fa-icon>
+          <p>{{servicePackage.name}}</p>
+          }
+        </div>
+        }
+      </div>
     </div>
   </article>
 </section>

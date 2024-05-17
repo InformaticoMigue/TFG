@@ -1,0 +1,17 @@
+<div class="flex justify-center items-center space-x-4 my-4">
+  <button 
+    class="px-4 py-2 text-text bg-primary disabled:bg-primarySub disabled:text-white rounded" 
+    (click)="previousPage()" 
+    [disabled]="currentPage === 1">
+    Anterior
+  </button>
+  <span class="text-sm text-text">
+    Página {{ currentPage }} de {{ totalPages }}
+  </span>
+  <button 
+    class="px-4 py-2 text-text bg-primary disabled:bg-primarySub disabled:text-white rounded" 
+    (click)="nextPage()" 
+    [disabled]="currentPage === totalPages">
+    Siguiente
+  </button>
+</div>

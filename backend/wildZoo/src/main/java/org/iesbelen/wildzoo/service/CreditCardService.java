@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface CreditCardService {
     public List<CreditCard> getAll();
     public Optional<CreditCard> find(long id);
+
     public boolean delete(long id);
     public CreditCard update(CreditCard creditCard);
 }

@@ -1,6 +1,60 @@
-<div class="w-4/5">
-  <p>
-    user-details works!
-  </p>
-</div>
+<div class="flex flex-col gap-20 px-20" >
+  <form [formGroup]="formDetailsUser" (ngSubmit)="onSubmit()" class="grid gap-x-5 grid-cols-2 ">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
 
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Primer Apellido</mat-label>
+      <input matInput formControlName="firstSurname">
+    </mat-form-field>
+
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Segundo Apellido</mat-label>
+      <input matInput formControlName="lastSurname">
+    </mat-form-field>
+
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+
+    <button [ngClass]="!formDetailsUser.invalid ? 'transition-all duration-500 hover:bg-primary' : ''"
+      class="disabled:text-gray-400 col-span-2 mx-auto disabled:border-primary disabled:border w-44 h-14"
+      [disabled]="formDetailsUser.invalid">Actualizar Datos</button>
+  </form>
+
+  <div>
+    <div class="grid grid-cols-2 gap-4">
+      <mat-accordion multi="false" class="col-span-1">
+        <mat-expansion-panel [disabled]="user.adoptions.length == 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <fa-icon [icon]="adoptionItems.icon " class="mr-2"></fa-icon>
+              @if (user.adoptions.length == 0) {
+                No tienes ningun animal adoptado {{user.name}}
+              }@else {
+                {{ adoptionItems.title }}
+              }
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="flex justify-between flex-wrap">
+            @for (adoption of adoptionItems.adoptions; track adoption.id) {
+              <p>{{adoption.animal.name}}</p>
+              <p>{{adoption.date | date: 'longDate'}}</p>
+            <p>{{adoption.adoptionAnimal.price | currency:'EUR':'symbol':'1.2-2'}}</p>
+          
+            }
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+  </div>
+</div>
