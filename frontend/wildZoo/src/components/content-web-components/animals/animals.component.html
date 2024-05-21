@@ -21,7 +21,7 @@
     </div>
     <div class="grid grid-cols-3 gap-2 max-xs:flex max-xs:flex-col max-portatil:grid-cols-2">
       @for (animal of pagedAnimals; track animal.id) {
-        <app-animals-card @fadeInOut [animal]="animal"></app-animals-card>
+        <app-animals-card [showMore]="true" @fadeInOut [animal]="animal"></app-animals-card>
       }
     </div>
     <div class="flex justify-center items-center space-x-4 my-4">

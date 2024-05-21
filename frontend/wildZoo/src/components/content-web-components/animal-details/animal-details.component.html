@@ -1,8 +1,68 @@
-<section class="flex flex-col gap-20">
-    <article class="text-white">
-      <app-header [title]="title"></app-header>
-    </article>
-    <article>
-        
-    </article>
+<section class="flex flex-col gap-20 mb-20">
+  <article class="text-white">
+    <app-header [title]="title"></app-header>
+  </article>
+  <div class="px-40 font-semibold mx-auto">
+    @if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption == null) {
+    <p class="text-text font-bold text-3xl">¡¡Estas de suerte!! Animal disponible para adoptar</p>
+    }@else if(animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption != null){
+    <p class="text-text font-bold text-3xl">Animal adoptado por {{animal.isAvailableForAdoption.adoption.user.name}}</p>
+    }@else {
+    <p class="text-text font-bold text-3xl">¡¡Lo sentimos!! Animal NO disponible para adoptar</p>
+    }
+  </div>
+  <article class="flex gap-10 px-40">
+    <div class="w-3/5">
+      <div [ngClass]="similarAnimal ? 'h-full' : 'h-[40em]'"
+        class="bg-cover bg-center bg-no-repeat rounded-md relative group"
+        style="background-image: url('{{ getBackground() }}');">
+        <div class="bg-black bg-opacity-35 absolute inset-0 rounded-md"></div>
+        @if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption == null ) {
+        <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <fa-icon (click)="openModalAdoption(animal.isAvailableForAdoption)" class="text-primarySub cursor-pointer text-[25em]" [icon]="adoptionIcon"></fa-icon>
+        </div>
+        }
+        @else if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption != null) {
+          <div class="absolute inset-0 flex justify-center items-center">
+            <fa-icon class="text-primarySub cursor-pointer text-[25em]" [icon]="adoptionIcon"></fa-icon>
+          </div>  
+        }
+      </div>
+    </div>
+    <div class="flex w-2/5 flex-col gap-8">
+      <div class="flex flex-col gap-6">
+        <div class="flex items-center gap-4">
+          <fa-icon class="text-2xl text-primary" [icon]="weightIcon"></fa-icon>
+          <p>Peso: </p>
+          <p>{{animal.weight}}kg</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <fa-icon class="text-2xl text-primary" [icon]="birthDateIcon"></fa-icon>
+          <p>Cumpleaños: </p>
+          <p>{{animal.birthDate | date:'longDate'}}</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <fa-icon class="text-2xl text-primary" [icon]="worldIcon"></fa-icon>
+          <p>Continente: </p>
+          <p>{{animal.continent.name}}</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <fa-icon class="text-2xl text-primary" [icon]="classIcon"></fa-icon>
+          <p>Clase: </p>
+          <p>{{animal.aclass.name}}</p>
+        </div>
+      </div>
+      <p>
+        {{animal.description}}
+      </p>
+      @if (similarAnimal) {
+      <h1 class="text-xl">Otros animales: </h1>
+      <div class="flex gap-5 justify-center flex-wrap">
+        <div class="w-full">
+          <app-animals-card [showMore]="true" [animal]="similarAnimal"></app-animals-card>
+        </div>
+      </div>
+      }
+    </div>
+  </article>
 </section>

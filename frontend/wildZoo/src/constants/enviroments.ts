@@ -1,0 +1,1 @@
+export const MAIN_SERVER = `localhost:8080`

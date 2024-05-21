@@ -2,27 +2,27 @@
   <article class="text-white">
     <app-header [title]="title"></app-header>
   </article>
-  <article class="pl-40 flex w-full">
+  <article class="pl-40 max-portatil:pl-20 max-normal:pl-10 max-xs:pl-0 flex max-normal:gap-12 max-normal:flex-col w-full">
     <div class="flex">
-      <div class="">
-        <button (click)="loadComponent(componentesView.userDetails)" class="flex p-4 hover:bg-zinc-200 transition-all duration-500 gap-3 items-center">
+      <div class="max-normal:flex flex-wrap  max-normal:justify-center">
+        <button (click)="loadComponent(componentesView.userDetails)" class="flex p-4 hover:bg-zinc-200 transition-all duration-500 gap-3 w-full items-center max-normal:justify-center">
           <fa-icon class="text-2xl" [icon]="userIcon"></fa-icon>
           <span>Detalles usuario</span>
         </button>
-        <button (click)="loadComponent(componentesView.creditCard, this.user.creditCard)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+        <button (click)="loadComponent(componentesView.creditCard, this.user.creditCard)" class="flex p-4 gap-3 hover:bg-zinc-200  w-full transition-all duration-500 items-center max-normal:justify-center">
           <fa-icon class="text-2xl" [icon]="creditCardIcon"></fa-icon>
           <span>Tarjeta de crédito</span>
         </button>
-        <button (click)="loadComponent(componentesView.changePassword)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+        <button (click)="loadComponent(componentesView.changePassword)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all  w-full duration-500 items-center max-normal:justify-center">
           <fa-icon class="text-2xl" [icon]="passwordIcon"></fa-icon>
           <span>Cambiar contraseña</span>
         </button>
-        <button (click)="loadComponent(componentesView.payments, {ticketSales: user.tickets, packageSales: user.packageSales})" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all duration-500 items-center">
+        <button (click)="loadComponent(componentesView.payments, {ticketSales: user.tickets, packageSales: user.packageSales})" class="flex p-4 gap-3  w-full hover:bg-zinc-200 transition-all duration-500 items-center max-normal:justify-center">
           <fa-icon class="text-2xl" [icon]="paymentIcon"></fa-icon>
           <span>Pagos realizados</span>
         </button>
       </div>
-      <hr class="bg-black h-96 w-[1px]">
+      <hr class="bg-black h-96 max-normal:hidden w-[1px]">
     </div>  
     <div class="flex-grow">
       <div #dynamicContainer class="w-full">

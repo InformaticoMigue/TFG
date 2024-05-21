@@ -8,7 +8,7 @@ import { LoadingService } from '../../service/loading/loading.service';
   standalone: true,
   imports: [MatProgressSpinnerModule, CommonModule],
   template: `
-<div *ngIf="loadingService.loading$ | async" class="fixed inset-0 flex justify-center items-center bg-slate-400 bg-opacity-50 z-[3939392002328283828928398398232]">
+<div *ngIf="loadingService.loading$ | async" class="fixed inset-0 flex justify-center items-center z-[3939392002328283828928398398232]">
   <mat-spinner diameter="200"></mat-spinner>
 </div>
 `,

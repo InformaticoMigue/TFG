@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
@@ -8,6 +8,7 @@ import { EncryptService } from '../../../service/encrypt/encrypt.service';
 import { CustomSnackbarComponent } from '../../custom-snackbar/custom-snackbar.component';
 import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
 import { AuthService } from '../../../service/auth/auth.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -18,72 +19,69 @@ import { AuthService } from '../../../service/auth/auth.service';
 })
 export class UserChangePasswordComponent implements OnInit {
 
-  public formChangePassword:FormGroup = new FormGroup({});
-  public user:any;
+  public  formChangePassword:FormGroup = new FormGroup({});
+  public  user:any;
   private encryptedService: EncryptService = inject(EncryptService);
   private formbuilder:FormBuilder = inject(FormBuilder);
   private userService:UserService = inject(UserService);
   private customSnackbar:CustomSnackbarService = inject(CustomSnackbarService)
   private authService:AuthService = inject(AuthService)
+  private location: Location = inject(Location);
 
-  ngOnInit(): void {
-    console.log(this.user);
-    
+  ngOnInit(): void {    
     this.formChangePassword = this.formbuilder.group({
       currentPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
+      newPassword: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])],
       confirmPassword: ['', Validators.required]
     }, {
       validator: this.mustMatch('newPassword', 'confirmPassword')
     });
   }
 
+  updateUrlWithToken(newToken: string) {
+    const currentPath = this.location.path(); 
+    const basePath = currentPath.split('/').slice(0, -1).join('/'); 
+    const newPath = `${basePath}/${newToken}`;
+    this.location.replaceState(newPath);
+  }  
+
+
   onChangePassword() {
-    console.log(this.encryptedService.encryptData(this.formChangePassword.get('currentPassword')?.value));
-    console.log(this.user.password)
-    if (this.encryptedService.encryptData(this.formChangePassword.get('currentPassword')?.value) != this.user.password) {
-      this.customSnackbar.openErrorSnackbar('La contraseña actual, y la indicada no coinciden', 'Cerrar')
+    if (this.encryptedService.encryptData(this.formChangePassword.value.currentPassword) !== this.user.password) {
+      this.customSnackbar.openErrorSnackbar('La contraseña actual no coincide', 'Cerrar');
       return;
     }
-    const objectRequest = {
-      id: this.user.id,
-      username:       this.user.username,
-      email:          this.user.email,
-      password:       this.encryptedService.encryptData(this.formChangePassword.get('newPassword')?.value),
-      name:           this.user.name,
-      firstSurname:   this.user.firstSurname,
-      lastSurname:    this.user.lastSurname,
-    }
 
-    this.userService.updateUser(objectRequest).subscribe({
-      next: (res) => {
-        this.user = res
-        this.authService.login(this.user.username,this.user.password).subscribe()
-        this.formChangePassword.get("currentPassword")!.setValue('')
-        this.formChangePassword.get("newPassword")!.setValue('')
-        this.formChangePassword.get("confirmPassword")!.setValue('')
+    const encryptedPassword = this.encryptedService.encryptData(this.formChangePassword.value.newPassword);
+    const objectRequest = { ...this.user, password: encryptedPassword };    
+
+    this.userService.updateUser(objectRequest).pipe(
+      switchMap(res => {
+        Object.assign(this.user,res.data)
+        return this.authService.login(this.user.username, encryptedPassword);
+      })
+    ).subscribe({
+      next: res => {
+        this.updateUrlWithToken(res);
+        this.customSnackbar.openSucessSnackbar("Contraseña cambiada con éxito", 'Cerrar');
       },
-      error: (err) => {
-        this.customSnackbar.openErrorSnackbar("Error del servidor", 'Cerrar')
-        console.error(err);
+      error: err => {
+        this.customSnackbar.openErrorSnackbar("Error del servidor", 'Cerrar');
+        console.error("Error updating user", err);
       }
-    })
+    });
   }
 
   mustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
+      const control = formGroup.get(controlName);
+      const matchingControl = formGroup.get(matchingControlName);
 
-      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
+      if (matchingControl?.errors && !matchingControl.errors['mustMatch']) {
         return;
       }
-
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ mustMatch: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
+      matchingControl?.setErrors(control?.value === matchingControl.value ? null : { mustMatch: true });
     };
   }
+
 }

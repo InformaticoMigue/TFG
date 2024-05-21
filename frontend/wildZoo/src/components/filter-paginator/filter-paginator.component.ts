@@ -21,8 +21,6 @@ export class FilterPaginatorComponent implements OnInit,OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.items);
-    
     this.updatePagedPayments(); 
   }
 

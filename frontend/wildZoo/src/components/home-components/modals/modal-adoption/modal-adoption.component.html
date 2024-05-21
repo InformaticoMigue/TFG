@@ -1,0 +1,28 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+
+  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+    
+    <div class="flex justify-end">
+      <button (click)="closeModal()" class="text-gray-400 hover:text-gray-600 cursor-pointer">
+        <span class="text-2xl">&times;</span>
+      </button>
+    </div>
+    
+    <div class="text-center p-3">
+      <h2 class="text-xl font-bold">Adoptar a {{adoptionAnimal.animal.name}}</h2>
+    </div>
+    
+    <form [formGroup]="formAdoption">
+      <div class="px-4 py-2">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Precio</mat-label>
+          <input matInput disabled [value]="adoptionAnimal.price">
+        </mat-form-field>
+      </div>
+
+      <div class="flex justify-center p-4">
+        <button (click)="adoption()" mat-raised-button color="primary" class="hover:bg-primary transition-all duration-500 w-40 h-12">Adoptar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -31,6 +31,10 @@ export class UserService {
     return this.http.post<ApiResponse<User>>(ApiUrl.UPDATE_USER_POST,data)
   }
 
+  public registerUser(data:any){
+    return this.http.post<ApiResponse<User>>(ApiUrl.REGISTER_USER_POST,data)
+  }
+
   checkUsernameAvailability(username: string) {
     console.log(ApiUrl.GET_USER_BY_USERNAME(username));
     

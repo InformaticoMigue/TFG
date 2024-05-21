@@ -14,5 +14,8 @@ export class ClassService {
   public getAll() {
     return this.http.get<ApiResponseArray<Aclass>>(ApiUrl.GET_ALL_CLASSES);
   }
+  public find(id:number) {
+    return this.http.get<ApiResponseArray<Aclass>>(ApiUrl.GET_CLASS_BY_ID(id));
+  }
   
 }

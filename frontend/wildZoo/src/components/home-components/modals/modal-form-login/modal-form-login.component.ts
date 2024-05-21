@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardFlip } from '../../../../constants/animations';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, catchError, forkJoin, of, switchMap } from 'rxjs';
 import { UserService } from '../../../../service/zoo/user.service';
 import { User } from '../../../../assets/types';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -34,7 +34,7 @@ export class ModalFormLoginComponent implements OnInit {
   private encryptedService: EncryptService = inject(EncryptService);
   private authService: AuthService = inject(AuthService)
   public registerForm: FormGroup = new FormGroup({});
-  private snackbarService:CustomSnackbarService = inject(CustomSnackbarService)
+  private snackbarService: CustomSnackbarService = inject(CustomSnackbarService)
 
   constructor(public dialogRef: MatDialogRef<ModalFormLoginComponent>,
   ) { }
@@ -47,15 +47,15 @@ export class ModalFormLoginComponent implements OnInit {
   initFormLogin(): void {
     this.formLogin = this.formBuilder.group({
       'username': ['', [Validators.required]],
-      'password': ['', [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]]
+      'password': ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])]
     })
   }
 
   initiFormRegister() {
     this.registerForm = this.formBuilder.group({
-      'username': ['', [Validators.required, Validators.minLength(3)]],
-      'email': ['', [Validators.required, Validators.email]],
-      'password': ['', [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
+      'username': ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      'email': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])],
       'name': ['', [Validators.required]],
       'firstSurname': ['', [Validators.required]],
       'lastSurname': ['', [Validators.required]]
@@ -63,7 +63,8 @@ export class ModalFormLoginComponent implements OnInit {
   }
 
   cardClicked() {
-     this.flip = this.flip == 'inactive' ? 'active' : 'inactive';
+    this.flip = this.flip == 'inactive' ? 'active' : 'inactive';
+    
   }
 
   login() {
@@ -76,16 +77,16 @@ export class ModalFormLoginComponent implements OnInit {
           const encryptedPassword = this.encryptedService.encryptData(password);
           this.authService.login(username, encryptedPassword).subscribe({
             next: (value) => {
-              this.snackbarService.openSucessSnackbar("Usuario logueado correctamente", "Cerrar")
+              this.snackbarService.openSucessSnackbar("Usuario logueado con éxito", "Cerrar")
               this.dialogRef.close();
             },
             error: (error) => {
-              this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
+              this.snackbarService.openErrorSnackbar('Contraseña incorrecta', 'Cerrar')
               console.error("Login failed", error);
             }
           });
         } else {
-          this.snackbarService.openErrorSnackbar('Error, no existe nadie con es nombre de usuario', 'Cerrar')
+          this.snackbarService.openErrorSnackbar('Error, no existe nadie con ese nombre de usuario', 'Cerrar')
         }
       },
       error: (error) => {
@@ -97,44 +98,47 @@ export class ModalFormLoginComponent implements OnInit {
 
 
   register() {
-    const objectToRequest = {
-      id: null,
-      email: this.registerForm.get('email')?.value,
-      password: this.encryptedService.encryptData(this.registerForm.get('password')?.value),
-      name: this.registerForm.get('name')?.value,
-      firstSurname: this.registerForm.get('firstSurname')?.value,
-      lastSurname: this.registerForm.get('lastSurname')?.value,
-      username: this.registerForm.get('username')?.value,
-      creditCard: null,
-      tickets: null,
-      adoptions: null,
-      packageSales: null
-    }
+    const formData = this.registerForm.value;
+    const encryptedPassword = this.encryptedService.encryptData(formData.password);
 
-    this.userService.checkUsernameAvailability(this.registerForm.get('username')?.value).subscribe((res) => {
-      if (!res.data) {
-        this.userService.updateUser(objectToRequest).subscribe({
-          next: () => {
-            this.authService.login(this.registerForm.get('username')?.value, this.encryptedService.encryptData(this.registerForm.get('password')?.value)).subscribe({
-              next:() => {
-                this.snackbarService.openSucessSnackbar("Usuario logueado correctamente", "Cerrar")
-                this.dialogRef.close()
-              },
-              error:(error) => {
-                this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
-                console.log('Error to authenticate user',error)    
-              }
+    const userRequest = {
+      email: formData.email,
+      password: encryptedPassword,
+      name: formData.name,
+      firstSurname: formData.firstSurname,
+      lastSurname: formData.lastSurname,
+      username: formData.username
+    };
+
+    this.userService.checkUsernameAvailability(formData.username).pipe(
+      switchMap((res) => {
+        if (!res.data) {
+          return this.userService.registerUser(userRequest).pipe(
+            switchMap(() => {
+              return this.authService.login(formData.username, encryptedPassword);
+            }),
+            catchError((error) => {
+              this.snackbarService.openErrorSnackbar('Error al registrarse', 'Cerrar');
+              console.error('Error during registration or login', error);
+              return of(null);
             })
-          },
-          error: (error) => {
-            this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
-            console.log('Error to update user',error)
-          }  
-        })
-      } else {
-        this.snackbarService.openErrorSnackbar('Error, Ya existe alguien con ese usuario', 'Cerrar')
+          );
+        } else {
+          this.snackbarService.openErrorSnackbar('Ya existe alguien con ese usuario', 'Cerrar');
+          return of(null);
+        }
+      }),
+      catchError((error) => {
+        this.snackbarService.openErrorSnackbar('Error al verificar la disponibilidad del usuario', 'Cerrar');
+        console.error('Error checking username availability', error);
+        return of(null);
+      })
+    ).subscribe((result) => {
+      if (result) {
+        this.snackbarService.openSucessSnackbar("Usuario registrado con éxito", "Cerrar");
+        this.dialogRef.close();
       }
-    })
+    });
 
   }
 }

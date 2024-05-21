@@ -107,14 +107,22 @@ export type User = {
     tickets:        Ticket[];
     adoptions:      Adoption[];
     packageSales:   any[];
-    registrationEvents: RegistrationEvent[];
+    eventSales: EventSales[];
 }
 
-export type RegistrationEvent = {
+export type EventSales = {
     id: number;
     user:User;
-    date: Date;
+    registrationDate: Date;
     event:Event;
+}
+
+export type PackageSales = {
+    id:number;
+    date: Date;
+    guests:number;
+    user:User;
+    apackage:Package;
 }
 
 export type Adoption = {
@@ -122,6 +130,7 @@ export type Adoption = {
     date:           Date;
     adoptionAnimal: AdoptionAnimal;
     animal:         Animal;
+    user:           User;
 }
 
 export type AdoptionAnimal = {
@@ -133,9 +142,10 @@ export type AdoptionAnimal = {
 export type CreditCard = {
     titular:        string;
     id:             number;
-    number:         number;
+    number:         string;
     expirationDate: string;
-    cvv:            number;
+    cvv:            string;
+    User:           User;
 }
 
 export type Ticket = {
@@ -165,10 +175,8 @@ export type ApiResponseArray<T> = {
     data: T[];
 }
 
-// Definir tipos de respuesta para cada entidad
-type ResponseTypes = Specie | Animal | Aclass | Continent | Package | Event | User | Service;
+type ResponseTypes = Specie | Adoption | Animal | Aclass | Continent | Package | Event | User | Service;
 
-// Generar tipos de respuesta para cada entidad
 export type ApiResponseMap<T> = {
     [K in keyof T]: ApiResponse<T[K]>;
 }

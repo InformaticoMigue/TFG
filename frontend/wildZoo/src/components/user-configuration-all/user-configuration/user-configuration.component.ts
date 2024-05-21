@@ -28,7 +28,6 @@ export class UserConfigurationComponent implements OnInit {
   public creditCardIcon:IconDefinition = faCreditCard
   public passwordIcon:IconDefinition = faKey
   public paymentIcon:IconDefinition = faMoneyBill
-
   public componentesView = {
     userDetails: UserDetailsComponent,
     creditCard: UserCreditCardComponent,
@@ -41,7 +40,6 @@ export class UserConfigurationComponent implements OnInit {
     this.initAllSuscriptions();
   }
 
-
   loadComponent(component: any, data?: any){
     this.container.clear();
     const compRef = this.container.createComponent(component);
@@ -49,14 +47,18 @@ export class UserConfigurationComponent implements OnInit {
   }
 
   addDataToComponent(component: any, data?:any){ 
-    console.log(this.user);
-    
     component.instance.user = this.user;  
     
     if (component.instance instanceof UserCreditCardComponent && data) { 
       component.instance.creditCardData = data;
     }else if(component.instance instanceof UserPaymentsComponent && data) {
       component.instance.paymentsData = data;
+      component.instance.packageDelete.subscribe((deletedPackage:any) => {
+        this.user.packageSales = this.user.packageSales.filter(p => p.id != deletedPackage.id);
+      });
+      component.instance.ticketDelete.subscribe((deletedTicket: any) => {
+        this.user.tickets = this.user.tickets.filter(t => t.id != deletedTicket.id);
+      });
     }
   }
 

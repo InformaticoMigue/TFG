@@ -31,19 +31,19 @@ export class UserCreditCardComponent implements OnInit {
   private initForm(): void {
     this.formCreditCard = this.formBuilder.group({
       id: [''],
-      titular: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\u00C0-\u00FF\s'.-]*$/)]],
-      number: ['', [Validators.required, Validators.pattern(/^\d{4} \d{4} \d{4} \d{4}$/)]],
-      dateOfExpiry: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/),this.monthYearGreaterThanCurrent()]],
-      cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
+      titular: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z\u00C0-\u00FF\s'.-]*$/)])],
+      number: ['', Validators.compose([Validators.required, Validators.pattern(/^\d{4} \d{4} \d{4} \d{4}$/)])],
+      dateOfExpiry: ['', Validators.compose([Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/),this.monthYearGreaterThanCurrent()])],
+      cvv: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
     });
 
     if (this.creditCardData) {
       this.formCreditCard.patchValue({
         id: this.creditCardData.id,
         titular: this.creditCardData.titular,
-        number: this.formatCardNumber(this.creditCardData.number.toString()),
+        number: this.formatCardNumber(this.creditCardData.number),
         dateOfExpiry: this.creditCardData.expirationDate.replace(/-/g, '/'),
-        cvv: this.creditCardData.cvv.toString()
+        cvv: this.creditCardData.cvv
       });
     }
   }
@@ -66,7 +66,7 @@ export class UserCreditCardComponent implements OnInit {
     }
     input.value = formattedValue;
     this.formCreditCard.get(fieldName)?.setValue(formattedValue, { emitEvent: false });
-  }
+  }  
 
   private monthYearGreaterThanCurrent(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -93,7 +93,6 @@ export class UserCreditCardComponent implements OnInit {
           return { 'monthNotGreaterThanCurrent': true };
         }
       }
-  
       return null;
     };
   }
@@ -103,10 +102,12 @@ export class UserCreditCardComponent implements OnInit {
     const objectToRequest = {
       id: this.formCreditCard.get('id')?.value,
       titular: this.formCreditCard.get('titular')?.value,
-      number: +this.formCreditCard.get('number')?.value.replace(/\s+/g, ''), // Remove spaces for number
+      number: this.formCreditCard.get('number')?.value.replace(/\s+/g, ''),
       expirationDate: this.formCreditCard.get('dateOfExpiry')?.value.replace('/', '-'), // Format date
       cvv: this.formCreditCard.get('cvv')?.value,
-      user: this.user
+      user: {
+        id: this.user.id
+      }
     };
 
     this.userService.updateCreditCard(objectToRequest).subscribe({

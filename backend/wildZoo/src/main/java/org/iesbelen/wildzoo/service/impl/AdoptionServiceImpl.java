@@ -17,4 +17,9 @@ public class AdoptionServiceImpl implements AdoptionService {
     public List<Adoption> getAll() {
         return (List<Adoption>) this.adoptionRepository.findAll();
     }
+
+    @Override
+    public Adoption save(Adoption adoption) {
+        return adoptionRepository.save(adoption);
+    }
 }

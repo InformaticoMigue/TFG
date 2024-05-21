@@ -22,12 +22,11 @@ public class CreditCard {
     private long id;
 
     private String titular;
-    private long number;
+    private String number;
     @Column(name = "expiration_date", length = 5)
     private String expirationDate;
-    private long cvv;
+    private String cvv;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 }

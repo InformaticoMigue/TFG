@@ -5,9 +5,11 @@
     <p class="text-white text-xl">
       {{ animal.name }}
     </p>
+    @if (showMore) {
+      <a [routerLink]="'/animales/'+animal.id" class="text-primary w-1/4">
+        Saber más
+      </a>
   
-    <a [routerLink]="'/animales/'+animal.id" class="text-primary w-1/4">
-      Saber más
-    </a>
+    }
   </div>
 </div>

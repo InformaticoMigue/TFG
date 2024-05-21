@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AdoptionService {
     public List<Adoption> getAll();
+    public Adoption save(Adoption adoption);
+
 }

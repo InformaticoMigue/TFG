@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 export class AnimalsCardComponent implements OnInit {
 
   @Input() animal!:Animal;
-  
+  @Input() showMore!:boolean
 
   ngOnInit() {
   }

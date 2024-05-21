@@ -41,8 +41,15 @@ public class UserController {
     }
 
     @PostMapping("update")
-    public User update(@RequestBody User user) {
-        return this.userService.update(user);
+    public ResponseEntity<ResponseWrapperUserOne> update(@RequestBody User user) {
+        return new ResponseEntity<>(
+                new ResponseWrapperUserOne(this.userService.update(user)),
+                HttpStatus.OK);
     }
 
+    @PostMapping("register")
+    public ResponseEntity<ResponseWrapperUserOne> register(@RequestBody User newUser) {
+        User createdUser = userService.createUser(newUser);
+        return ResponseEntity.ok(new ResponseWrapperUserOne(createdUser));
+    }
 }

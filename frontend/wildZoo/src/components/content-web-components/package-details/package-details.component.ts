@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { catchError, forkJoin, map, of, switchMap, take } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { catchError, forkJoin, map, of, switchMap, take, throwError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Package, User } from '../../../assets/types';
 import { PackageService } from '../../../service/zoo/package.service';
 import { CarouselComponent } from '../../carousel/carousel.component';
@@ -43,6 +43,7 @@ export class PackageDetailsComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private userService: UserService = inject(UserService);
   private user!: User;
+  private router:Router = inject(Router);
   private snackbarService:CustomSnackbarService = inject(CustomSnackbarService)
 
   ngOnInit() {
@@ -59,7 +60,8 @@ export class PackageDetailsComponent implements OnInit {
       }),
       catchError(error => {
         console.error('Error getting package', error);
-        return of({ package: null });
+        this.router.navigate(['/']);
+        return throwError(() => new Error('Redirected due to package not found')); 
       })
     ).subscribe((result: any) => {
       this.package = result.package.data;
@@ -83,15 +85,18 @@ export class PackageDetailsComponent implements OnInit {
     }
     
       this.packageService.buyPackage({
-        id:null,
-        date: new Date(this.formBuyPackage.get('date')!.value),
-        user: this.user,
+        date: this.formBuyPackage.get('date')!.value,
+        user: {
+          id: this.user.id
+        },
+        apackage: {
+          id: this.package.id
+        },
         guests: +this.formBuyPackage.get('guests')!.value,
-        apackage: this.package
       }).subscribe({
         next: (data) => {
           if (data) {
-            this.snackbarService.openSucessSnackbar("Paquete comprado correctamente", "Cerrar")
+            this.snackbarService.openSucessSnackbar("Paquete comprado con éxito", "Cerrar")
           }else{
             this.snackbarService.openErrorSnackbar("Error desconocido", "Cerrar")
           }
