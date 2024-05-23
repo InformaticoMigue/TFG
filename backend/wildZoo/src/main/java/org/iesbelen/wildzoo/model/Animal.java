@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Animal {
 
     @Column(name = "birthdate")
     private LocalDate birthDate;
-    private int weight;
+    private BigDecimal weight;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "specie_id", nullable = false, foreignKey = @ForeignKey(name = "FK_SPECIE_ANIMAL"))

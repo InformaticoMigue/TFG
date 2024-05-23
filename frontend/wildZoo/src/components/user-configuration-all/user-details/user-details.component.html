@@ -78,12 +78,12 @@
           }
         </div>
         <mat-action-row>
-          <button class="px-[16px] hover:text-primary transition-all duration-500"
+          <button [disabled]="user.eventSales.length == 0"  class="disabled:text-gray-400 px-[16px] hover:text-primary transition-all duration-500"
             (click)="nextStep()">Siguiente</button>
         </mat-action-row>
       </mat-expansion-panel>
       <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle
-        [disabled]="user.adoptions.length == 0">
+        [disabled]="user.eventSales.length == 0">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <fa-icon [icon]="eventSalesItems.icon " class="mr-2"></fa-icon>

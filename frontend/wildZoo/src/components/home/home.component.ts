@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { ShotsComponent } from "../home-components/shots-home/shots.component";
 import { Aclass, Animal, GalleryAnimal, GalleryAnimalsOptions, Specie } from '../../assets/types';
 import { NavbarComponent } from "../navbar/navbar.component";
@@ -10,6 +10,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { AnimalService } from '../../service/zoo/animal.service';
 import { ServicesZooComponent } from '../home-components/services-zoo-home/services-zoo.component';
 import { EventsHomeComponent } from "../home-components/events-home/events-home.component";
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
     private AclassService:ClassService = inject(ClassService)
     private specieService:SpecieService = inject(SpecieService)
     private animalService:AnimalService = inject(AnimalService)
+    private route:ActivatedRoute = inject(ActivatedRoute)
     public allSpecies!:Specie[]
     public allClasses!:Aclass[]
     public allAnimals!:Animal[]

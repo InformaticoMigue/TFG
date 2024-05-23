@@ -6,6 +6,7 @@ import { MatInput } from '@angular/material/input';
 import { AdoptionService } from '../../../../service/zoo/adoption.service';
 import { CustomSnackbarService } from '../../../../service/snackbar/custom-snackbar.service';
 import { catchError, of } from 'rxjs';
+import { User } from '../../../../assets/types';
 
 @Component({
   selector: 'app-modal-adoption',
@@ -20,13 +21,13 @@ export class ModalAdoptionComponent implements OnInit {
   private snackbarService:CustomSnackbarService = inject(CustomSnackbarService);
   public adoptionAnimal:any;
   public formAdoption:FormGroup = new FormGroup({});
-  private user!:any;
+  private user!:User;
 
   constructor(public dialogRef: MatDialogRef<ModalAdoptionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { 
     this.adoptionAnimal = data.adoptionAnimal;
-    this.user = data.user;    
+    this.user = data.user;        
   }
 
   ngOnInit() {
@@ -70,7 +71,7 @@ export class ModalAdoptionComponent implements OnInit {
     ).subscribe({
       next: data => {
         if (data) {
-          this.snackbarService.openSucessSnackbar(this.adoptionAnimal.animal.name + "Adoptado con éxtio", "Cerrar")
+          this.snackbarService.openSucessSnackbar(this.adoptionAnimal.animal.name + " Adoptado con éxtio", "Cerrar")
           const newResponse = {
             date: data.data.date,
             id: data.data.id,

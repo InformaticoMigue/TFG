@@ -9,6 +9,7 @@ export class ApiUrl {
     public static BUY_PACKAGE_POST = `http://${MAIN_SERVER}/packages/createpackagesale`
     public static GET_ALL_CONTINENTS = `http://${MAIN_SERVER}/continents`
     public static GET_ALL_EVENTS = `http://${MAIN_SERVER}/events`
+    public static GET_ALL_TYPE_TICKETS = `http://${MAIN_SERVER}/tickets/types`;
     public static GET_ALL_ADOPTIONS = `http://${MAIN_SERVER}/adoptions`
     public static UPDATE_USER_POST = `http://${MAIN_SERVER}/users/update`;
     public static UPDATE_CREDIT_CARD_POST = `http://${MAIN_SERVER}/creditcard/update`
@@ -50,4 +51,5 @@ export class ApiUrl {
     public static GET_SPECIE_BY_ID(id:number) {
         return `http://${MAIN_SERVER}/species/${id}`;
     } 
+    public static BUY_TICKET_POST = `http://${MAIN_SERVER}/tickets/save`
 }

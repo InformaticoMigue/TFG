@@ -13,11 +13,10 @@ import { faTicketAlt } from "@fortawesome/free-solid-svg-icons";
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [CommonModule, RouterOutlet, FontAwesomeModule, NavbarComponent, SpinnerComponent]
+    imports: [CommonModule ,RouterOutlet, FontAwesomeModule, NavbarComponent, SpinnerComponent]
 })
 export class AppComponent implements OnInit {
   title = 'wildZoo';
-  public faTicketAlt = faTicketAlt;
 
   ngOnInit(): void {
     AOS.init();

@@ -29,6 +29,9 @@ export class FilterPaginatorComponent implements OnInit,OnChanges {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.pagedItems = this.items.slice(startIndex, endIndex);
+    if (this.pagedItems.length == 0) {
+      this.previousPage();
+    }
     this.getPagedItems.emit(this.pagedItems);
   }  
 

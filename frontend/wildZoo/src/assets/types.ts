@@ -158,6 +158,7 @@ export type TypeTicket = {
     id:    number;
     name:  string;
     price: number;
+    description: string;
 }
 
 

@@ -40,7 +40,6 @@ export class EventsHomeComponent implements OnInit {
     const indexFirstPoint = event.description.indexOf('.')
     const newString = event.description.substring(0,indexFirstPoint)
     event.descriptionAccorted = newString
-    this.setTimeSistem(event)
     this.formatDate(event)
 
   }
@@ -72,10 +71,11 @@ export class EventsHomeComponent implements OnInit {
   }
 
 
-  private setTimeSistem(event:any){
-    event.timeSistem = event.finishHour >= 12 ? "PM" : "AM";
+  formatTime(hour: number): string {
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12} ${ampm}`;
   }
-
 
   private getAllEvents(){
     return this.eventService.getAll();

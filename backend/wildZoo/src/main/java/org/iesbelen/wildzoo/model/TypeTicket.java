@@ -1,5 +1,6 @@
 package org.iesbelen.wildzoo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,10 @@ public class TypeTicket {
 
     private String name;
     private BigDecimal price;
+    private String description;
 
     @OneToMany(mappedBy = "typeTicket")
-    private List<Ticket> ticket;
+    @JsonIgnore
+    private List<Ticket> tickets;
 
 }

@@ -21,6 +21,9 @@
           <mat-error *ngIf="formBuyPackage.get('date')?.errors?.['required']">
             La fecha de asistencia es obligatoria.
           </mat-error>
+          <mat-error *ngIf="formBuyPackage.get('date')?.hasError('invalidDate')">
+            La fecha debe ser mayor o igual que la fecha actual.
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-[270px]">
           <mat-label>Número de invitados</mat-label>

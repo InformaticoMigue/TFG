@@ -48,6 +48,7 @@ export class UserPaymentsComponent implements OnInit {
       next: (res) => {
         this.snackbarService.openSucessSnackbar("Ticket eliminado con exito", "Cerrar")
         this.allPayments = this.allPayments.filter((payment: any) => payment.id != ticket.id)
+        console.log(this.allPayments);
         this.ticketDelete.emit(ticket)
       },
       error: () => {

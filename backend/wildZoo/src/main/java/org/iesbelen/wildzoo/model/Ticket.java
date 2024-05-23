@@ -26,7 +26,7 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "type_ticket_id", nullable = false,foreignKey = @ForeignKey(name = "FK_TYPETICKET_TICKET"))
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "ticket"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "tickets"})
     private TypeTicket typeTicket;
 
 }

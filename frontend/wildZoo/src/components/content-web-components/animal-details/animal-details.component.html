@@ -24,7 +24,7 @@
         }
         @else if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption != null) {
           <div class="absolute inset-0 flex justify-center items-center">
-            <fa-icon class="text-primarySub cursor-pointer text-[25em]" [icon]="adoptionIcon"></fa-icon>
+            <fa-icon class="text-primarySub  text-[25em]" [icon]="adoptionIcon"></fa-icon>
           </div>  
         }
       </div>
@@ -34,7 +34,7 @@
         <div class="flex items-center gap-4">
           <fa-icon class="text-2xl text-primary" [icon]="weightIcon"></fa-icon>
           <p>Peso: </p>
-          <p>{{animal.weight}}kg</p>
+          <p>{{getFormattedWeight(animal.weight)}}</p>
         </div>
         <div class="flex items-center gap-4">
           <fa-icon class="text-2xl text-primary" [icon]="birthDateIcon"></fa-icon>

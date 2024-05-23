@@ -22,7 +22,7 @@
       provideNativeDateAdapter(),
       provideHttpClient(withInterceptors([AuthInterceptor,LoadingInterceptor])),
       provideOAuthClient(),
-      
     ]
+    
     
   };

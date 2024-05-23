@@ -8,7 +8,7 @@ import { CarouselComponent } from '../../carousel/carousel.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCar, faCheck, faInfoCircle, faUserCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -128,11 +128,23 @@ export class PackageDetailsComponent implements OnInit {
 
   private initForm() {
     this.formBuyPackage = this.formBuilder.group({
-      'date': [new Date(), [Validators.required]],
-      'guests': ['', [Validators.required, Validators.min(this.package.packageType.min_size), Validators.max(this.package.packageType.max_size)]],
+      'date': [new Date(), Validators.compose([Validators.required,this.dateValidator()])],
+      'guests': ['', Validators.compose([Validators.required, Validators.min(this.package.packageType.min_size), Validators.max(this.package.packageType.max_size)])],
     })
   }
 
+  dateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const inputDate = new Date(control.value);
+      const currentDate = new Date();
+  
+      // Comparar solo las fechas sin las horas
+      currentDate.setHours(0, 0, 0, 0);
+      inputDate.setHours(0, 0, 0, 0);
+  
+      return inputDate >= currentDate ? null : { invalidDate: true };
+    };
+  }
   getActuallyUser() {
     this.authService.currentUser$.subscribe(tokenDecoded => {
       if (tokenDecoded && tokenDecoded.id) {

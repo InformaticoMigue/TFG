@@ -1,0 +1,124 @@
+<section class="flex flex-col gap-10 mb-20">
+  <article class="text-white">
+    <app-header [title]="'Venta de entradas'"></app-header>
+  </article>
+
+  <article class="px-40 flex gap-5">
+    <mat-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="ticketForm.get('date')!"
+        errorMessage="La fecha de asistencia es obligatoria o menor a la actual.">
+        <form [formGroup]="ticketForm">
+          <ng-template matStepLabel>
+            Indique una fecha
+          </ng-template>
+          <mat-form-field class="mt-5 w-64" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput formControlName="date" [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="ticketForm.get('date')?.hasError('required')">La fecha de asistencia es
+              obligatoria.</mat-error>
+            <mat-error *ngIf="ticketForm.get('date')?.hasError('invalidDate')">La fecha debe ser mayor o igual que la
+              fecha actual.</mat-error>
+          </mat-form-field>
+          <div>
+            <button matStepperNext
+              class="hover:bg-primary transition-all duration-500 disabled:hover:bg-transparent disabled:text-gray-400 disabled:border disabled:border-primary p-4"
+              [disabled]="!ticketForm.get('date')?.valid">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="ticketForm.get('tickets')!" errorMessage="Debes seleccionar al menos una entrada.">
+        <div class="flex mt-5 flex-col gap-5">
+          <p>
+            Selecciona el número de entradas y comienza tu compra. <b>Los niños menores de 3 años y el acompañante de la
+              persona con discapacidad pueden acceder gratis</b>. No necesitan comprar una entrada.
+          </p>
+          <form [formGroup]="ticketForm">
+            <ng-template matStepLabel>Selecciona el tipo de entrada</ng-template>
+            <div class="space-y-4">
+              <div *ngFor="let ticket of ticketsArray.controls"
+                class="bg-white rounded-lg shadow p-4 flex justify-between items-center">
+                <div class="flex items-center">
+                  <mat-icon class="text-green-500">confirmation_number</mat-icon>
+                  <div class="flex gap-5">
+                    <h2 class="text-lg font-bold ml-2">{{ticket.value.name}}</h2>
+                    <p>{{ticket.value.price | currency:'EUR'}}</p>
+                  </div>
+                </div>
+                <p>{{ticket.value.description}}</p>
+                <div class="flex items-center">
+                  <button mat-icon-button color="primary"
+                    (click)="ticket.get('quantity')?.setValue(ticket.value.quantity - 1)"
+                    [disabled]="ticket.value.quantity <= 0">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <span class="mx-2">{{ticket.value.quantity}}</span>
+                  <button mat-icon-button color="primary"
+                    (click)="ticket.get('quantity')?.setValue(ticket.value.quantity + 1)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10 flex gap-8">
+              <button matStepperPrevious class="hover:bg-primary transition-all duration-500 p-4">Anterior</button>
+              <button matStepperNext
+                class="hover:bg-primary transition-all duration-500 disabled:hover:bg-transparent disabled:text-gray-400 disabled:border disabled:border-primary p-4"
+                [disabled]="!ticketForm.get('tickets')?.valid">Siguiente</button>
+            </div>
+          </form>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Resumen del pedido</ng-template>
+        <div class="mt-5 flex flex-col ">
+          <div class="flex flex-col">
+            <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                  <table class="min-w-full bg-white">
+                    <thead class="bg-primary border-b">
+                      <tr>
+                        <th scope="col" class="text-base font-medium text-gray-900 px-6 py-4 text-center">
+                          Nombre
+                        </th>
+                        <th scope="col" class="text-base font-medium text-gray-900 px-6 py-4 text-center">
+                          Cantidad
+                        </th>
+                        <th scope="col" class="text-base font-medium text-gray-900 px-6 py-4 text-center">
+                          Precio
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (ticket of ticketsArray.controls; track ticket.value.id) {
+                        <ng-container *ngIf="ticket.value.quantity > 0">
+                          <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-primarySub">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{{ ticket.value.name }}</td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">{{ ticket.value.quantity }}</td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">{{ (ticket.value.price * ticket.value.quantity) | currency:'EUR' }}</td>
+                          </tr>
+                        </ng-container>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>          
+          <div class="mt-10 flex justify-between">
+            <button class="hover:bg-primary transition-all duration-500 p-4"
+              matStepperPrevious>Anterior</button>
+            <button class="hover:bg-primary transition-all duration-500 p-4" (click)="buyTickets()">Comprar</button>
+          </div>
+        </div>
+      </mat-step>
+      <ng-template matStepperIcon="phone">
+        <mat-icon>call_end</mat-icon>
+      </ng-template>
+    </mat-stepper>
+  </article>
+</section>

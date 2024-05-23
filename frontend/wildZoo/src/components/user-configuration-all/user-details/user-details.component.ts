@@ -118,7 +118,6 @@ export class UserDetailsComponent implements OnInit {
       title: "Registro de eventos",
       eventsales: this.user.eventSales
     }
-    console.log(this.user);
   }
 
   formatTime(hour: number): string {

@@ -29,4 +29,9 @@ public class TicketServiceImpl implements TicketService {
         return false;
     }
 
+    @Override
+    public Ticket save(Ticket ticket) {
+        return this.ticketRepository.save(ticket);
+    }
+
 }

@@ -35,7 +35,7 @@
                 
                 <div class="flex gap-12">
                     <div class="flex items-center justify-center w-40">
-                        <button class="border border-primary text-xl rounded-md w-full h-16 transition-all duration-500 hover:bg-primary hover:text-text" matTooltip="Comprar entradas">Entradas</button>
+                        <button [routerLink]="'/entradas'" class="border border-primary text-xl rounded-md w-full h-16 transition-all duration-500 hover:bg-primary hover:text-text" matTooltip="Comprar entradas">Entradas</button>
                     </div>
                     @if (logged) {
                         <div class="flex items-center hover:text-primary transition-all duration-700">

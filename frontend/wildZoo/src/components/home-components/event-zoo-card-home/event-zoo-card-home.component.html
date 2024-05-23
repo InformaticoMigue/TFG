@@ -8,9 +8,9 @@
         </div>
         <div class="flex flex-col">
             <div class="flex gap-2 text-lg">
-                <span>{{event.initialHour}}</span>
+                <span>{{formatTime(event.initialHour)}}</span>
                 <span>-</span>
-                <span>{{event.finishHour}} {{event.timeSistem}}</span>
+                <span>{{formatTime(event.finishHour)}}</span>
             </div>
             <div class="flex justify-center gap-2 text-gray-400">
                 <span>{{event.dateInfo.dayMonth}}</span>

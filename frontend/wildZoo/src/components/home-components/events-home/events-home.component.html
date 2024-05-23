@@ -1,7 +1,7 @@
 <section class="flex max-portatil:flex-col">
   <article class="bg-gray-100 w-3/5 max-portatil:w-full">
     <div class="py-32 px-20 flex flex-col gap-16">
-      <div #eventsSection>
+      <div id="eventsSection">
         <app-title-section [wrap]="true" [preTitle]="'EVENTS'"
           [title]="'NUESTROS PROXIMOS EVENTOS'"></app-title-section>
       </div>
@@ -11,9 +11,9 @@
           (handleClickButton)="showNewEvent($event)" [event]="event"></app-event-zoo-card-home>
         }
         <a class="flex text-center max-xs:w-full max-xs:text-center justify-center items-center rounded-md max-normal:w-1/3 max-normal:mx-auto h-16 transition-all duration-500 border border-primary text-lg w-1/3 hover:bg-primary text-text"
-      [routerLink]="'/eventos'">
-      Ver todos los eventos
-    </a>
+          [routerLink]="'/eventos'">
+          Ver todos los eventos
+        </a>
       </div>
 
     </div>
@@ -26,9 +26,9 @@
       <p class="text-lg">{{eventDetails.descriptionAccorted}}.</p>
       <div class="flex flex-col">
         <div class="flex gap-2 text-lg text-primary font-semibold">
-          <span>{{eventDetails.initialHour}}</span>
+          <span>{{formatTime(eventDetails.initialHour)}}</span>
           <span>-</span>
-          <span>{{eventDetails.finishHour}} {{eventDetails.timeSistem}}</span>
+          <span>{{formatTime(eventDetails.finishHour)}}</span>
         </div>
         <div class="flex gap-2">
           <span>{{eventDetails.dateInfo.dayMonth}}</span>

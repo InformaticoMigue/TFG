@@ -53,7 +53,7 @@ export class UserChangePasswordComponent implements OnInit {
     }
 
     const encryptedPassword = this.encryptedService.encryptData(this.formChangePassword.value.newPassword);
-    const objectRequest = { ...this.user, password: encryptedPassword };    
+    const objectRequest = {id: this.user.id, password: encryptedPassword };    
 
     this.userService.updateUser(objectRequest).pipe(
       switchMap(res => {

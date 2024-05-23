@@ -91,6 +91,8 @@ export class AnimalDetailsComponent implements OnInit {
       map((result: any) => {
         if (result.animal) {
           this.animal = result.animal.data;
+          console.log(this.animal);
+          
           this.title = this.animal.name;
           this.animal.isAvailableForAdoption = result.isAvailable;
           this.similarAnimal = result.specieById.data.animals.filter((animal: Animal) => animal.id !== this.animal.id)[0];
@@ -105,7 +107,7 @@ export class AnimalDetailsComponent implements OnInit {
     );
   }
 
-  openModalAdoption(adoptionAnimal:AdoptionAnimal) {        
+  openModalAdoption(adoptionAnimal:AdoptionAnimal) {  
     this.matDialog.open(ModalAdoptionComponent, {
       data: {
         adoptionAnimal,
@@ -150,6 +152,14 @@ export class AnimalDetailsComponent implements OnInit {
         return of(null);
       })
     );
+  }
+
+  getFormattedWeight(weight: number): string {
+    if (weight >= 1000) {
+      return `${(weight / 1000).toFixed(2)} kg`;
+    } else {
+      return `${weight} g`;
+    }
   }
 
   getBackground() {

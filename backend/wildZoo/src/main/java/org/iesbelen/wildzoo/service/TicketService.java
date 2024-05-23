@@ -6,5 +6,6 @@ import java.util.Optional;
 
 public interface TicketService {
     public boolean delete(long id);
+    public Ticket save(Ticket ticket);
     public Optional<Ticket> find(long id);
 }
