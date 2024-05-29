@@ -52,8 +52,9 @@ export class PackageDetailsComponent implements OnInit {
   }
 
   public initAllSuscriptions() {
-    this.getIdParamUrl().pipe(
-      switchMap(id => {
+    return this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = +params.get('id')!
         return forkJoin({
           package: this.getPackageById(id),
         });
@@ -113,13 +114,6 @@ export class PackageDetailsComponent implements OnInit {
     return this.packageService.find(packageId)
   }
 
-  private getIdParamUrl() {
-    return this.route.paramMap.pipe(
-      take(1),
-      map((params: any) => +params.get('id')!)
-    );
-  }
-
   private setImages(numberImages: number) {
     for (let i = 1; i <= numberImages; i++) {
       this.images.push('../../../assets/img/zoo-images/package-details/' + this.package.name + '_' + i + '.jpg');
@@ -136,15 +130,14 @@ export class PackageDetailsComponent implements OnInit {
   dateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const inputDate = new Date(control.value);
-      const currentDate = new Date();
-  
-      // Comparar solo las fechas sin las horas
+      const currentDate = new Date();  
       currentDate.setHours(0, 0, 0, 0);
       inputDate.setHours(0, 0, 0, 0);
   
       return inputDate >= currentDate ? null : { invalidDate: true };
     };
   }
+
   getActuallyUser() {
     this.authService.currentUser$.subscribe(tokenDecoded => {
       if (tokenDecoded && tokenDecoded.id) {

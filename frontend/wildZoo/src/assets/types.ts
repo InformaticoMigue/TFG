@@ -30,7 +30,7 @@ export type Animal = {
     name:        string;
     age:         number;
     description: string;
-    birthDate:   Date;
+    feeding:   string;
     weight:      number;
     continent:   Continent;
     events:      Event[];
@@ -165,6 +165,13 @@ export type TypeTicket = {
 export type Service = {
     id:    number;
     name:  string;
+    description: string;
+}
+
+export type ContactForm = {
+    name: string;
+    phone: string;
+    email: string;
     description: string;
 }
 

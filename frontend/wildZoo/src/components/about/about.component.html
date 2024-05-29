@@ -1,0 +1,68 @@
+<section class=" flex flex-col gap-20">
+    <article class="text-white">
+      <app-header [title]="'Sobre nosotros'"></app-header>
+    </article>
+    <div class="px-40 max-normal:px-20 max-xs:px-10">
+        <div class="max-portatil:flex max-portatil:flex-col grid grid-cols-2 gap-24 items-center">
+          <div class="flex flex-col gap-10">
+            <h1 class="text-4xl font-semibold">Nos dedicamos a brindarte la mejor experiencia</h1>
+            <p class="text-justify">En WildZoo, estamos comprometidos a ofrecerte una experiencia inolvidable. Nuestra misión es conectar a nuestros visitantes con la majestuosidad de la vida salvaje a través de exhibiciones educativas y emocionantes encuentros con animales. Desde los majestuosos leones hasta los coloridos loros, cada visita está diseñada para inspirar y educar. Ven y descubre la diversidad y belleza del mundo natural en un entorno seguro y acogedor. ¡Te esperamos para una aventura salvaje como ninguna otra!</p>
+            <button [routerLink]="'/entradas'" class="bg-primary p-4 w-40">Comenzar</button>
+          </div>
+          <div class="flex flex-col items-center relative">
+            <img src="../../assets/img/nosotros/loro.jpg" alt="Parrot" class="">
+            <img src="../../assets/img/nosotros/tigre.jpg" alt="Tiger" class="absolute w-1/2 -left-14 -bottom-20 border border-white border-x-[25px] border-y-[25px]">
+          </div>  
+        </div>
+      </div>
+
+      <div class="mt-12 bg-[#003629] w-full p-12">
+        <div class="px-40 flex max-normal:flex-col max-normal:gap-12 justify-between h-full">
+          <div class="flex flex-col h-full gap-3 justify-center text-center w-full">
+            <fa-icon class="text-6xl text-primary" [icon]="adoptionsIcon"></fa-icon>
+            <p class="text-white font-semibold">Posibilidad de adopciones</p>
+          </div>
+          <div class="flex flex-col h-full gap-3 justify-center text-center w-full">
+            <fa-icon class="text-6xl text-primary" [icon]="eventsIcon"></fa-icon>
+            <p class="text-white font-semibold">Eventos para participar</p>
+          </div>
+          <div class="flex flex-col h-full gap-3 justify-center text-center w-full">
+            <fa-icon class="text-6xl text-primary" [icon]="dollarIcon"></fa-icon>
+            <p class="text-white font-semibold">Precios super económicos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-40 mt-20 max-normal:px-20 max-xs:px-10">
+          <div class="flex max-portatil:flex-col relative">
+            <div class="bg-[url('./assets/img/nosotros/elefante.jpg')] h-[700px] w-full bg-cover bg-center">
+            </div>
+            <div class="bg-[url('./assets/img/nosotros/mono.jpg')] h-[700px] w-full bg-cover bg-center">
+            </div>
+            <div class="absolute text-white -top-16 -right-16">
+                <div class="w-72 bg-primary text-black border h-52 border-white border-x-[25px] border-y-[25px]">
+                  <div class="flex flex-col gap-2 h-full justify-center items-center w-full">
+                    <span class="text-4xl font-bold">20+</span>
+                    <span>Años de experiencia</span>
+                  </div>
+                </div>
+            </div>
+            <div class="absolute text-white -bottom-16 -left-16">
+              <div class="w-72 bg-primary text-black border h-52 border-white border-x-[25px] border-y-[25px]">
+                <div class="flex flex-col gap-2 h-full justify-center items-center w-full">
+                  <span class="text-4xl font-bold">300+</span>
+                  <span>Clientes diarios</span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-[url('./assets/img/nosotros/fin-nosotros.jpg')] relative bg-cover bg-center bg-fixed h-[500px] flex mt-20">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="w-full z-10 text-white flex flex-col gap-10 justify-center text-center items-center max-normal:px-10 max-xs:px-5 max-portatil:px-20 px-60">
+          <span class="text-4xl max-normal:text-2xl font-semibold">Disfruta de la mejor experiencia en un zoológico con nuestra gran variedad de animales</span>
+          <span>En WildZoo, cada visita es una inmersión en la majestuosidad de la naturaleza. Observa de cerca a criaturas asombrosas y aprende sobre sus hábitats y comportamientos. Nuestra misión es inspirar amor y respeto por el reino animal, ofreciendo una experiencia educativa y emocionante para toda la familia.</span> 
+          <button class="bg-primary max-portatil:w-1/2 w-[12%] mx-auto p-4 text-black" [routerLink]="'/animales/clase/0'">Animales</button>
+        </div>
+      </div>
+</section>

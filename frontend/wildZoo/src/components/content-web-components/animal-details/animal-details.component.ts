@@ -6,7 +6,7 @@ import { Observable, catchError, forkJoin, map, of, switchMap, throwError } from
 import { AnimalService } from '../../../service/zoo/animal.service';
 import { AdoptionService } from '../../../service/zoo/adoption.service';
 import { CommonModule } from '@angular/common';
-import { faAddressBook, faAddressCard, faCakeCandles, faCalendarCheck, faGlobe, faHome, faPaw, faWeightHanging, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faAddressCard, faCakeCandles, faCalendarCheck, faGlobe, faHome, faPaw, faUtensils, faWeightHanging, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { SpecieService } from '../../../service/zoo/specie.service';
 import { AnimalsCardComponent } from '../animals-card/animals-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -37,7 +37,7 @@ export class AnimalDetailsComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private user!:User;
   private userService: UserService = inject(UserService);
-  public birthDateIcon:IconDefinition = faCakeCandles;
+  public utensilsIcon:IconDefinition = faUtensils;
   public weightIcon:IconDefinition = faWeightHanging;
   public worldIcon:IconDefinition = faGlobe;
   public classIcon: IconDefinition = faAddressBook;
@@ -91,11 +91,11 @@ export class AnimalDetailsComponent implements OnInit {
       map((result: any) => {
         if (result.animal) {
           this.animal = result.animal.data;
-          console.log(this.animal);
-          
           this.title = this.animal.name;
           this.animal.isAvailableForAdoption = result.isAvailable;
-          this.similarAnimal = result.specieById.data.animals.filter((animal: Animal) => animal.id !== this.animal.id)[0];
+          const animalsBySpecie = result.specieById.data.animals.filter((animal: Animal) => animal.id !== this.animal.id)          
+          this.similarAnimal = animalsBySpecie[Math.floor(Math.random()*animalsBySpecie.length)];
+        
         } else {
           console.log('Result handling for non-existing animal');
         }
@@ -131,7 +131,6 @@ export class AnimalDetailsComponent implements OnInit {
   private getSpecieById(id: number) {
     return this.specieService.find(id);
   }
-
   
   getActuallyUser(): Observable<User | null> {
     return this.authService.currentUser$.pipe(

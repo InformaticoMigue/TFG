@@ -15,6 +15,7 @@ import { StorageService } from '../../service/storage/storage.service';
 import { ModalFormLoginComponent } from '../home-components/modals/modal-form-login/modal-form-login.component';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
+import { NavbarTopComponent } from '../navbar-top/navbar-top.component';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { AuthService } from '../../service/auth/auth.service';
     standalone: true,
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss',
-    imports: [RouterLink, MatMenuModule,MatTooltipModule, MatButtonModule, MatDialogModule,FontAwesomeModule, CommonModule, MatSidenavModule, SidevarComponent]
+    imports: [RouterLink, NavbarTopComponent, MatMenuModule,MatTooltipModule, MatButtonModule, MatDialogModule,FontAwesomeModule, CommonModule, MatSidenavModule, SidevarComponent]
 })
 
 export class NavbarComponent implements OnInit {

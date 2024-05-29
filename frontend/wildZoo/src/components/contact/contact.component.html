@@ -1,0 +1,94 @@
+<section class=" flex flex-col">
+  <article class="text-white">
+    <app-header [title]="'Contacto'" [abstract]="false"></app-header>
+  </article>
+  <article class="flex flex-col gap-20">
+    <div>
+      <iframe class="w-full"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25645.729440628!2d-4.665871925683569!3d36.53684109999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72e2146fdc4ab7%3A0x2e0da5ab840f91!2sBioparc%20Fuengirola!5e0!3m2!1ses!2ses!4v1716547076910!5m2!1ses!2ses"
+        width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="px-40 max-normal:px-20 max-xs:px-10 max-portatil:flex max-portatil:flex-col max-portatil:text-center grid grid-cols-2 flex-col gap-5 mb-52 z-50 relative">
+      <div class="flex flex-col gap-10 ">
+        <div class="flex flex-col gap-5">
+          <h1 class="text-4xl font-semibold">Ponerse en contacto</h1>
+          <span>Si has tenido algun problema o necesitas ponerte en contacto con nosotros por algún motivo no dudes en
+            rellenar el formulario de la derecha y escribirnos.</span>
+        </div>
+        <div class="flex flex-col gap-5">
+          <h1 class="text-2xl font-semibold">Wild Zoo</h1>
+          <h2 class="text-xl">Fuengirola, Málaga</h2>
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-5 max-portatil:justify-center">
+              <fa-icon class="text-primary" [icon]="phoneIcon"></fa-icon>
+              <span>(+34) 677 765 990</span>
+            </div>
+            <div class="flex gap-5 max-portatil:justify-center">
+              <fa-icon class="text-primary" [icon]="emailIcon"></fa-icon>
+              <span>wildzootfg&#64;gmail.com</span>
+            </div>
+            <div class="flex gap-5 max-portatil:justify-center">
+              <fa-icon class="text-primary" [icon]="locationIcon"></fa-icon>
+              <span>Calle Antonio Machado Nº23</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-5">
+            <h1 class="text-2xl font-semibold">Oficina Wild Zoo</h1>
+            <h2 class="text-xl">Fuengirola, Málaga</h2>
+            <div class="flex flex-col gap-2">
+              <div class="flex gap-5 max-portatil:justify-center">
+                <fa-icon class="text-primary" [icon]="phoneIcon"></fa-icon>
+                <span>(+34) 692 760 181</span>
+              </div>
+              <div class="flex gap-5 max-portatil:justify-center">
+                <fa-icon class="text-primary" [icon]="emailIcon"></fa-icon>
+                <span>wildzootfg&#64;gmail.com</span>
+              </div>
+              <div class="flex gap-5 max-portatil:justify-center">
+                <fa-icon class="text-primary" [icon]="locationIcon"></fa-icon>
+                <span>Calle Antonio Machado Nº23</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-10 bg-white">
+        <h1 class="text-4xl font-semibold">Tus detalles</h1>
+        <div class="shadow-md">
+          <form [formGroup]="messageForm" class="p-10">
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input formControlName="name" type="text" matInput>
+              <mat-error *ngIf="messageForm.get('name')?.hasError('required')">Tu nombre es obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Teléfono</mat-label>
+              <input formControlName="phone" type="number" matInput>
+              <mat-error *ngIf="messageForm.get('phone')?.hasError('required')">Tu número de teléfono es obligatorio</mat-error>
+              <mat-error *ngIf="messageForm.get('phone')?.hasError('pattern')">Numero de telefono no válido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input formControlName="email" type="email" matInput>
+              <mat-error *ngIf="messageForm.get('email')?.hasError('required')">Tu email es obligatorio</mat-error>
+              <mat-error *ngIf="messageForm.get('email')?.hasError('email')">Formato de email incorrecto</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Descripcion</mat-label>
+              <textarea formControlName="description" matInput class="custom-textarea"></textarea>
+              <mat-error *ngIf="messageForm.get('description')?.hasError('required')">Es obligatoria una descripción básica de porqué nos contactas</mat-error>
+  
+            </mat-form-field>
+            <button [disabled]="messageForm.invalid" (click)="sendMessage()" class="disabled:border disabled:border-primary disabled:bg-transparent bg-primary w-full transition-all duration-500 p-4">Enviar mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="bg-[url('./assets/img/contact/bosque.jpg')] bg-no-repeat bg-cover bg-center flex h-72 w-full bg-fixed object-cover bottom-0 absolute">
+    <div class="bg-black opacity-50 absolute inset-0"></div>
+
+    </div>
+
+  </article>
+</section>

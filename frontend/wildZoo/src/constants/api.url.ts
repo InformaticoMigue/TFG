@@ -16,7 +16,8 @@ export class ApiUrl {
     public static GET_ALL_SERVICES = `http://${MAIN_SERVER}/services`
     public static REGISTER_USER_POST = `http://${MAIN_SERVER}/users/register`
     public static SAVE_ADOPTION_POST = `http://${MAIN_SERVER}/adoptions/save`
-    
+    public static SEND_CONTACT_MESSAGE = `http://${MAIN_SERVER}/contact`
+
     //Methods
     public static DELETE_TICKET = (id: number) => {
         return `http://${MAIN_SERVER}/tickets/delete/${id}`;

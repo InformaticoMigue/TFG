@@ -28,8 +28,8 @@ public class Animal {
     @Column(length = 1000)
     private String description;
 
-    @Column(name = "birthdate")
-    private LocalDate birthDate;
+    @Column(name = "feeding")
+    private String feeding;
     private BigDecimal weight;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
