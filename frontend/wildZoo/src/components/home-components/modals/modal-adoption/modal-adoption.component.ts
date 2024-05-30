@@ -19,20 +19,20 @@ export class ModalAdoptionComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private adoptionService:AdoptionService = inject(AdoptionService);
   private snackbarService:CustomSnackbarService = inject(CustomSnackbarService);
-  public adoptionAnimal:any;
+  public sponsorAnimal:any;
   public formAdoption:FormGroup = new FormGroup({});
   private user!:User;
 
   constructor(public dialogRef: MatDialogRef<ModalAdoptionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { 
-    this.adoptionAnimal = data.adoptionAnimal;
+  ) {     
+    this.sponsorAnimal = data.sponsorAnimal;
     this.user = data.user;        
   }
 
   ngOnInit() {
     this.formAdoption = this.formBuilder.group({
-      price: [this.adoptionAnimal.price, [Validators.required]]
+      price: [this.sponsorAnimal.price, [Validators.required]]
     })
   }
 
@@ -42,21 +42,21 @@ export class ModalAdoptionComponent implements OnInit {
 
   adoption(){
     if (!this.user) {
-      this.snackbarService.openErrorSnackbar("Necesita estar logueado para adoptar a un animal", "Cerrar");
+      this.snackbarService.openErrorSnackbar("Necesita estar logueado para apadrinar a un animal", "Cerrar");
       return;
     }
     if (!this.user.creditCard) {
-      this.snackbarService.openErrorSnackbar("Necesita tener una tarjeta de crédito para adoptar a un animal", "Cerrar");
+      this.snackbarService.openErrorSnackbar("Necesita tener una tarjeta de crédito para apadrinar a un animal", "Cerrar");
       return;
     }
 
     const objectToRequest = {
       date: new Date(),
-      adoptionAnimal: {
-        id: this.adoptionAnimal.id
+      sponsorAnimal: {
+        id: this.sponsorAnimal.id
       },
       animal: {
-        id: this.adoptionAnimal.animal.id
+        id: this.sponsorAnimal.animal.id
       },
       user: {
         id: this.user.id
@@ -71,17 +71,17 @@ export class ModalAdoptionComponent implements OnInit {
     ).subscribe({
       next: data => {
         if (data) {
-          this.snackbarService.openSucessSnackbar(this.adoptionAnimal.animal.name + " Adoptado con éxtio", "Cerrar")
+          this.snackbarService.openSucessSnackbar(this.sponsorAnimal.animal.name + " Apadrinado con éxtio", "Cerrar")
           const newResponse = {
             date: data.data.date,
             id: data.data.id,
             user: this.user,
-            adoptionAnimal: this.adoptionAnimal,
-            animal: this.adoptionAnimal.animal 
+            sponsorAnimal: this.sponsorAnimal,
+            animal: this.sponsorAnimal.animal 
           }
           this.dialogRef.close(newResponse);
         } else {
-          this.snackbarService.openErrorSnackbar("Error al adoptar", "Cerrar");
+          this.snackbarService.openErrorSnackbar("Error al apadrinar", "Cerrar");
           console.error('No data received due to an error.');
           this.closeModal();
         }

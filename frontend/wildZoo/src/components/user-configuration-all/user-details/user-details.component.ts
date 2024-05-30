@@ -30,7 +30,7 @@ export class UserDetailsComponent implements OnInit {
   public step = 0;
   public formDetailsUser: FormGroup = new FormGroup({});
   public user!: User;
-  public adoptionItems: any;
+  public sponsorItems: any;
 
 
   ngOnInit() {
@@ -39,21 +39,13 @@ export class UserDetailsComponent implements OnInit {
       firstSurname: [this.user.firstSurname, Validators.required],
       lastSurname: [this.user.lastSurname, Validators.required],
       username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
-      email: [this.user.email, [Validators.required, Validators.email]],
+      email: [this.user.email, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])],
     })
     this.setAccordionItems();
   }
 
   setStep(index: number) {
     this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
   }
 
   updateUrlWithToken(newToken: string) {
@@ -107,10 +99,12 @@ export class UserDetailsComponent implements OnInit {
   }
 
   setAccordionItems() {
-    this.adoptionItems = {
+    console.log(this.user);
+    
+    this.sponsorItems = {
       icon: faPaw,
       title: "Adopciones",
-      adoptions: this.user.adoptions
+      sponsors: this.user.sponsors
     }
 
     this.eventSalesItems = {

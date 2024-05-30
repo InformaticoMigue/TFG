@@ -8,7 +8,7 @@
       <mat-error *ngIf="formDetailsUser.get('email')?.errors?.['required']">
         El email es obligatorio.
       </mat-error>
-      <mat-error *ngIf="formDetailsUser.get('email')?.errors?.['email']">
+      <mat-error *ngIf="formDetailsUser.get('email')?.errors?.['pattern']">
         Por favor ingresa un email válido.
       </mat-error>
     </mat-form-field>
@@ -55,32 +55,28 @@
 
   <div>
     <mat-accordion multi="false">
-      <mat-expansion-panel [expanded]="user.adoptions.length > 0 && step === 0" (opened)="setStep(0)" hideToggle
-        [disabled]="user.adoptions.length == 0">
+      <mat-expansion-panel [expanded]="user.sponsors.length > 0 && step === 0" (opened)="setStep(0)" hideToggle
+        [disabled]="user.sponsors.length == 0">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <fa-icon [icon]="adoptionItems.icon " class="mr-2"></fa-icon>
-            @if (user.adoptions.length == 0) {
-            No tienes ningun animal adoptado {{user.name}}
+            <fa-icon [icon]="sponsorItems.icon " class="mr-2"></fa-icon>
+            @if (user.sponsors.length == 0) {
+            No tienes ningun animal apadrinado {{user.name}}
             }@else {
-            {{ adoptionItems.title }}
+            {{ sponsorItems.title }}
             }
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="flex flex-col flex-wrap gap-5">
-          @for (adoption of adoptionItems.adoptions; track adoption.id) {
+          @for (sponsor of sponsorItems.sponsors; track sponsor.id) {
           <div class="flex justify-between ">
-            <p>{{adoption.animal.name}}</p>
-            <p>{{adoption.date | date: 'longDate'}}</p>
-            <p>{{adoption.adoptionAnimal.price | currency:'EUR':'symbol':'1.2-2'}}</p>
+            <p>{{sponsor.animal.name}}</p>
+            <p>{{sponsor.date | date: 'longDate'}}</p>
+            <p>{{sponsor.sponsorAnimal.price | currency:'EUR':'symbol':'1.2-2'}}</p>
 
           </div>
           }
         </div>
-        <mat-action-row>
-          <button [disabled]="user.eventSales.length == 0"  class="disabled:text-gray-400 px-[16px] hover:text-primary transition-all duration-500"
-            (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
       </mat-expansion-panel>
       <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle
         [disabled]="user.eventSales.length == 0">
@@ -105,12 +101,6 @@
           </div>
           }
         </div>
-        <mat-action-row>
-          <div class="flex gap-10 px-[16px]">
-            <button class="text-red-600" (click)="prevStep()">Anterior</button>
-            <button class="hover:text-primary transition-all duration-500" (click)="nextStep()">Cerrar</button>
-          </div>
-        </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

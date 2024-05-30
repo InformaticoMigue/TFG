@@ -45,7 +45,7 @@ public class PackageController {
     @PostMapping("createpackagesale")
     public ResponseEntity<PackageSale> createPackageSale(@RequestBody PackageSale packageSale) {
         PackageSale created = packageService.createPackageSale(packageSale);
-        return ResponseEntity.ok(created);
+        return new ResponseEntity<>(created,HttpStatus.CREATED);
     }
 
     @DeleteMapping("delete/packagesale/{id}")

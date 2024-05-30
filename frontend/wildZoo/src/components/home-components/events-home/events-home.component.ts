@@ -28,7 +28,9 @@ export class EventsHomeComponent implements OnInit {
     ]
 
     forkJoin(observableArray).subscribe((response) => {
-      this.eventsToShow = response[0].data.filter((event:Event,index:number) => index <= 2)
+      this.eventsToShow = response[0].data
+      this.eventsToShow = this.eventsToShow.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      this.eventsToShow = this.eventsToShow.filter((event:Event,index:number) => index <= 2)
       this.eventsToShow.forEach((event:Event) => {
         this.formatEventContent(event)      
       })
@@ -41,7 +43,6 @@ export class EventsHomeComponent implements OnInit {
     const newString = event.description.substring(0,indexFirstPoint)
     event.descriptionAccorted = newString
     this.formatDate(event)
-
   }
 
   private formatDate(event:any){

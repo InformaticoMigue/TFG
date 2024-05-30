@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { TicketService } from '../../../service/zoo/ticket.service';
 import { Observable, catchError, forkJoin, map, of, switchMap, throwError } from 'rxjs';
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, AbstractControl, ValidationErrors, FormArray } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -60,17 +60,26 @@ export class TicketComponent implements OnInit {
   private userService: UserService = inject(UserService);
   public typesTickets: any[] = [];
   public cartShopping: IconDefinition = faCartShopping;
-  public ticketForm: FormGroup = this.formBuilder.group({
-    date: [new Date(), Validators.compose([Validators.required, this.dateValidator()])],
-    tickets: this.formBuilder.array([])
-  });
+  public ticketForm!: FormGroup;
+  @ViewChild('stepper') private stepper!: MatStepper; 
+
+  constructor(){
+    this.initForm();
+  }
 
   ngOnInit() {
     this.getActuallyUser();
     this.initAllSubscriptions();
   }
 
-  private initForms() {
+  private initForm(){
+    this.ticketForm = this.formBuilder.group({
+      date: [new Date(), Validators.compose([Validators.required, this.dateValidator()])],
+      tickets: this.formBuilder.array([])
+    });
+  }
+
+  private initTicketsForm() {
     const ticketControls = this.typesTickets.map(ticketType => this.formBuilder.group({
       id: [ticketType.id],
       name: [ticketType.name],
@@ -138,7 +147,12 @@ export class TicketComponent implements OnInit {
         }
       }   
     }
+    this.stepper.reset();
+    this.initForm();
+    this.initTicketsForm();
   }
+
+
 
   dateValidator() {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -164,7 +178,7 @@ export class TicketComponent implements OnInit {
         console.log(res); 
         if (res.typesTickets && res.typesTickets.data ) {
           this.typesTickets = res.typesTickets.data;
-          this.initForms();
+          this.initTicketsForm();
         }
       },
       error: (err) => {

@@ -54,7 +54,7 @@ export class ModalFormLoginComponent implements OnInit {
   initiFormRegister() {
     this.registerForm = this.formBuilder.group({
       'username': ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      'email': ['', Validators.compose([Validators.required, Validators.email])],
+      'email': ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])],
       'password': ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])],
       'name': ['', [Validators.required]],
       'firstSurname': ['', [Validators.required]],

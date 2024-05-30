@@ -6,16 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
 @Data
 @Table(name = "User")
 @NoArgsConstructor
-@ToString(exclude = {"creditCard", "tickets", "adoptions", "packageSales"})
+@ToString(exclude = {"creditCard", "tickets", "sponsors", "packageSales"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +39,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})
-    private List<Adoption> adoptions;
+    private List<Sponsor> sponsors;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "user"})

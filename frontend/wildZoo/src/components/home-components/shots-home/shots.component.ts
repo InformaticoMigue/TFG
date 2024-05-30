@@ -3,13 +3,14 @@ import { Component, HostListener, Input, OnInit, inject } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { GalleryAnimal, GalleryAnimalsOptions } from '../../../assets/types';
 import { TitleSectionComponent } from "../../title-section/title-section.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-shots',
     standalone: true,
     templateUrl: './shots.component.html',
     styleUrl: './shots.component.scss',
-    imports: [MatGridListModule, CommonModule, TitleSectionComponent]
+    imports: [MatGridListModule, RouterLink,CommonModule, TitleSectionComponent]
 })
 export class ShotsComponent implements OnInit {
   private id = 0;

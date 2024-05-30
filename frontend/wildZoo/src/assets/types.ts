@@ -30,7 +30,7 @@ export type Animal = {
     name:        string;
     age:         number;
     description: string;
-    feeding:   string;
+    feeing:   string;
     weight:      number;
     continent:   Continent;
     events:      Event[];
@@ -105,7 +105,7 @@ export type User = {
     lastSurname:    string;
     creditCard: CreditCard;
     tickets:        Ticket[];
-    adoptions:      Adoption[];
+    sponsors:      Adoption[];
     packageSales:   any[];
     eventSales: EventSales[];
 }
@@ -128,12 +128,12 @@ export type PackageSales = {
 export type Adoption = {
     id:             number;
     date:           Date;
-    adoptionAnimal: AdoptionAnimal;
+    sponsorAnimal: SponsorAnimal;
     animal:         Animal;
     user:           User;
 }
 
-export type AdoptionAnimal = {
+export type SponsorAnimal = {
     id:    number;
     price: number;
     animal: Animal;

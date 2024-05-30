@@ -3,12 +3,12 @@
     <app-header [title]="title"></app-header>
   </article>
   <div class="px-40 font-semibold mx-auto">
-    @if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption == null) {
-    <p class="text-text font-bold text-3xl">¡¡Estas de suerte!! Animal disponible para adoptar</p>
-    }@else if(animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption != null){
-    <p class="text-text font-bold text-3xl">Animal adoptado por {{animal.isAvailableForAdoption.adoption.user.name}}</p>
+    @if (animal?.isAvailableForAdoption && animal?.isAvailableForAdoption.sponsor == null) {
+    <p class="text-text font-bold text-3xl">¡¡Estas de suerte!! Animal disponible para apadrinar</p>
+    }@else if(animal?.isAvailableForAdoption && animal?.isAvailableForAdoption.sponsor != null){
+    <p class="text-text font-bold text-3xl">Animal apadrinado por {{animal.isAvailableForAdoption.sponsor.user.name}}</p>
     }@else {
-    <p class="text-text font-bold text-3xl">¡¡Lo sentimos!! Animal NO disponible para adoptar</p>
+    <p class="text-text font-bold text-3xl">¡¡Lo sentimos!! Animal NO disponible para apadrinar</p>
     }
   </div>
   <article class="flex gap-10 px-40">
@@ -17,12 +17,12 @@
         class="bg-cover bg-center bg-no-repeat rounded-md relative group"
         style="background-image: url('{{ getBackground() }}');">
         <div class="bg-black bg-opacity-35 absolute inset-0 rounded-md"></div>
-        @if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption == null ) {
+        @if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.sponsor == null ) {
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
           <fa-icon (click)="openModalAdoption(animal.isAvailableForAdoption)" class="text-primarySub cursor-pointer text-[25em]" [icon]="adoptionIcon"></fa-icon>
         </div>
         }
-        @else if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.adoption != null) {
+        @else if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.sponsor != null) {
           <div class="absolute inset-0 flex justify-center items-center">
             <fa-icon class="text-primarySub  text-[25em]" [icon]="adoptionIcon"></fa-icon>
           </div>  

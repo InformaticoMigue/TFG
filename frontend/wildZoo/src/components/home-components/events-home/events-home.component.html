@@ -5,21 +5,17 @@
         <app-title-section [wrap]="true" [preTitle]="'EVENTS'"
           [title]="'NUESTROS PROXIMOS EVENTOS'"></app-title-section>
       </div>
-      <div class="w-full flex flex-col gap-5">
+      <div class="w-full flex h-full flex-col gap-5">
         @for (event of eventsToShow; track event.id) {
         <app-event-zoo-card-home data-aos="zoom-in-down" data-aos-duration="2000"
           (handleClickButton)="showNewEvent($event)" [event]="event"></app-event-zoo-card-home>
         }
-        <a class="flex text-center max-xs:w-full max-xs:text-center justify-center items-center rounded-md max-normal:w-1/3 max-normal:mx-auto h-16 transition-all duration-500 border border-primary text-lg w-1/3 hover:bg-primary text-text"
-          [routerLink]="'/eventos'">
-          Ver todos los eventos
-        </a>
       </div>
 
     </div>
   </article>
-  <article class="flex flex-col text-white gap-40 py-32 px-20 max-portatil:w-full w-2/5 bg-cover bg-center"
-    style="background-image: url('../../assets/img/zoo-images/events/{{ eventDetails.name }}_details.jpg');">
+  <article class="flex flex-col text-white gap-40 py-32  px-20 max-portatil:w-full w-2/5 bg-cover bg-center"
+    style="background-image: url('../../assets/img/zoo-images/events-home/{{ eventDetails.name }}_details.jpg');">
     <div class="flex flex-col gap-10">
       <app-title-section [white]="true" [wrap]="true" [preTitle]="'EVENTO SELECCIONADO'"
         [title]="eventDetails.name.toUpperCase()"></app-title-section>

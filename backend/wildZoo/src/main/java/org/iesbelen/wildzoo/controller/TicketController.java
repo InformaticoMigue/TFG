@@ -36,7 +36,7 @@ public class TicketController {
     public ResponseEntity<ResponseWrapperTicketOne> save(@RequestBody Ticket ticket) {
         return new ResponseEntity<>(
                 new ResponseWrapperTicketOne(this.ticketService.save(ticket))
-                ,HttpStatus.OK);
+                ,HttpStatus.CREATED);
     }
 
     @DeleteMapping("delete/{id}")

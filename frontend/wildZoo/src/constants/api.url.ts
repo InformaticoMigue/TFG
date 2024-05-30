@@ -10,12 +10,12 @@ export class ApiUrl {
     public static GET_ALL_CONTINENTS = `http://${MAIN_SERVER}/continents`
     public static GET_ALL_EVENTS = `http://${MAIN_SERVER}/events`
     public static GET_ALL_TYPE_TICKETS = `http://${MAIN_SERVER}/tickets/types`;
-    public static GET_ALL_ADOPTIONS = `http://${MAIN_SERVER}/adoptions`
+    public static GET_ALL_SPONSORS = `http://${MAIN_SERVER}/sponsored`
     public static UPDATE_USER_POST = `http://${MAIN_SERVER}/users/update`;
     public static UPDATE_CREDIT_CARD_POST = `http://${MAIN_SERVER}/creditcard/update`
     public static GET_ALL_SERVICES = `http://${MAIN_SERVER}/services`
     public static REGISTER_USER_POST = `http://${MAIN_SERVER}/users/register`
-    public static SAVE_ADOPTION_POST = `http://${MAIN_SERVER}/adoptions/save`
+    public static SAVE_SPONSORED_POST = `http://${MAIN_SERVER}/sponsored/save`
     public static SEND_CONTACT_MESSAGE = `http://${MAIN_SERVER}/contact`
 
     //Methods
@@ -34,8 +34,8 @@ export class ApiUrl {
     public static GET_PACKAGE_BY_ID(id: number) {
         return `http://${MAIN_SERVER}/packages/${id}`;
     }
-    public static GET_ADOPTION_AVAILABLE_BY_ID(id: number) {
-        return `http://${MAIN_SERVER}/adoptions/available/${id}`;
+    public static GET_SPONSOR_AVAILABLE_BY_ID(id: number) {
+        return `http://${MAIN_SERVER}/sponsored/available/${id}`;
     }
     public static GET_USER_BY_ID(id: number) {
         return `http://${MAIN_SERVER}/users/${id}`;

@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -56,10 +54,10 @@ public class Animal {
             mappedBy = "animal"
     )
     @JsonIgnore
-    private AdoptionAnimal adoptionAnimal;
+    private SponsorAnimal sponsorAnimal;
     @OneToOne(
             mappedBy = "animal"
     )
     @JsonIgnore
-    private Adoption adoption;
+    private Sponsor sponsor;
 }

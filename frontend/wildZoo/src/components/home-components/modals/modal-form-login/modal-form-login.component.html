@@ -118,7 +118,7 @@
                                 <input matInput formControlName="email" placeholder="Email">
                                 <mat-error *ngIf="registerForm.get('email')?.hasError('required')">El email es
                                     obligatorio</mat-error>
-                                <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Email no
+                                <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">Email no
                                     valido</mat-error>
                             </mat-form-field>
 

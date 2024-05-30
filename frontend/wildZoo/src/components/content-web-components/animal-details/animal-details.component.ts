@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AdoptionAnimal, Animal, User } from '../../../assets/types';
+import { SponsorAnimal, Animal, User } from '../../../assets/types';
 import { HeaderComponent } from "../header/header.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, forkJoin, map, of, switchMap, throwError } from 'rxjs';
@@ -25,7 +25,7 @@ import { UserService } from '../../../service/zoo/user.service';
   imports: [HeaderComponent, TitleSectionComponent ,CommonModule, CarouselComponent, AnimalsCardComponent,FontAwesomeModule]
 })
 export class AnimalDetailsComponent implements OnInit {
-  public animal!: any;
+  public animal: any = {};
   public similarAnimal!: any;
   public title!: string;
   private animalService: AnimalService = inject(AnimalService);
@@ -33,13 +33,13 @@ export class AnimalDetailsComponent implements OnInit {
   private adoptionService: AdoptionService = inject(AdoptionService);
   private specieService: SpecieService = inject(SpecieService);
   private router: Router = inject(Router);
-  private matDialog:MatDialog = inject(MatDialog);
+  private matDialog: MatDialog = inject(MatDialog);
   private authService: AuthService = inject(AuthService);
-  private user!:User;
+  private user!: User;
   private userService: UserService = inject(UserService);
-  public utensilsIcon:IconDefinition = faUtensils;
-  public weightIcon:IconDefinition = faWeightHanging;
-  public worldIcon:IconDefinition = faGlobe;
+  public utensilsIcon: IconDefinition = faUtensils;
+  public weightIcon: IconDefinition = faWeightHanging;
+  public worldIcon: IconDefinition = faGlobe;
   public classIcon: IconDefinition = faAddressBook;
   public adoptionIcon: IconDefinition = faPaw;
 
@@ -93,9 +93,10 @@ export class AnimalDetailsComponent implements OnInit {
           this.animal = result.animal.data;
           this.title = this.animal.name;
           this.animal.isAvailableForAdoption = result.isAvailable;
-          const animalsBySpecie = result.specieById.data.animals.filter((animal: Animal) => animal.id !== this.animal.id)          
-          this.similarAnimal = animalsBySpecie[Math.floor(Math.random()*animalsBySpecie.length)];
-        
+          const animalsBySpecie = result.specieById.data.animals.filter((animal: Animal) => animal.id !== this.animal.id);
+          this.similarAnimal = animalsBySpecie[Math.floor(Math.random() * animalsBySpecie.length)];
+          console.log(this.animal);
+          
         } else {
           console.log('Result handling for non-existing animal');
         }
@@ -107,10 +108,10 @@ export class AnimalDetailsComponent implements OnInit {
     );
   }
 
-  openModalAdoption(adoptionAnimal:AdoptionAnimal) {  
+  openModalAdoption(sponsorAnimal: SponsorAnimal) {  
     this.matDialog.open(ModalAdoptionComponent, {
       data: {
-        adoptionAnimal,
+        sponsorAnimal,
         user: this.user        
       }
     }).afterClosed().subscribe((res) => {

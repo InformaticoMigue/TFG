@@ -49,6 +49,7 @@ export class PackageDetailsComponent implements OnInit {
   ngOnInit() {
     this.getActuallyUser();
     this.initAllSuscriptions();
+
   }
 
   public initAllSuscriptions() {
@@ -70,8 +71,9 @@ export class PackageDetailsComponent implements OnInit {
         return (b.include === a.include) ? 0 : b.include ? 1 : -1;
       });
       this.title = this.package.name
-      this.setImages(3)
       this.initForm();
+      this.images = []
+      this.setImages(3)
     });
   }
 

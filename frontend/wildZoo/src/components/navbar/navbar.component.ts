@@ -16,7 +16,8 @@ import { ModalFormLoginComponent } from '../home-components/modals/modal-form-lo
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
 import { NavbarTopComponent } from '../navbar-top/navbar-top.component';
-
+import { EventService } from '../../service/zoo/event.service';
+import { Event } from '../../assets/types';
 
 @Component({
     selector: 'app-navbar',
@@ -38,14 +39,17 @@ export class NavbarComponent implements OnInit {
   public responsive: boolean = false;
   public allClasses: Aclass[] = [];
   public allPackages: Package[] = [];
+  public allEvents:Event[] = [];
   public logged: boolean = false;
   private packageService = inject(PackageService);
   public menuStates: {[key: string]: boolean} = {
     packages: false,
+    events: false,
   };
   private authService:AuthService = inject(AuthService);
   public storageService:StorageService = inject(StorageService);
   private router:Router = inject(Router);
+  private eventService:EventService = inject(EventService);
 
   ngOnInit(): void {
     this.getActuallyUser();
@@ -56,11 +60,13 @@ export class NavbarComponent implements OnInit {
   public initAllSuscriptions(): void {
     const observableArray: Observable<any>[] = [
       this.getAllPackages(),
+      this.getAllEvents(),
     ]
     
     forkJoin(observableArray).subscribe((responses:any[]) => {
         const packages = responses[0].data
         this.allPackages = packages;
+        this.allEvents = responses[1].data
     })
   }
 
@@ -97,5 +103,9 @@ export class NavbarComponent implements OnInit {
     this.authService.isLoggedIn$.subscribe(log => {
       this.logged = log;
     });
+  }
+
+  getAllEvents(){
+    return this.eventService.getAll();
   }
 }

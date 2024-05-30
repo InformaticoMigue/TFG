@@ -36,9 +36,9 @@ export class ContactComponent implements OnInit {
   initForm(){
     this.messageForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      phone: ['', Validators.compose([Validators.required,Validators.pattern(/^6[0-9]{8}$/)    ])],
+      phone: ['', Validators.compose([Validators.required, Validators.pattern(/^[67][0-9]{8}$/)])],
       description: ['',[Validators.required]],
-      email: ['',Validators.compose([Validators.required,Validators.email])]
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])],
     })
   }
 

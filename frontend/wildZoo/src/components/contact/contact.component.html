@@ -72,7 +72,7 @@
               <mat-label>Email</mat-label>
               <input formControlName="email" type="email" matInput>
               <mat-error *ngIf="messageForm.get('email')?.hasError('required')">Tu email es obligatorio</mat-error>
-              <mat-error *ngIf="messageForm.get('email')?.hasError('email')">Formato de email incorrecto</mat-error>
+              <mat-error *ngIf="messageForm.get('email')?.hasError('pattern')">Formato de email incorrecto</mat-error>
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
               <mat-label>Descripcion</mat-label>
@@ -80,7 +80,7 @@
               <mat-error *ngIf="messageForm.get('description')?.hasError('required')">Es obligatoria una descripción básica de porqué nos contactas</mat-error>
   
             </mat-form-field>
-            <button [disabled]="messageForm.invalid" (click)="sendMessage()" class="disabled:border disabled:border-primary disabled:bg-transparent bg-primary w-full transition-all duration-500 p-4">Enviar mensaje</button>
+            <button [disabled]="messageForm.invalid" (click)="sendMessage()" class="disabled:border disabled:text-gray-400 disabled:border-primary disabled:bg-transparent bg-primary w-full transition-all duration-500 p-4">Enviar mensaje</button>
           </form>
         </div>
       </div>

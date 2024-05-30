@@ -1,6 +1,5 @@
 package org.iesbelen.wildzoo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,22 +8,22 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Adoption")
+@Table(name = "Sponsor")
 @Data
 @NoArgsConstructor
 
-public class Adoption {
+public class Sponsor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "adoption_id")
+    @Column(name = "sponsor_id")
     private long id;
 
     private LocalDate date;
 
     @OneToOne
-    @JoinColumn(name = "adoption_animal_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "animal","adoption"})
-    private AdoptionAnimal adoptionAnimal;
+    @JoinColumn(name = "sponsor_animal_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "animal","sponsor"})
+    private SponsorAnimal sponsorAnimal;
 
     @OneToOne
     @JoinColumn(name = "animal_id")

@@ -12,8 +12,18 @@
           <h1 class="text-2xl text-center p-4 text-text">{{event.name.toUpperCase()}}</h1>
         </div>
       </div>
-      <form [formGroup]="formSuscribeEvent" class="flex flex-col mx-auto">
-
+      <form [formGroup]="formSuscribeEvent" class="flex flex-col gap-1">
+        <mat-form-field appearance="outline" class="w-[270px] mx-auto">
+          <mat-label>Día de asistencia al evento</mat-label>
+          <input matInput [disabled]="verifyInscription()" [value]="event.date" [matDatepicker]="picker">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        @if (dateToday != dateEvent) {
+          <mat-error class="mx-auto">No es posible inscribirse, el evento no está disponible, se permitirá la inscripción UNA SEMANA antes del comienzo del mismo</mat-error>
+        }
+        <button (click)="registerToEvent()" [disabled]="dateToday != dateEvent"
+        class="mt-5 disabled:border disabled:border-primary disabled:text-gray-400 disabled:hover:bg-transparent w-40 h-12 hover:bg-primary transition-all duration-500 mx-auto">Inscribirse</button>
       </form>
     </div>
     

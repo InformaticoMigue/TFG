@@ -26,6 +26,19 @@
                             <button [routerLink]="'/paquete/'+package.id" mat-menu-item>{{package.name}}</button>
                         }
                     </mat-menu>
+                    <button (click)="toggleMenu('events')" [matMenuTriggerFor]="events" class="text-white transition-all duration-500 hover:text-primary">
+                        <div class="flex items-center gap-2">
+                            <span>Eventos</span>
+                            <fa-icon [flip]="menuStates['events'] ? 'horizontal' : 'vertical'" 
+                                [icon]="iconCollapse">
+                            </fa-icon>
+                        </div>
+                    </button>
+                    <mat-menu (closed)="menuStates['events'] = false" #events="matMenu">
+                        @for (event of allEvents; track event.id) {
+                            <button [routerLink]="'/eventos/'+event.id" mat-menu-item>{{event.name}}</button>
+                        }
+                    </mat-menu>
                     <button  [routerLink]="'/animales/clase/0'" class="text-white transition-all duration-500 hover:text-primary">
                         <div class="flex items-center gap-2">
                             <span>Animales</span>
