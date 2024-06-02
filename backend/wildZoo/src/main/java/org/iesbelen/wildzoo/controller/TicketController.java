@@ -32,7 +32,7 @@ public class TicketController {
         );
     }
 
-    @PostMapping("/save")
+    @PostMapping("/buy")
     public ResponseEntity<ResponseWrapperTicketOne> save(@RequestBody Ticket ticket) {
         return new ResponseEntity<>(
                 new ResponseWrapperTicketOne(this.ticketService.save(ticket))

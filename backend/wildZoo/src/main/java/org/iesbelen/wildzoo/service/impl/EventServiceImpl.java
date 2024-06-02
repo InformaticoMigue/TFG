@@ -1,7 +1,9 @@
 package org.iesbelen.wildzoo.service.impl;
 
 import org.iesbelen.wildzoo.model.Event;
+import org.iesbelen.wildzoo.model.EventSale;
 import org.iesbelen.wildzoo.repository.EventRepository;
+import org.iesbelen.wildzoo.repository.EventSaleRepository;
 import org.iesbelen.wildzoo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    EventSaleRepository eventSaleRepository;
 
     @Override
     public List<Event> getAll() {
@@ -34,5 +39,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event update(Event event) {
         return null;
+    }
+
+    @Override
+    public EventSale updateEventSale(EventSale eventSale) {
+        return this.eventSaleRepository.save(eventSale);
     }
 }

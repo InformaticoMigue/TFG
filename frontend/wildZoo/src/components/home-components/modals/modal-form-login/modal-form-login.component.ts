@@ -5,21 +5,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardFlip } from '../../../../constants/animations';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { Observable, catchError, forkJoin, of, switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { UserService } from '../../../../service/zoo/user.service';
-import { User } from '../../../../assets/types';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EncryptService } from '../../../../service/encrypt/encrypt.service';
-import { StorageService } from '../../../../service/storage/storage.service';
 import { AuthService } from '../../../../service/auth/auth.service';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CustomSnackbarService } from '../../../../service/snackbar/custom-snackbar.service';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faCheckCircle, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-modal-form-login',
   standalone: true,
   animations: [CardFlip],
-  imports: [ReactiveFormsModule, CommonModule, MatButton, MatFormFieldModule, MatInputModule, FormsModule, MatInput],
+  imports: [ReactiveFormsModule, CommonModule, MatButton, FontAwesomeModule, MatFormFieldModule, MatInputModule, FormsModule, MatInput],
   templateUrl: './modal-form-login.component.html',
   styleUrl: './modal-form-login.component.scss'
 })
@@ -34,7 +34,42 @@ export class ModalFormLoginComponent implements OnInit {
   private encryptedService: EncryptService = inject(EncryptService);
   private authService: AuthService = inject(AuthService)
   public registerForm: FormGroup = new FormGroup({});
+  public checkIcon:IconDefinition = faCheckCircle;
+  public crossIcon: IconDefinition = faCircleXmark;
   private snackbarService: CustomSnackbarService = inject(CustomSnackbarService)
+  infoUserPasswordValid = [
+    
+    {
+      id:1,
+      description: 'Mínimo 8 caracteres',
+      isValid: false,
+      icon: this.crossIcon
+    },
+    {
+      id:2,
+      description: 'Una letra minúscula',
+      isValid: false,
+      icon: this.crossIcon
+    },
+    {
+      id:3,
+      description: 'Una letra mayúscula',
+      isValid: false,
+      icon: this.crossIcon
+    },
+    {
+      id:4,
+      description: 'Un dígito',
+      isValid: false,
+      icon: this.crossIcon
+    },
+    {
+      id:5,
+      description: 'Un carácter especial',
+      isValid: false,
+      icon: this.crossIcon
+    }
+  ];
 
   constructor(public dialogRef: MatDialogRef<ModalFormLoginComponent>,
   ) { }
@@ -47,7 +82,7 @@ export class ModalFormLoginComponent implements OnInit {
   initFormLogin(): void {
     this.formLogin = this.formBuilder.group({
       'username': ['', [Validators.required]],
-      'password': ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])]
+      'password': ['', [Validators.required]]
     })
   }
 
@@ -55,16 +90,19 @@ export class ModalFormLoginComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       'username': ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       'email': ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])],
-      'password': ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])],
+      'password': ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~])[A-Za-z\\d!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]{8,}$")])],
       'name': ['', [Validators.required]],
       'firstSurname': ['', [Validators.required]],
       'lastSurname': ['', [Validators.required]]
+    });
+
+    this.registerForm.get('password')!.valueChanges.subscribe((value:any) => {      
+      this.validatePassword(value);
     });
   }
 
   cardClicked() {
     this.flip = this.flip == 'inactive' ? 'active' : 'inactive';
-    
   }
 
   login() {
@@ -96,6 +134,21 @@ export class ModalFormLoginComponent implements OnInit {
     });
   }
 
+  validatePassword(password: string) {
+    console.log(password.length >= 8);
+    
+    this.infoUserPasswordValid[0].isValid = password.length >= 8;
+    this.infoUserPasswordValid[1].isValid = /[a-z]/.test(password);
+    this.infoUserPasswordValid[2].isValid = /[A-Z]/.test(password);
+    this.infoUserPasswordValid[3].isValid = /\d/.test(password);
+    this.infoUserPasswordValid[4].isValid = /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/.test(password);
+
+    this.infoUserPasswordValid.forEach(criteria => {
+      console.log(criteria);
+      
+      criteria.icon = criteria.isValid ? this.checkIcon : this.crossIcon;
+    });
+  }
 
   register() {
     const formData = this.registerForm.value;

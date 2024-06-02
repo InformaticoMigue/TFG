@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ApiUrl } from '../../constants/api.url';
-import { ApiResponse, ApiResponseArray,Event } from '../../assets/types';
+import { ApiResponse, ApiResponseArray,Event, EventSales } from '../../assets/types';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class EventService {
 
   public find(id:number){
     return this.http.get<ApiResponse<Event>>(ApiUrl.GET_EVENT_BY_ID(id))
+  }
+
+  public register(data:any){
+    return this.http.post<ApiResponse<EventSales>>(ApiUrl.RESGISTER_EVENT_POST,data)
   }
 
 }

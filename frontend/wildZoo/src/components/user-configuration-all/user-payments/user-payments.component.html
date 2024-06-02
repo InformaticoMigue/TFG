@@ -20,9 +20,6 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Detalles
                 </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Acciones
-                </th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -33,7 +30,6 @@
                   <td class="px-6 py-4 whitespace-nowrap">{{ item.typeTicket.price | currency:'EUR':'symbol':'1.2-2' }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap w-20">{{ item.typeTicket.name }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap w-20"><button (click)="deleteTicket(item)">Borrar</button></td>
                 </tr>
                 <tr class="hover:bg-gray-100" *ngIf="item.type === 'Paquete'">
                   <td class="px-6 py-4 whitespace-nowrap">{{ item.type }}</td>
@@ -42,8 +38,6 @@
                     currency:'EUR':'symbol':'1.2-2' }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     {{ item.apackage.name }} - {{ item.apackage.typeTour.name }}
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap w-20" (click)="deletePackageSale(item)"><button>Borrar</button>
                   </td>
                 </tr>
               </ng-container>

@@ -18,6 +18,7 @@ import { AuthService } from '../../../service/auth/auth.service';
 import { UserService } from '../../../service/zoo/user.service';
 import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
 import { CommonModule } from '@angular/common';
+import { faFacebookSquare, faSquareInstagram, faSquarePinterest, faSquareXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-package-details',
@@ -45,6 +46,10 @@ export class PackageDetailsComponent implements OnInit {
   private user!: User;
   private router:Router = inject(Router);
   private snackbarService:CustomSnackbarService = inject(CustomSnackbarService)
+  public facebookIcon:IconDefinition = faFacebookSquare
+  public twitterIcon:IconDefinition = faSquareXTwitter
+  public instagramIcon:IconDefinition = faSquareInstagram
+  public pinterestIcon:IconDefinition = faSquarePinterest
 
   ngOnInit() {
     this.getActuallyUser();

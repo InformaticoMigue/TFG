@@ -3,15 +3,15 @@
     <app-header [title]="'Venta de entradas'"></app-header>
   </article>
 
-  <article class="px-40 flex gap-5">
-    <mat-stepper [linear]="true" #stepper>
-      <mat-step [stepControl]="ticketForm.get('date')!"
+  <article class="max-xs:px-5 px-40 flex gap-5">
+    <mat-stepper class="max-xs:w-full" [orientation]=" getQueryMaxXs() ? 'vertical' : 'horizontal'" [linear]="true" #stepper>
+      <mat-step  [stepControl]="ticketForm.get('date')!"
         errorMessage="La fecha de asistencia es obligatoria o menor a la actual.">
         <form [formGroup]="ticketForm">
           <ng-template matStepLabel>
             Indique una fecha
           </ng-template>
-          <mat-form-field class="mt-5 w-64" appearance="outline">
+          <mat-form-field class="mt-5 w-64 max-xs:w-full" appearance="outline">
             <mat-label>Fecha</mat-label>
             <input matInput formControlName="date" [matDatepicker]="picker">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -30,8 +30,8 @@
       </mat-step>
 
       <mat-step [stepControl]="ticketForm.get('tickets')!" errorMessage="Debes seleccionar al menos una entrada.">
-        <div class="flex mt-5 flex-col gap-5">
-          <p>
+        <div class="flex mt-5 flex-col flex-wrap gap-5">
+          <p class="max-xs:w-full">
             Selecciona el número de entradas y comienza tu compra. <b>Los niños menores de 3 años y el acompañante de la
               persona con discapacidad pueden acceder gratis</b>. No necesitan comprar una entrada.
           </p>
@@ -39,10 +39,10 @@
             <ng-template matStepLabel>Selecciona el tipo de entrada</ng-template>
             <div class="space-y-4">
               <div *ngFor="let ticket of ticketsArray.controls"
-                class="bg-white rounded-lg shadow p-4 flex justify-between items-center">
-                <div class="flex items-center">
-                  <mat-icon class="text-green-500">confirmation_number</mat-icon>
-                  <div class="flex gap-5">
+                class="bg-white max-xs:flex-col rounded-lg max-xs:gap-5 max-xs:w-full max-xs:text-center shadow p-4 flex justify-between items-center">
+                <div class="flex items-center ">
+                  <div class="flex gap-5 max-xs:flex-col items-center">
+                    <mat-icon class="text-green-500 max-xs:mx-auto">confirmation_number</mat-icon>
                     <h2 class="text-lg font-bold ml-2">{{ticket.value.name}}</h2>
                     <p>{{ticket.value.price | currency:'EUR'}}</p>
                   </div>
@@ -56,13 +56,14 @@
                   </button>
                   <span class="mx-2">{{ticket.value.quantity}}</span>
                   <button mat-icon-button color="primary"
-                    (click)="ticket.get('quantity')?.setValue(ticket.value.quantity + 1)">
+                    (click)="ticket.get('quantity')?.setValue(ticket.value.quantity + 1)"
+                    [disabled]="ticket.get('quantity')?.value == 10">
                     <mat-icon>add</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
-            <div class="mt-10 flex gap-8">
+            <div class="mt-10 flex gap-8 flex-wrap max-xs:justify-center">
               <button matStepperPrevious class="hover:bg-primary transition-all duration-500 p-4">Anterior</button>
               <button matStepperNext
                 class="hover:bg-primary transition-all duration-500 disabled:hover:bg-transparent disabled:text-gray-400 disabled:border disabled:border-primary p-4"
@@ -77,7 +78,7 @@
         <div class="mt-5 flex flex-col ">
           <div class="flex flex-col">
             <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="py-2 inline-block min-w-full">
                 <div class="overflow-hidden">
                   <table class="min-w-full bg-white">
                     <thead class="bg-primary border-b">

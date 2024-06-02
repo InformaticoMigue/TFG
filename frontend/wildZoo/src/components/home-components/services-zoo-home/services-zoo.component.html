@@ -1,4 +1,4 @@
-<section #scrollDownRef class="px-20 flex flex-col gap-24">
+<section #scrollDownRef class="px-20 max-xs:px-5 flex flex-col gap-24">
   <div class="max-portatil:flex max-portatil:flex-col max-portatil:gap-12 grid grid-cols-2">
     <article class="flex flex-col gap-5">
       <app-title-section [wrap]="true" [preTitle]="'NUESTROS SERVICIOS'"
@@ -8,7 +8,7 @@
         todos los servicios</button>
     </article>
     <article class="flex gap-3 bg-primary">
-      <div class="flex gap-5 px-10 py-5 items-center">
+      <div class="flex max-xs:flex-col max-xs:justify-center max-xs:text-center gap-5 max-xs:px-0 px-10 py-5 items-center">
         <fa-icon class="text-[75px]" [icon]="iconMobile"></fa-icon>
         <div class="flex flex-col gap-3">
           <h3 class="text-2xl">Nueva aplicación móvil para WildZoo</h3>

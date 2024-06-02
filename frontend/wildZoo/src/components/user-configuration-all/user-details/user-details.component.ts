@@ -99,11 +99,9 @@ export class UserDetailsComponent implements OnInit {
   }
 
   setAccordionItems() {
-    console.log(this.user);
-    
     this.sponsorItems = {
       icon: faPaw,
-      title: "Adopciones",
+      title: "Apadrinamientos",
       sponsors: this.user.sponsors
     }
 

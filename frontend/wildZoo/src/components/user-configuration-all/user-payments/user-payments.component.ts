@@ -43,6 +43,8 @@ export class UserPaymentsComponent implements OnInit {
     });
   }
 
+  /*
+  Opción deshabilitada
   deleteTicket(ticket: any) {
     this.ticketService.delete(ticket.id).subscribe({
       next: (res) => {
@@ -56,7 +58,10 @@ export class UserPaymentsComponent implements OnInit {
       }
     })
   }
+  */
 
+  /*
+  Opción deshabilitada
   deletePackageSale(aPackage: any) {
     this.packageService.deletePackageSale(aPackage.id).subscribe(({
       next: () => {
@@ -69,7 +74,7 @@ export class UserPaymentsComponent implements OnInit {
       }
     }))
   }
-
+  */
   handlePagedItems($event: any) {
     this.allPaymentsAux = $event
   }

@@ -150,7 +150,7 @@ export type CreditCard = {
 
 export type Ticket = {
     id:         number;
-    date:       Date;
+    date:       string;
     typeTicket: TypeTicket;
 }
 

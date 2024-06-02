@@ -17,6 +17,8 @@ export class ApiUrl {
     public static REGISTER_USER_POST = `http://${MAIN_SERVER}/users/register`
     public static SAVE_SPONSORED_POST = `http://${MAIN_SERVER}/sponsored/save`
     public static SEND_CONTACT_MESSAGE = `http://${MAIN_SERVER}/contact`
+    public static BUY_TICKET_POST = `http://${MAIN_SERVER}/tickets/buy`
+    public static RESGISTER_EVENT_POST = `http://${MAIN_SERVER}/events/register`
 
     //Methods
     public static DELETE_TICKET = (id: number) => {
@@ -52,5 +54,4 @@ export class ApiUrl {
     public static GET_SPECIE_BY_ID(id:number) {
         return `http://${MAIN_SERVER}/species/${id}`;
     } 
-    public static BUY_TICKET_POST = `http://${MAIN_SERVER}/tickets/save`
 }

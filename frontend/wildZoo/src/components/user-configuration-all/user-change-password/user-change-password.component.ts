@@ -31,7 +31,7 @@ export class UserChangePasswordComponent implements OnInit {
   ngOnInit(): void {    
     this.formChangePassword = this.formbuilder.group({
       currentPassword: ['', Validators.required],
-      newPassword: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")])],
+      newPassword: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~])[A-Za-z\\d!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]{8,}$")])],
       confirmPassword: ['', Validators.required]
     }, {
       validator: this.mustMatch('newPassword', 'confirmPassword')
@@ -77,6 +77,8 @@ export class UserChangePasswordComponent implements OnInit {
       const control = formGroup.get(controlName);
       const matchingControl = formGroup.get(matchingControlName);
 
+      console.log(control?.value,matchingControl?.value);
+      
       if (matchingControl?.errors && !matchingControl.errors['mustMatch']) {
         return;
       }

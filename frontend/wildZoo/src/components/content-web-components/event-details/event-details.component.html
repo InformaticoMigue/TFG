@@ -1,9 +1,9 @@
-<section class="flex flex-col gap-20">
+<section class="mb-20 flex flex-col gap-20">
   <article class="text-white">
     <app-header [title]="title"></app-header>
   </article>
   <article class="pl-40 max-normal:flex-wrap max-portatil:pl-5 max-portatil:pr-5 pr-20 flex gap-16">
-    <div class="w-2/3 max-normal:w-full flex flex-col gap-10">
+    <div class="w-2/3 max-xs:hidden max-normal:w-full flex flex-col gap-10">
       <app-carousel [images]="images" [interval]="8000"></app-carousel>
     </div>
     <div class="flex flex-col gap-10 w-1/3 max-normal:w-full">
@@ -15,28 +15,28 @@
       <form [formGroup]="formSuscribeEvent" class="flex flex-col gap-1">
         <mat-form-field appearance="outline" class="w-[270px] mx-auto">
           <mat-label>Día de asistencia al evento</mat-label>
-          <input matInput [disabled]="verifyInscription()" [value]="event.date" [matDatepicker]="picker">
+          <input matInput [disabled]="true" [value]="event.date" [matDatepicker]="picker">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        @if (dateToday != dateEvent) {
+        @if (!verifyInscription()) {
           <mat-error class="mx-auto">No es posible inscribirse, el evento no está disponible, se permitirá la inscripción UNA SEMANA antes del comienzo del mismo</mat-error>
         }
-        <button (click)="registerToEvent()" [disabled]="dateToday != dateEvent"
+        <button (click)="registerToEvent()" [disabled]="!verifyInscription()"
         class="mt-5 disabled:border disabled:border-primary disabled:text-gray-400 disabled:hover:bg-transparent w-40 h-12 hover:bg-primary transition-all duration-500 mx-auto">Inscribirse</button>
       </form>
     </div>
     
   </article>
-  <article class="w-2/3 max-normal:w-full pl-40 max-portatil:pl-20 max-portatil:pr-10 pr-10 flex flex-col gap-12">
-    <div class="flex justify-between">
+  <article class="w-2/3 max-normal:w-full max-xs:pl-5 pl-40 max-xs:pr-5 max-portatil:pl-20 max-portatil:pr-10 pr-10 flex flex-col gap-12">
+    <div class="flex justify-between max-xs:flex-wrap max-xs gap-5 max-xs:justify-center">
       <div class="flex items-center gap-2">
         <fa-icon class="text-3xl text-primarySub" [icon]="initialHour"></fa-icon>
-        <span>Hora de apertura {{event.initialHour}}</span>
+        <span>Hora de apertura {{formatTime(event.initialHour)}}</span>
       </div>
       <div class="flex items-center gap-2">
         <fa-icon class="text-3xl text-primarySub" [icon]="finishHour"></fa-icon>
-        <span>Hora de finalización {{event.finishHour}}</span>
+        <span>Hora de finalización {{formatTime(event.finishHour)}}</span>
       </div>
       <div class="flex items-center gap-2">
         <fa-icon class="text-3xl text-primarySub" [icon]="dayEvent"></fa-icon>
@@ -54,7 +54,7 @@
   </article>  
   <article class="pl-40 max-normal:flex-wrap max-portatil:pl-5 max-portatil:pr-5 pr-20 flex flex-col gap-10">
     <h1 class="text-text text-3xl font-bold">Animales presentes</h1>
-    <div class="grid grid-cols-3 w-full mx-auto gap-10">
+    <div class="grid grid-cols-3 max-xs:grid-cols-1 w-full mx-auto gap-10">
       @for (animal of event.animals; track animal.id) {
         <app-animals-card [showMore]="true" [animal]="animal"></app-animals-card>
       }

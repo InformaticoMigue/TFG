@@ -3,9 +3,13 @@ package org.iesbelen.wildzoo.controller;
 import org.iesbelen.wildzoo.exception.ErrorNotFound;
 import org.iesbelen.wildzoo.exception.NotFoundException;
 import org.iesbelen.wildzoo.model.Event;
+import org.iesbelen.wildzoo.model.EventSale;
+import org.iesbelen.wildzoo.model.Ticket;
 import org.iesbelen.wildzoo.record.Animal.ResponseWrapperAnimalOne;
 import org.iesbelen.wildzoo.record.Event.ResponseWrapperEvent;
 import org.iesbelen.wildzoo.record.Event.ResponseWrapperEventOne;
+import org.iesbelen.wildzoo.record.Event.ResponseWrapperEventSaleOne;
+import org.iesbelen.wildzoo.record.Ticket.ResponseWrapperTicketOne;
 import org.iesbelen.wildzoo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,5 +40,12 @@ public class EventController {
             return new ResponseEntity<>(new ResponseWrapperEventOne(optionalEvent.get()),
                     HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ResponseWrapperEventSaleOne> save(@RequestBody EventSale eventSale) {
+        return new ResponseEntity<>(
+                new ResponseWrapperEventSaleOne(this.eventService.updateEventSale(eventSale))
+                ,HttpStatus.CREATED);
     }
 }

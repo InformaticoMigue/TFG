@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-page-not-found',
@@ -8,5 +11,13 @@ import { Component } from '@angular/core';
   styleUrl: './page-not-found.component.scss'
 })
 export class PageNotFoundComponent {
+  private router:Router = inject(Router)
+  private location:Location = inject(Location)
 
+  goToHome(){
+    this.router.navigate(['/']);
+  }
+  goToPrevious(){
+    this.location.back();
+  }
 }
