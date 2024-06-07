@@ -1,5 +1,11 @@
-<div class="max-xs:px-10 px-20 flex justify-between items-center h-20 w-full">
-  <div class="flex gap-10">
+<div class="max-xs:px-10 px-20 max-normal:mb-20 flex justify-between items-center max-normal:flex-col max-normal:mt-0 h-20 mt-10 w-full">
+  <button [routerLink]="'/'" class="flex max-xs:justify-center items-center">
+    <h1 class="text-6xl max-normal:text-5xl font-bold">Wild</h1>
+    <div class="w-32 max-xs:w-20">
+      <img src="../../assets/img/logo.png" alt="" srcset="">
+    </div>
+  </button>
+  <div class="flex max-xs:flex-col max-xs:gap-3 mt-5 gap-10">
     <div class="flex items-center gap-3">
       <fa-icon class="text-xl text-primary" [icon]="ubicationIcon"></fa-icon>
       <span class="text-sm">Calle Antonio Machado Nº23</span>

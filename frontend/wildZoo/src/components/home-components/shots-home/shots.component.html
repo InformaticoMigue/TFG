@@ -1,6 +1,11 @@
-<section class="px-20 max-xs:px-5 mb-16">
-    <app-title-section [wrap]="true" [preTitle]="'NUESTRA GALERIA'"
-        [title]="'FOTOS DE NUESTRO ZOO'"></app-title-section>
+<section class="px-20 max-xs:px-5 mb-16 flex justify-between max-normal:flex-col max-normal:gap-10 items-center">
+    <article>
+        <app-title-section [wrap]="true" [preTitle]="'NUESTRA GALERIA'"
+            [title]="'FOTOS DE NUESTRO ZOO'"></app-title-section>
+    </article>
+    <article>
+         <button class="border-primary p-5 border-2 hover:bg-primary transition-all duration-500 " [routerLink]="'/animales/clase/0'">Ver todos los animales</button>
+    </article>
 </section>
 <mat-grid-list data-aos="zoom-out-up" data-aos-duration="2500" data-aos-easing="linear" [rowHeight]="options.rowHeight"
     [cols]="responsive ? 1 : options.numberCols">

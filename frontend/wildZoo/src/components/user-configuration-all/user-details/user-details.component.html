@@ -59,11 +59,11 @@
         [disabled]="user.sponsors.length == 0">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <fa-icon [icon]="sponsorItems.icon " class="mr-2"></fa-icon>
+            <fa-icon class="max-xs:text-center" [icon]="sponsorItems.icon " class="mr-2"></fa-icon>
             @if (user.sponsors.length == 0) {
-            No tienes ningun animal apadrina {{user.name}}
+            <span class="max-xs:hidden">No tienes ningun animal apadrinado {{user.name}}</span>
             }@else {
-            {{ sponsorItems.title }}
+              <span class="max-xs:hidden">{{ sponsorItems.title }}</span>
             }
           </mat-panel-title>
         </mat-expansion-panel-header>

@@ -16,6 +16,11 @@ public class SponsorAnimalServiceImpl implements SponsorAnimalService {
 
     @Override
     public List<SponsorAnimal> getAll() {
+        return (List<SponsorAnimal>) this.SponsorAnimalRepository.findAll();
+    }
+
+    @Override
+    public List<SponsorAnimal> getAllWithSponsored() {
         List<SponsorAnimal> animals = (List<SponsorAnimal>) this.SponsorAnimalRepository.findAll();
         return animals.stream()
                 .filter(adoptionAnimal -> adoptionAnimal.getSponsor() == null)

@@ -90,11 +90,16 @@ export class EventDetailsComponent implements OnInit {
       this.snackbarService.openErrorSnackbar("Necesita estar logueado", "Cerrar")
       return;
     }
-    
+
     const ticketDayEvent = this.user.tickets.find(t => t.date == this.event.date)
 
     if (!this.user.tickets || !ticketDayEvent) {
       this.snackbarService.openErrorSnackbar("Necesita comprar un ticket con la fecha del evento", "Cerrar")
+      return;
+    }
+    
+    if (this.user.eventSales.find(evs => evs.event.id == this.event.id)) {
+      this.snackbarService.openErrorSnackbar("Ya se ha inscrito a este evento", "Cerrar")
       return;
     }
 
@@ -108,7 +113,8 @@ export class EventDetailsComponent implements OnInit {
       registrationDate: new Date()
     }
     this.eventService.register(objectRequest).subscribe({
-      next: () => {
+      next: (event) => {
+        this.user.eventSales.push(event.data);
         this.snackbarService.openSucessSnackbar(`Se ha inscrito correctamente al evento ${this.event.name}`, "Cerrar")
       },
       error: () => {

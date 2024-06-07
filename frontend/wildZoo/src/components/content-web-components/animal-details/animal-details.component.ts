@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { SponsorAnimal, Animal, User } from '../../../assets/types';
+import { SponsorAnimal, Animal, User, Event } from '../../../assets/types';
 import { HeaderComponent } from "../header/header.component";
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, catchError, forkJoin, map, of, switchMap, throwError } from 'rxjs';
 import { AnimalService } from '../../../service/zoo/animal.service';
-import { AdoptionService } from '../../../service/zoo/adoption.service';
+import { SponsorService } from '../../../service/zoo/sponsor.service';
 import { CommonModule } from '@angular/common';
-import { faAddressBook, faAddressCard, faCakeCandles, faCalendarCheck, faGlobe, faHome, faPaw, faUtensils, faWeightHanging, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faAddressCard, faCakeCandles, faCalendarCheck, faGlobe, faHome, faPaw, faUsers, faUtensils, faWeightHanging, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { SpecieService } from '../../../service/zoo/specie.service';
 import { AnimalsCardComponent } from '../animals-card/animals-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -22,7 +22,7 @@ import { UserService } from '../../../service/zoo/user.service';
   standalone: true,
   templateUrl: './animal-details.component.html',
   styleUrls: ['./animal-details.component.scss'],
-  imports: [HeaderComponent, TitleSectionComponent ,CommonModule, CarouselComponent, AnimalsCardComponent,FontAwesomeModule]
+  imports: [HeaderComponent, RouterLink,TitleSectionComponent ,CommonModule, CarouselComponent, AnimalsCardComponent,FontAwesomeModule]
 })
 export class AnimalDetailsComponent implements OnInit {
   public animal: any = {};
@@ -30,7 +30,7 @@ export class AnimalDetailsComponent implements OnInit {
   public title!: string;
   private animalService: AnimalService = inject(AnimalService);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private adoptionService: AdoptionService = inject(AdoptionService);
+  private adoptionService: SponsorService = inject(SponsorService);
   private specieService: SpecieService = inject(SpecieService);
   private router: Router = inject(Router);
   private matDialog: MatDialog = inject(MatDialog);
@@ -42,6 +42,7 @@ export class AnimalDetailsComponent implements OnInit {
   public worldIcon: IconDefinition = faGlobe;
   public classIcon: IconDefinition = faAddressBook;
   public adoptionIcon: IconDefinition = faPaw;
+  public specieIcon:IconDefinition = faUsers;
 
   ngOnInit(): void {
     this.getActuallyUser().pipe(
@@ -95,6 +96,7 @@ export class AnimalDetailsComponent implements OnInit {
           this.animal.isAvailableForAdoption = result.isAvailable;
           const animalsBySpecie = result.specieById.data.animals.filter((animal: Animal) => animal.id !== this.animal.id);
           this.similarAnimal = animalsBySpecie[Math.floor(Math.random() * animalsBySpecie.length)];
+          this.animal.events = this.animal.events.filter((event: Event) => new Date(event.date).getTime() >= new Date().getTime());
           console.log(this.animal);
           
         } else {
@@ -116,7 +118,7 @@ export class AnimalDetailsComponent implements OnInit {
       }
     }).afterClosed().subscribe((res) => {
       if (res) {
-        this.animal.isAvailableForAdoption.adoption = res;
+        this.animal.isAvailableForAdoption.sponsor = res;
       }      
     });
   }

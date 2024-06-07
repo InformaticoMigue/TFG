@@ -10,6 +10,7 @@ import { UserConfigurationComponent } from '../components/user-configuration-all
 import { TicketComponent } from '../components/content-web-components/ticket/ticket.component';
 import { AboutComponent } from '../components/about/about.component';
 import { ContactComponent } from '../components/contact/contact.component';
+import { SponsorsComponent } from '../components/content-web-components/sponsors/sponsors.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,5 +25,6 @@ export const routes: Routes = [
     { path: 'entradas', component: TicketComponent },
     { path: 'sobre-nosotros', component: AboutComponent},
     { path: 'contacto', component: ContactComponent},
+    { path: 'apadrinar', component: SponsorsComponent},
     { path: '**', component: PageNotFoundComponent }
 ];

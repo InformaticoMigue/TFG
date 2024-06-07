@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { AdoptionService } from '../../../../service/zoo/adoption.service';
+import { SponsorService } from '../../../../service/zoo/sponsor.service';
 import { CustomSnackbarService } from '../../../../service/snackbar/custom-snackbar.service';
 import { catchError, of } from 'rxjs';
 import { User } from '../../../../assets/types';
@@ -17,7 +17,7 @@ import { User } from '../../../../assets/types';
 })
 export class ModalAdoptionComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
-  private adoptionService:AdoptionService = inject(AdoptionService);
+  private adoptionService:SponsorService = inject(SponsorService);
   private snackbarService:CustomSnackbarService = inject(CustomSnackbarService);
   public sponsorAnimal:any;
   public formAdoption:FormGroup = new FormGroup({});

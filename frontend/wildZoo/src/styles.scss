@@ -8,7 +8,7 @@
 }
 
 body {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 .custom-dialog-transparent .mat-mdc-dialog-container .mdc-dialog__surface {

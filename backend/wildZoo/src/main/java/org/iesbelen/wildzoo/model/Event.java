@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
@@ -32,7 +33,7 @@ public class Event {
     private long finishHour;
     @Column(length = 2000)
     private String description;
-
+    private BigDecimal capacity;
     @ManyToMany
     @JoinTable(
             name = "Event_Animal",

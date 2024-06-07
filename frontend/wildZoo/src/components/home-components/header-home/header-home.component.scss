@@ -1,5 +1,5 @@
-.bg {
-    clip-path: polygon(50% 0%, 100% 0, 100% 35%, 100% 89%, 77% 100%, 43% 94%, 24% 98%, 0 92%, 0 0, 20% 0);
+.rotar {
+    transform: translateX(-50%) rotateY(180deg);
 }
 h1 {
     font-weight: 600;

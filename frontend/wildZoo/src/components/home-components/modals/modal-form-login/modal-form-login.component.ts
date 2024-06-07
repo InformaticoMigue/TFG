@@ -110,7 +110,7 @@ export class ModalFormLoginComponent implements OnInit {
     const password = this.formLogin.get("password").value;
 
     this.userService.checkUsernameAvailability(username).subscribe({
-      next: (response) => {
+      next: (response) => {        
         if (response.data) {
           const encryptedPassword = this.encryptedService.encryptData(password);
           this.authService.login(username, encryptedPassword).subscribe({
@@ -119,7 +119,7 @@ export class ModalFormLoginComponent implements OnInit {
               this.dialogRef.close();
             },
             error: (error) => {
-              this.snackbarService.openErrorSnackbar('Contraseña incorrecta', 'Cerrar')
+              this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
               console.error("Login failed", error);
             }
           });

@@ -126,9 +126,9 @@ export class TicketComponent implements OnInit {
             description: controlTicket.value.description,
             name: controlTicket.value.name
           };
-          const date = new Date(this.ticketForm.get("date")?.value)
-          date.setDate(date.getDate()+1)
-          
+          const date = new Date(this.ticketForm.get("date")?.value)  
+          date.setDate(date.getDate()+1);
+                  
           const objectToRequest = {
             id: null,
             date: date,
@@ -153,10 +153,6 @@ export class TicketComponent implements OnInit {
     this.stepper.reset();
     this.initForm();
     this.initTicketsForm();
-  }
-
-  private formatDate(date: Date): string {
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate}`
   }
 
   dateValidator() {
@@ -203,7 +199,7 @@ export class TicketComponent implements OnInit {
       }
     })
   }
-  getQueryMaxXs(){
-    return window.innerWidth <= 320
+  getQueryMaxNormal(){
+    return window.innerWidth <= 768
   }
 }

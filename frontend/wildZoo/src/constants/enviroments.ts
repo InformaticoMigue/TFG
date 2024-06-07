@@ -1,1 +1,1 @@
-export const MAIN_SERVER = `localhost:8088`
+export const MAIN_SERVER = `http://wildzoo.life:8088`

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBars,faUser,faAngleUp, faRightFromBracket, faUserCircle, faCog, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars,faUser,faAngleUp, faRightFromBracket, faUserCircle, faCog, faSignInAlt, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidevarComponent } from "../sidevar/sidevar.component";
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -29,7 +29,8 @@ import { Event } from '../../assets/types';
 
 export class NavbarComponent implements OnInit {
   public dialog:MatDialog = inject(MatDialog);
-  public iconSidebar = faBars;
+  public iconOpenSidebar = faBars;
+  public iconCloseSidebar = faXmark;
   public iconUser = faUser;
   public iconCollapse = faAngleUp;
   public iconLogOut = faRightFromBracket;
@@ -67,6 +68,8 @@ export class NavbarComponent implements OnInit {
         const packages = responses[0].data
         this.allPackages = packages;
         this.allEvents = responses[1].data
+        this.allEvents = this.allEvents.filter(event => new Date(event.date).getTime() >= new Date().getTime())
+
     })
   }
 

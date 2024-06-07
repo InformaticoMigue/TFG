@@ -17,7 +17,7 @@
   <article class="flex flex-col text-white gap-40 max-xs:px-5 py-32  px-20 max-portatil:w-full w-2/5 bg-cover bg-center"
     style="background-image: url('../../assets/img/zoo-images/events-home/{{ eventDetails.name }}_details.jpg');">
     <div class="flex flex-col gap-10">
-      <app-title-section [white]="true" [wrap]="true" [preTitle]="'EVENTO SELECCIONADO'"
+      <app-title-section id="eventDetail" [white]="true" [wrap]="true" [preTitle]="'EVENTO SELECCIONADO'"
         [title]="eventDetails.name.toUpperCase()"></app-title-section>
       <p class="text-lg">{{eventDetails.descriptionAccorted}}.</p>
       <div class="flex flex-col">
@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <a class="flex max-xs:w-1/2 justify-center items-center rounded-md max-normal:w-1/3 max-normal:mx-auto h-16 transition-all duration-500 border border-primary text-lg w-2/5 text-white  hover:bg-primary hover:text-text"
+    <a  class="flex max-xs:w-1/2 justify-center items-center rounded-md max-normal:w-1/3 max-normal:mx-auto h-16 transition-all duration-500 border border-primary text-lg w-2/5 text-white  hover:bg-primary hover:text-text"
       [routerLink]="'/eventos/'+eventDetails.id">
       Descubrir
     </a>

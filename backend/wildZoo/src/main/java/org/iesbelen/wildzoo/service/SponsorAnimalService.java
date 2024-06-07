@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface SponsorAnimalService {
     public List<SponsorAnimal> getAll();
+    public List<SponsorAnimal> getAllWithSponsored();
+
     public Optional<SponsorAnimal> getAdoptionAnimalByAnimalId(long animalId);
 }

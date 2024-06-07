@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { StorageService } from '../storage/storage.service';
+import { MAIN_SERVER } from '../../constants/enviroments';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class AuthService {
 
 
   login(username: string, password: string): Observable<any> {
-    return this.httpClient.post<{ jwt: string }>(`http://localhost:8080/authenticate`, { username, password })
+    return this.httpClient.post<{ jwt: string }>(`${MAIN_SERVER}/authenticate`, { username, password })
     .pipe(map(response => {
       this.storage.saveData('jwtToken', response.jwt);
       this.currentUser.next(this.getUserData());

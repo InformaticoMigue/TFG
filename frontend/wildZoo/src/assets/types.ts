@@ -59,6 +59,7 @@ export type Event = {
     finishHour:  number;
     description: string;
     animals: Animal[];
+    capacity: number;
 }
 
 export type Tile = {
@@ -105,7 +106,7 @@ export type User = {
     lastSurname:    string;
     creditCard: CreditCard;
     tickets:        Ticket[];
-    sponsors:      Adoption[];
+    sponsors:       Sponsor[];
     packageSales:   any[];
     eventSales: EventSales[];
 }
@@ -125,7 +126,7 @@ export type PackageSales = {
     apackage:Package;
 }
 
-export type Adoption = {
+export type Sponsor = {
     id:             number;
     date:           Date;
     sponsorAnimal: SponsorAnimal;
@@ -137,6 +138,8 @@ export type SponsorAnimal = {
     id:    number;
     price: number;
     animal: Animal;
+    sponsor:Sponsor,
+    
 }
 
 export type CreditCard = {
@@ -183,7 +186,7 @@ export type ApiResponseArray<T> = {
     data: T[];
 }
 
-type ResponseTypes = Specie | Adoption | Animal | Aclass | Continent | Package | Event | User | Service;
+type ResponseTypes = Specie | Sponsor | Animal | Aclass | Continent | Package | Event | User | Service;
 
 export type ApiResponseMap<T> = {
     [K in keyof T]: ApiResponse<T[K]>;

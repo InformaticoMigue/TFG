@@ -1,6 +1,13 @@
-<article [ngClass]="abstract ? 'bg' : ''" class=" bg-header h-[500px] bg-fixed bg-cover bg-center">
+<article class="relative bg-header h-[600px] bg-fixed bg-cover bg-center">
+  @if (abstract) {
+    <article class="z-10 absolute left-0 overflow-hidden w-full -bottom-1">
+      <svg class="left-1/2 relative rotar " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <path class="fill-white" d="M761.9,40.6L643.1,24L333.9,93.8L0.1,1H0v99h1000V1"></path>
+      </svg>
+    </article>
+  }
   <app-navbar></app-navbar>
-  <div class="h-[28%] max-normal:text-center max-normal:px-10 font-bold text-4xl flex items-center justify-center">
+  <div class="h-[30%] max-normal:text-center max-normal:px-10 font-bold text-4xl flex items-center justify-center">
     {{title}}
   </div>
 </article>

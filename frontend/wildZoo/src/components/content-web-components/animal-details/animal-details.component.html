@@ -2,35 +2,34 @@
   <article class="text-white">
     <app-header [title]="title"></app-header>
   </article>
-  <div class="px-40 font-semibold mx-auto">
+  <div class="px-40 max-normal:px-5 font-semibold mx-auto">
     @if (animal?.isAvailableForAdoption && animal?.isAvailableForAdoption.sponsor == null) {
-    <p class="text-text font-bold text-3xl">¡¡Estas de suerte!! Animal disponible para apadrinar</p>
-    }@else if(animal?.isAvailableForAdoption && animal?.isAvailableForAdoption.sponsor != null){
-    <p class="text-text font-bold text-3xl">Animal apadrinado por {{animal.isAvailableForAdoption.sponsor.user.name}}</p>
+    <p class="text-text font-bold text-3xl bg-primary p-10 shadow-lg max-normal:text-center">¡¡Estas de suerte!! Animal disponible para apadrinar</p>
+    }@else if(animal.isAvailableForAdoption && animal.isAvailableForAdoption.sponsor != null){
+    <p class="text-text font-bold text-3xl bg-primary p-10 shadow-lg max-normal:text-center">Animal apadrinado por {{animal.isAvailableForAdoption.sponsor.user.name}}</p>
     }@else {
-    <p class="text-text font-bold text-3xl">¡¡Lo sentimos!! Animal NO disponible para apadrinar</p>
+    <p class="text-text font-bold text-3xl bg-primary p-10 shadow-lg max-normal:text-center">¡¡Lo sentimos!! Animal NO disponible para apadrinar</p>
     }
   </div>
-  <article class="flex gap-10 px-40">
-    <div class="w-3/5">
+  <article class="flex gap-10 max-normal:flex-col max-normal:gap-20 max-normal:px-5 px-40">
+    <div class="w-3/5 max-normal:w-full">
       <div [ngClass]="similarAnimal ? 'h-full' : 'h-[40em]'"
-        class="bg-cover bg-center bg-no-repeat rounded-md relative group"
+        class="bg-cover bg-center max-normal:h-[50em] bg-no-repeat relative group"
         style="background-image: url('{{ getBackground() }}');">
-        <div class="bg-black bg-opacity-35 absolute inset-0 rounded-md"></div>
         @if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.sponsor == null ) {
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <fa-icon (click)="openModalAdoption(animal.isAvailableForAdoption)" class="text-primarySub cursor-pointer text-[25em]" [icon]="adoptionIcon"></fa-icon>
+          <fa-icon (click)="openModalAdoption(animal.isAvailableForAdoption)" class="text-primarySub cursor-pointer text-[25em] max-normal:text-[15em]" [icon]="adoptionIcon"></fa-icon>
         </div>
         }
         @else if (animal.isAvailableForAdoption && animal.isAvailableForAdoption.sponsor != null) {
           <div class="absolute inset-0 flex justify-center items-center">
-            <fa-icon class="text-primarySub  text-[25em]" [icon]="adoptionIcon"></fa-icon>
+            <fa-icon class="text-primarySub  text-[25em] max-normal:text-[15em]" [icon]="adoptionIcon"></fa-icon>
           </div>  
         }
       </div>
     </div>
-    <div class="flex w-2/5 flex-col gap-8">
-      <div class="flex flex-col gap-6">
+    <div class="flex w-2/5 flex-col max-normal:w-full gap-8">
+      <div class="flex flex-col gap-6 max-normal:items-center">
         <div class="flex items-center gap-4">
           <fa-icon class="text-2xl text-primary" [icon]="weightIcon"></fa-icon>
           <p>Peso: </p>
@@ -51,8 +50,13 @@
           <p>Clase: </p>
           <p>{{animal.aclass.name}}</p>
         </div>
+        <div class="flex items-center gap-4">
+          <fa-icon class="text-2xl text-primary" [icon]="specieIcon"></fa-icon>
+          <p>Especie: </p>
+          <p>{{animal.specie.name}}</p>
+        </div>
       </div>
-      <p>
+      <p class="max-normal:text-center">
         {{animal.description}}
       </p>
       @if (similarAnimal) {
@@ -65,4 +69,23 @@
       }
     </div>
   </article>
+    @if (animal.events.length > 0) {
+      <article class="px-40 flex flex-col gap-20 max-normal:px-5 ">
+        <div class="mx-auto font-semibold">
+          <p class="text-text font-bold text-3xl bg-primary p-10 shadow-lg rounded-md max-normal:text-center">Eventos - {{animal.name}}</p>
+        </div>
+        <div class="flex gap-20 justify-center max-normal:flex-wrap">
+          @for (event of animal.events; track event.id) {
+            <div class="w-1/2 relative max-normal:w-full h-[500px] bg-cover bg-center flex"
+            style="background-image: url('../../../assets/img/zoo-images/event-details/{{event.name}}_1.jpg')">
+              <div class="absolute inset-0 bg-black w-full h-full bg-opacity-50"></div>
+              <div class="flex z-20 text-white max-normal:gap-5 h-full w-full items-center flex-col text-center justify-center gap-5">
+                <h1 class="text-2xl">{{event.name}}</h1>
+                <a [routerLink]="'/eventos/'+event.id" class="hover:text-primary text-xl transition-all duration-700">Saber mas</a>
+              </div>
+            </div>
+          }
+        </div>
+      </article>
+    }
 </section>

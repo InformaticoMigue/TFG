@@ -34,8 +34,15 @@ public class SponsorController {
                 new ResponseWrapperSponsor(this.sponsorService.getAll()), HttpStatus.OK);
     }
 
-    @GetMapping("available")
+    @GetMapping("available/sponsors")
     public ResponseEntity<ResponseWrapperAvailable> getSponsorAnimalsAvailable(){
+        return new ResponseEntity<>(
+                new ResponseWrapperAvailable(this.sponsorAnimalService.getAllWithSponsored()),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("available")
+    public ResponseEntity<ResponseWrapperAvailable> getAllSponsorAnimal(){
         return new ResponseEntity<>(
                 new ResponseWrapperAvailable(this.sponsorAnimalService.getAll()),
                 HttpStatus.OK);

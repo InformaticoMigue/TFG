@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ApiUrl } from '../../constants/api.url';
 import { Observable, catchError, map, of } from 'rxjs';
-import { Adoption, SponsorAnimal, ApiResponse } from '../../assets/types';
+import { SponsorAnimal, ApiResponse, Sponsor, ApiResponseArray } from '../../assets/types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdoptionService {
+export class SponsorService {
 
   private http: HttpClient = inject(HttpClient)
 
@@ -16,6 +16,14 @@ export class AdoptionService {
   }
 
   public savedAdoption(data:any){
-    return this.http.post<ApiResponse<Adoption>>(ApiUrl.SAVE_SPONSORED_POST,data);
+    return this.http.post<ApiResponse<Sponsor>>(ApiUrl.SAVE_SPONSORED_POST,data);
+  }
+
+  public getAllSponsors(){
+    return this.http.get<ApiResponseArray<Sponsor>>(ApiUrl.GET_ALL_SPONSORS);
+  }
+
+  public getAllAvailableAnimals(){
+    return this.http.get<ApiResponseArray<SponsorAnimal>>(ApiUrl.GET_ALL_AVAILABLE_SPONSORS_ANIMAL)
   }
 }

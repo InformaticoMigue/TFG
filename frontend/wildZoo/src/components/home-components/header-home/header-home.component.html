@@ -1,6 +1,11 @@
-<header class="bg-header bg bg-cover bg-fixed bg-center text-white flex flex-col max-normal:gap-10">
-  <app-navbar></app-navbar>
-  <section class=" relative flex max-normal:flex-wrap items-center max-normal:gap-10 max-normal:px-5 max-normal:text-center max-normal:justify-center pl-20">
+<header class="bg-header relative bg-cover bg-fixed bg-center text-white flex flex-col max-normal:gap-10">
+  <div class=" z-10 absolute left-0 overflow-hidden w-full -bottom-1">
+    <svg class="left-1/2 relative rotar " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+      <path class="fill-white" d="M761.9,40.6L643.1,24L333.9,93.8L0.1,1H0v99h1000V1"></path>
+    </svg>
+  </div>
+  <app-navbar class="relative overflow-visible z-50"></app-navbar>
+  <section class=" relative flex max-normal:flex-wrap max-portatil:items-start max-portatil:mt-4 items-center max-normal:gap-10 max-normal:px-5 max-normal:text-center max-normal:justify-center pl-20">
     <article data-aos="zoom-out-up" data-aos-duration="2000" class="flex w-1/2 max-normal:w-full flex-col items-center gap-12">
       <h1 class="text-center max-portatil:text-3xl max-normal:text-4xl text-5xl leading-normal">Descubre la emoción de la vida salvaje en WildZoo</h1>
       <p class="max-portatil:text-sm max-normal:text-lg">Embárcate en una aventura única en WildZoo, donde la emoción de la vida salvaje te aguarda. Descubre la majestuosidad de la naturaleza y la diversidad de especies en nuestro santuario. Únete a nosotros para disfrutar de eventos educativos y actividades interactivas que te permitirán conocer de cerca a nuestras fascinantes criaturas y aprender sobre su importancia.      </p>
@@ -9,8 +14,8 @@
         Ver eventos
         </a>
     </article>
-    <img data-aos="fade-up-left"
-    data-aos-duration="1500"
-    class="max-normal:w-full max-xs:h-[400px] max-xs:object-cover content-end w-1/2 h-full flex items-end justify-end" src="../../assets/img/loro-header-home.png" alt="">
+    <img data-aos="fade-left"
+    data-aos-duration="3000"
+    class="max-normal:w-full mt-10 max-xs:h-[400px] max-xs:object-cover content-end w-1/2 h-full flex items-end justify-end" src="../../assets/img/loro-header-home.png" alt="">
   </section>
 </header>

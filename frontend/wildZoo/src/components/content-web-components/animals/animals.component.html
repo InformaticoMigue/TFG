@@ -3,8 +3,8 @@
     <app-header [title]="'Animales de WildZoo'"></app-header>
   </article>
   
-  <article #filtersArticle class="flex flex-col gap-10 max-normal:px-20 max-xs:px-10 px-40">
-    <div class="flex flex-wrap gap-10 max-xs:justify-center">
+  <article #filtersArticle class="flex flex-col gap-10 max-normal:px-20 max-xs:px-0 px-40">
+    <div class="flex flex-wrap gap-10 max-xs:justify-center max-xs:px-10">
       @for (filter of filters; track filter.id) {
         @if (activeFilterId == filter.id) {
           <div class="flex flex-col gap-1 group">
@@ -24,7 +24,7 @@
         <app-animals-card  [showMore]="true" @fadeInOut [animal]="animal"></app-animals-card>
       }
     </div>
-    <div class="flex justify-center items-center space-x-4 my-4">
+    <div class="flex justify-center items-center space-x-4 max-xs:px-10 my-4">
       <button 
         class="px-4 py-2 text-text bg-primary disabled:bg-primarySub disabled:text-white rounded" 
         (click)="previousPage()" 

@@ -1,87 +1,89 @@
-<div class="z-50 relative flex flex-col gap-4">
+<div class="z-50 relative flex flex-col gap-12">
     <app-navbar-top></app-navbar-top>
+    <hr class=" border border-primary opacity-60">
     <div class="max-w-full ">
-    <hr class=" border-primary opacity-25">
-        <div class="max-xs:px-10 px-20 flex max-xs:flex-col items-center justify-between">
-            <button [routerLink]="'/'" class="flex w-full max-xs:justify-center items-center">
-                <h1 class="text-6xl font-bold">Wild</h1>
-                <div class="w-32">
-                    <img src="../../assets/img/logo.png" alt="" srcset="">
-                </div>
-            </button>
+        <div class="max-xs:px-10 px-20 flex max-xs:flex-col items-center" [ngClass]="responsive ? 'justify-end' : ''">
             @if (!responsive) {
-            <div class="flex w-full items-center justify-end gap-12">
-                <div class="flex gap-12 text-lg w-full">
-                    <button [routerLink]="''" class="text-white transition-all duration-500 hover:text-primary">Home</button>
-                    <button (click)="toggleMenu('packages')" [matMenuTriggerFor]="packages" class="text-white transition-all duration-500 hover:text-primary">
+            <div class="flex w-full items-center justify-end gap-5">
+                <div class="flex gap-12 text-lg w-full justify-end">
+                    <button [routerLink]="''"
+                        class="text-white transition-all duration-500 hover:text-primary">Home</button>
+                    <button (click)="toggleMenu('packages')" [matMenuTriggerFor]="packages"
+                        class="text-white transition-all duration-500 hover:text-primary">
                         <div class="flex items-center gap-2">
                             <span>Paquetes</span>
-                            <fa-icon [flip]="menuStates['packages'] ? 'horizontal' : 'vertical'" 
-                                [icon]="iconCollapse">
+                            <fa-icon [flip]="menuStates['packages'] ? 'horizontal' : 'vertical'" [icon]="iconCollapse">
                             </fa-icon>
                         </div>
                     </button>
                     <mat-menu (closed)="menuStates['packages'] = false" #packages="matMenu">
                         @for (package of allPackages; track package.id) {
-                            <button [routerLink]="'/paquete/'+package.id" mat-menu-item>{{package.name}}</button>
+                        <button [routerLink]="'/paquete/'+package.id" mat-menu-item>{{package.name}}</button>
                         }
                     </mat-menu>
-                    <button (click)="toggleMenu('events')" [matMenuTriggerFor]="events" class="text-white transition-all duration-500 hover:text-primary">
+                    <button (click)="toggleMenu('events')" [matMenuTriggerFor]="events"
+                        class="text-white transition-all duration-500 hover:text-primary">
                         <div class="flex items-center gap-2">
                             <span>Eventos</span>
-                            <fa-icon [flip]="menuStates['events'] ? 'horizontal' : 'vertical'" 
-                                [icon]="iconCollapse">
+                            <fa-icon [flip]="menuStates['events'] ? 'horizontal' : 'vertical'" [icon]="iconCollapse">
                             </fa-icon>
                         </div>
                     </button>
                     <mat-menu (closed)="menuStates['events'] = false" #events="matMenu">
                         @for (event of allEvents; track event.id) {
-                            <button [routerLink]="'/eventos/'+event.id" mat-menu-item>{{event.name}}</button>
+                        <button [routerLink]="'/eventos/'+event.id" mat-menu-item>{{event.name}}</button>
                         }
                     </mat-menu>
-                    <button  [routerLink]="'/animales/clase/0'" class="text-white transition-all duration-500 hover:text-primary">
+                    <button [routerLink]="'/animales/clase/0'"
+                        class="text-white transition-all duration-500 hover:text-primary">
                         <div class="flex items-center gap-2">
                             <span>Animales</span>
                         </div>
                     </button>
-                    <button [routerLink]="'/sobre-nosotros'" class="w-32 text-white transition-all duration-500 hover:text-primary">Sobre nosotros</button>
-                    <button [routerLink]="'/contacto'" class="text-white transition-all duration-500 hover:text-primary">Contacto</button>
-                </div>
-                
-                <div class="flex gap-12">
+                    <button [routerLink]="'/apadrinar'"
+                    class=" text-white transition-all duration-500 hover:text-primary">Apadrinar</button>
+
+                    <button [routerLink]="'/sobre-nosotros'"
+                        class=" text-white transition-all duration-500 hover:text-primary">Nosotros</button>
+                    <button [routerLink]="'/contacto'"
+                        class="text-white transition-all duration-500 hover:text-primary">Contacto</button>
                     <div class="flex items-center justify-center w-40">
-                        <button [routerLink]="'/entradas'" class="border border-primary text-xl rounded-md w-full h-16 transition-all duration-500 hover:bg-primary hover:text-text" matTooltip="Comprar entradas">Entradas</button>
+                        <button [routerLink]="'/entradas'"
+                            class="border border-primary text-xl rounded-md w-full h-16 transition-all duration-500 hover:bg-primary hover:text-text"
+                            matTooltip="Comprar entradas">Entradas</button>
                     </div>
                     @if (logged) {
-                        <div class="flex items-center hover:text-primary transition-all duration-700">
-                            <button class="w-full text-3xl h-full" [matMenuTriggerFor]="menu" aria-label="Menú del usuario">
-                                <fa-icon [icon]="faUserCircle"></fa-icon>
-                            </button>
-                        </div>                          
-                            <mat-menu #menu="matMenu">
-                                <button [routerLink]="'/user/configuracion/'+storageService.getData('jwtToken')" mat-menu-item>
-                                <div class="flex gap-5">
-                                    <fa-icon [icon]="faCog" aria-hidden="true"></fa-icon>
-                                    <span class="w-full h-full" >Configuracion</span>
-                                </div>
-                                </button>
-                                <button mat-menu-item (click)="logout()">
-                                <div class="flex gap-5">
-                                  <fa-icon [icon]="faSignOutAlt" aria-hidden="true"></fa-icon>
-                                  <span>Cerrar sesión</span>
-                                </div>
-                                </button>
-                              </mat-menu>    
+                    <div class="flex items-center hover:text-primary transition-all duration-700">
+                        <button class="w-full text-3xl h-full" [matMenuTriggerFor]="menu" aria-label="Menú del usuario">
+                            <fa-icon [icon]="faUserCircle"></fa-icon>
+                        </button>
+                    </div>
+                    <mat-menu #menu="matMenu">
+                        <button [routerLink]="'/user/configuracion/'+storageService.getData('jwtToken')" mat-menu-item>
+                            <div class="flex gap-5">
+                                <fa-icon [icon]="faCog" aria-hidden="true"></fa-icon>
+                                <span class="w-full h-full">Configuracion</span>
+                            </div>
+                        </button>
+                        <button mat-menu-item (click)="logout()">
+                            <div class="flex gap-5">
+                                <fa-icon [icon]="faSignOutAlt" aria-hidden="true"></fa-icon>
+                                <span>Cerrar sesión</span>
+                            </div>
+                        </button>
+                    </mat-menu>
                     }@else {
-                        <div>
-                            <button (click)="openModalLogin()" class="text-2xl w-full h-full"><fa-icon [icon]="iconUser"></fa-icon></button>
-                        </div>
+                    <div>
+                        <button (click)="openModalLogin()" class="text-2xl w-full h-full"><fa-icon
+                                [icon]="iconUser"></fa-icon></button>
+                    </div>
                     }
                 </div>
             </div>
             }@else{
-                <app-sidevar [icon]="iconSidebar"></app-sidevar>
+            <app-sidevar [logged]="logged"  [allEvents]="allEvents" [allPackages]="allPackages"
+                [iconOpen]="iconOpenSidebar" [iconClose]="iconCloseSidebar"></app-sidevar>
             }
-        </div>          
+        </div>
     </div>
 </div>

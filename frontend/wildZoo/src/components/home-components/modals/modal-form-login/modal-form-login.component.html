@@ -1,7 +1,7 @@
-<div class="card w-[1200px] h-[625px]" [@cardFlip]="flip">
+<div class="card w-[1200px] h-[625px] max-normal:w-[500px] max:normal:h-[425px]" [@cardFlip]="flip">
     <div class="face back overflow-x-auto">
-        <div class="grid grid-cols-2 w-full h-full">
-            <div class="bg-[url('./assets/img/sigin.jpg')] bg-cover bg-center">
+        <div class="grid max-normal:grid-cols-1 grid-cols-2 w-full h-full">
+            <div class="bg-[url('./assets/img/sigin.jpg')] max-normal:hidden bg-cover bg-center">
                 <div class="flex flex-col h-full items-center justify-center px-5 ">
                     <div class="flex flex-col gap-3 items-center justify-center px-5">
                         <div class="flex w-full items-center justify-center">
@@ -15,14 +15,14 @@
                     </div>
                 </div>
             </div>
-            <div class="h-full flex bg-white flex-col items-center justify-center">
+            <div class="h-full flex overflow-y-auto bg-white flex-col items-center justify-center">
                 <div class="text-center p-10 w-full">
                     <form [formGroup]="formLogin">
                         <div class="flex flex-col justify-center items-center">
                             <h1 class="text-5xl mb-10">Login</h1>
                             <div class="w-full">
                                 <div class="relative w-full ">
-                                    <mat-form-field class="w-3/4 mb-3 h-1/4" appearance="outline">
+                                    <mat-form-field class="w-3/4 max-normal:w-full mb-3 h-1/4" appearance="outline">
                                         <mat-label>Nombre de usuario</mat-label>
                                         <input matInput formControlName="username" placeholder="Usuario" />
                                         <mat-error *ngIf="formLogin.get('username')?.errors?.['required']">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="w-full">
                                 <div class="relative h-10 w-full">
-                                    <mat-form-field appearance="outline" class="w-3/4">
+                                    <mat-form-field appearance="outline" class="w-3/4 max-normal:w-full">
                                         <mat-label>Contraseña</mat-label>
                                         <input matInput formControlName="password" type="password" placeholder="Contraseña" />
                                         <mat-error *ngIf="formLogin.get('password')?.hasError('required')">La contraseña es obligatoria</mat-error>        
@@ -54,8 +54,8 @@
         </div>
     </div>
     <div class="face front">
-        <div class="grid grid-cols-2 w-full h-full overflow-x-hidden">
-            <div class="bg-[url('./assets/img/login.jpg')] bg-cover bg-center h-full text-white">
+        <div class="grid grid-cols-2 w-full h-full overflow-x-hidden max-normal:grid-cols-1">
+            <div class="bg-[url('./assets/img/login.jpg')] bg-cover bg-center max-normal:hidden h-full text-white">
                 <div class="flex flex-col h-full items-center justify-center gap-20">
                     <div class="flex flex-col items-center justify-center px-5">
                         <div class="flex w-full items-center justify-center">

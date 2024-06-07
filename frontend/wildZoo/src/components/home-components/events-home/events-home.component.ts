@@ -7,45 +7,46 @@ import { EventZooCardHomeComponent } from "../event-zoo-card-home/event-zoo-card
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-events-home',
-    standalone: true,
-    templateUrl: './events-home.component.html',
-    styleUrls: ['./events-home.component.scss'],
-    imports: [RouterLink, TitleSectionComponent, EventZooCardHomeComponent]
+  selector: 'app-events-home',
+  standalone: true,
+  templateUrl: './events-home.component.html',
+  styleUrls: ['./events-home.component.scss'],
+  imports: [RouterLink, TitleSectionComponent, EventZooCardHomeComponent]
 })
 export class EventsHomeComponent implements OnInit {
-  public eventsToShow:Event[] = [];
-  public eventDetails!:any
-  private eventService:EventService = inject(EventService);
+  public eventsToShow: Event[] = [];
+  public eventDetails!: any
+  private eventService: EventService = inject(EventService);
 
   ngOnInit() {
     this.initAllSuscriptions();
   }
 
   private initAllSuscriptions(): void {
-    const observableArray:Observable<any>[] = [
+    const observableArray: Observable<any>[] = [
       this.getAllEvents()
     ]
 
     forkJoin(observableArray).subscribe((response) => {
       this.eventsToShow = response[0].data
+      this.eventsToShow = this.eventsToShow.filter(event => new Date(event.date).getTime() >= new Date().getTime())
       this.eventsToShow = this.eventsToShow.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-      this.eventsToShow = this.eventsToShow.filter((event:Event,index:number) => index <= 2)
-      this.eventsToShow.forEach((event:Event) => {
-        this.formatEventContent(event)      
+      this.eventsToShow = this.eventsToShow.filter((event: Event, index: number) => index <= 2)
+      this.eventsToShow.forEach((event: Event) => {
+        this.formatEventContent(event)
       })
       this.eventDetails = this.eventsToShow[0]
     })
   }
 
-  private formatEventContent(event:any){
+  private formatEventContent(event: any) {
     const indexFirstPoint = event.description.indexOf('.')
-    const newString = event.description.substring(0,indexFirstPoint)
+    const newString = event.description.substring(0, indexFirstPoint)
     event.descriptionAccorted = newString
     this.formatDate(event)
   }
 
-  private formatDate(event:any){
+  private formatDate(event: any) {
     const date = new Date(event.date);
     const namesMonth = {
       1: "Enero",
@@ -64,7 +65,7 @@ export class EventsHomeComponent implements OnInit {
 
     const monthNumber = date.getMonth() + 1;
     const selectedMonthName = namesMonth[monthNumber as keyof typeof namesMonth];
-    
+
     event.dateInfo = {
       dayMonth: date.getDate(),
       nameMonth: selectedMonthName
@@ -78,13 +79,16 @@ export class EventsHomeComponent implements OnInit {
     return `${hour12} ${ampm}`;
   }
 
-  private getAllEvents(){
+  private getAllEvents() {
     return this.eventService.getAll();
   }
 
-  showNewEvent($event:Event){
-    console.log($event);
+  showNewEvent($event: Event) {
     this.eventDetails = $event;
+    const element = document.getElementById('eventDetail');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
 }
