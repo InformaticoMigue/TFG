@@ -11,6 +11,7 @@ import { AnimalService } from '../../service/zoo/animal.service';
 import { ServicesZooComponent } from '../home-components/services-zoo-home/services-zoo.component';
 import { EventsHomeComponent } from "../home-components/events-home/events-home.component";
 import { ActivatedRoute } from '@angular/router';
+import { SponsorHomeComponent } from '../home-components/sponsor-home/sponsor-home.component';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
-    imports: [ServicesZooComponent, ShotsComponent, NavbarComponent, HeaderHomeComponent, OurAnimalsComponent, EventsHomeComponent]
+    imports: [ServicesZooComponent, ShotsComponent, SponsorHomeComponent,NavbarComponent, HeaderHomeComponent, OurAnimalsComponent, EventsHomeComponent]
 })
 export class HomeComponent implements OnInit {
     public optionsGallery!:GalleryAnimalsOptions;
@@ -36,19 +37,14 @@ export class HomeComponent implements OnInit {
     }
 
     private initAllSuscriptions(){
-        const observableArray:Observable<any>[] = [
-            this.getAllClasses(),
-            this.getAllSpecies(),
-            this.getAllAnimals()
-        ]
-
-        forkJoin(observableArray).subscribe(responses => {
-            const allClasses = responses[0].data
-            const allSpecies = responses[1].data
-            const allAnimals = responses[2].data
-            this.allClasses = allClasses
-            this.allSpecies = allSpecies
-            this.allAnimals = allAnimals
+        forkJoin({
+            classes : this.getAllClasses(),
+            species: this.getAllSpecies(),
+            animals: this.getAllAnimals()
+        }).subscribe(responses => {
+            this.allClasses = responses.classes.data
+            this.allSpecies = responses.species.data
+            this.allAnimals = responses.animals.data
         })
     }
 

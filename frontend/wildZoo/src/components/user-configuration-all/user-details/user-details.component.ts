@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -29,11 +29,15 @@ export class UserDetailsComponent implements OnInit {
   public eventSalesItems: any;
   public step = 0;
   public formDetailsUser: FormGroup = new FormGroup({});
-  public user!: User;
+  @Input() public user!: User;
   public sponsorItems: any;
 
+  ngOnInit() {    
+    this.setAccordionItems();
+    this.initForm();
+  }
 
-  ngOnInit() {
+  private initForm(){
     this.formDetailsUser = this.formBuilder.group({
       name: [this.user.name, Validators.required],
       firstSurname: [this.user.firstSurname, Validators.required],
@@ -41,7 +45,6 @@ export class UserDetailsComponent implements OnInit {
       username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(3)])],
       email: [this.user.email, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])],
     })
-    this.setAccordionItems();
   }
 
   setStep(index: number) {
@@ -49,11 +52,11 @@ export class UserDetailsComponent implements OnInit {
   }
 
   updateUrlWithToken(newToken: string) {
-    const currentPath = this.location.path(); 
-    const basePath = currentPath.split('/').slice(0, -1).join('/'); 
+    const currentPath = this.location.path();
+    const basePath = currentPath.split('/').slice(0, -1).join('/');
     const newPath = `${basePath}/${newToken}`;
     this.location.replaceState(newPath);
-  }  
+  }
 
   onSubmit() {
     const previousUsername = this.user.username;
@@ -86,8 +89,8 @@ export class UserDetailsComponent implements OnInit {
       next: (token) => {
         if (token) {
           this.updateUrlWithToken(token)
-          this.snackbarService.openSucessSnackbar('Usuario actualizado con éxito', 'Cerrar');  
-        }else{
+          this.snackbarService.openSucessSnackbar('Usuario actualizado con éxito', 'Cerrar');
+        } else {
           this.snackbarService.openErrorSnackbar('Error, ese nombre de usuario ya existe', 'Cerrar');
         }
       },

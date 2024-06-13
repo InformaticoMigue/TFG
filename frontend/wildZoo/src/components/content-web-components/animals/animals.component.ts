@@ -8,14 +8,16 @@ import { AnimalsCardComponent } from '../animals-card/animals-card.component';
 import { filterAnimalOpacity } from '../../../constants/animations';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-animals',
   standalone: true,
-  imports: [HeaderComponent, AnimalsCardComponent, CommonModule, RouterLink],
+  imports: [HeaderComponent, AnimalsCardComponent, MatPaginatorModule,CommonModule, RouterLink],
   templateUrl: './animals.component.html',
   styleUrls: ['./animals.component.scss'],
-  animations: [filterAnimalOpacity]
+  //animations: [filterAnimalOpacity]
 })
 export class AnimalsComponent implements OnInit {
   private animalService: AnimalService = inject(AnimalService);
@@ -26,9 +28,9 @@ export class AnimalsComponent implements OnInit {
   public allAnimals: Animal[] = [];
   public filters: any[] = [];
   public activeFilterId?: number;
-  public currentPage: number = 1;
-  public itemsPerPage: number = 12;
+  public currentPage: number = 0;
   public pagedAnimals: Animal[] = [];
+  public pageSize: number = 10;
   @ViewChild('filtersArticle') filtersArticle!: ElementRef;
 
   ngOnInit(): void {
@@ -36,8 +38,8 @@ export class AnimalsComponent implements OnInit {
   }
 
   private initAllSubscriptions(): void {
-    forkJoin([this.getAllAnimals(), this.getAllClasses()]).subscribe(
-      ([animalsResponse, classesResponse]) => {
+    forkJoin([this.getAllAnimals(), this.getAllClasses()]).subscribe({
+      next: ([animalsResponse, classesResponse]) => {
         this.animals = animalsResponse.data;
         this.allAnimals = animalsResponse.data;
         this.filters = classesResponse.data.map((aclass: Aclass) => ({
@@ -47,13 +49,14 @@ export class AnimalsComponent implements OnInit {
         }));
         this.filters.unshift({ id: 0, name: "Todos los animales", filterFunc: () => this.filterAnimalsByClass(0) });
         this.getParamIdClass();
-        this.updatePagedAnimals();
+        this.currentPage = 0;
+        this.loadData();
       },
-      (error) => {
+      error:(error) => {
         console.error('Error fetching data', error);
         this.router.navigate(['/home']);
       }
-    );
+    })
   }
 
   filterAnimalsByClass(id: number): void {
@@ -62,7 +65,9 @@ export class AnimalsComponent implements OnInit {
     } else {
       this.animals = [...this.allAnimals];
     }
-    this.updatePagedAnimals();
+    console.log(this.animals);
+    
+    this.loadData();
   }
 
   setActiveFilter(filter: any): void {
@@ -92,36 +97,20 @@ export class AnimalsComponent implements OnInit {
       } else {
         this.router.navigate(['/home']);
       }      
-      this.currentPage = 1;
-      this.updatePagedAnimals();
     });
   }
 
-  updatePagedAnimals(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.pagedAnimals = this.animals.slice(startIndex, endIndex);
-  }
-
-  setPage(page: number): void {
-    this.currentPage = page;
-    this.updatePagedAnimals();
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    console.log(event);
+    
     this.scrollToTop();
+    this.loadData();
   }
 
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.setPage(this.currentPage + 1);
-    }
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.setPage(this.currentPage - 1);
-    }
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.animals.length / this.itemsPerPage);
+  loadData() {
+    const startIndex = this.currentPage * this.pageSize;
+    this.pagedAnimals = this.animals.slice(startIndex, startIndex + this.pageSize);
   }
 }

@@ -1,32 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { PackageService } from '../../../service/zoo/package.service';
 import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { FilterPaginatorComponent } from '../../filter-paginator/filter-paginator.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TicketService } from '../../../service/zoo/ticket.service';
+import { User } from '../../../assets/types';
+import { MatLabel } from '@angular/material/form-field';
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatPaginatorModule, FilterPaginatorComponent, MatDialogModule],
+  imports: [CommonModule, MatPaginatorModule, MatLabel,FilterPaginatorComponent, MatDialogModule],
   selector: 'app-user-payments',
   templateUrl: './user-payments.component.html',
   styleUrls: ['./user-payments.component.scss']
 })
 export class UserPaymentsComponent implements OnInit {
-  public paymentsData: any;
+  @Input() public paymentsData: any;
   public allPayments: any;
-  public allPaymentsAux: any;
-  public user: any;
-  private packageService: PackageService = inject(PackageService)
-  private snackbarService: CustomSnackbarService = inject(CustomSnackbarService)
-  private dialog: MatDialog = inject(MatDialog);
-  private ticketService: TicketService = inject(TicketService);
+  @Input() public user!: User;
   @Output() packageDelete = new EventEmitter<any>();
   @Output() ticketDelete = new EventEmitter<any>();
-
+  public allPaymentsAux: any;
+  private currentPage = 0;
+  public pageSize = 5;
+  
   ngOnInit() {
     this.initPaymentsData();
   }
@@ -41,7 +41,20 @@ export class UserPaymentsComponent implements OnInit {
         element.type = 'Ticket'
       }
     });
+    this.loadData();
   }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadData();
+  }
+
+  loadData() {
+    const startIndex = this.currentPage * this.pageSize;
+    this.allPaymentsAux = this.allPayments.slice(startIndex, startIndex + this.pageSize);
+  }
+  
 
   /*
   Opción deshabilitada
@@ -75,7 +88,4 @@ export class UserPaymentsComponent implements OnInit {
     }))
   }
   */
-  handlePagedItems($event: any) {
-    this.allPaymentsAux = $event
-  }
 }

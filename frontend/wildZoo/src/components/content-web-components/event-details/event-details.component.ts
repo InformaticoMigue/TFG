@@ -94,7 +94,7 @@ export class EventDetailsComponent implements OnInit {
     const ticketDayEvent = this.user.tickets.find(t => t.date == this.event.date)
 
     if (!this.user.tickets || !ticketDayEvent) {
-      this.snackbarService.openErrorSnackbar("Necesita comprar un ticket con la fecha del evento", "Cerrar")
+      this.snackbarService.openErrorSnackbar("Necesita comprar una entrada con la fecha del evento", "Cerrar")
       return;
     }
     

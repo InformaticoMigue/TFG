@@ -144,7 +144,7 @@ export class TicketComponent implements OnInit {
             })
           ).subscribe((response) => {
             if(response){
-              this.snackbarService.openSucessSnackbar(this.getTotalQuantity() > 1 ? "Entradas comprado con éxito" : "Entrada comprado con éxito", "Cerrar")            
+              this.snackbarService.openSucessSnackbar(this.getTotalQuantity() > 1 ? "Entradas compradas con éxito" : "Entrada comprada con éxito", "Cerrar")            
             }
           })          
         }

@@ -25,6 +25,12 @@ public class CreditCardServiceImpl implements CreditCardService {
         return Optional.empty();
     }
 
+    //No implementado
+    @Override
+    public boolean isUnique(String number) {
+        return this.creditCardRepository.findByNumber(number).isEmpty();
+    }
+
     @Override
     public boolean delete(long id) {
         Optional<CreditCard> creditCard = this.creditCardRepository.findById(id);

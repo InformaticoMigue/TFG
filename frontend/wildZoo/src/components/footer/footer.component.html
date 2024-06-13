@@ -1,0 +1,67 @@
+<footer class="bg-greenColor text-white">
+  <div class="flex flex-col px-24 max-portatil:px-12">
+    <div class="py-12">
+      <div
+        class="w-full flex max-portatil:grid-cols-3 max-portatil:grid max-normal:grid-cols-2 max-xs:grid-cols-1 max-xs:text-center gap-8">
+        <div class="w-full">
+          <h5 class="font-bold text-lg mb-4">Enlaces rápidos</h5>
+          <ul>
+            <li><a [routerLink]="'/'" class="hover:underline">Home</a></li>
+            <li><a [routerLink]="'/sobre-nosotros'" class="hover:underline">Sobre nosotros</a></li>
+            <li><a [routerLink]="'/animales'" class="hover:underline">Animales</a></li>
+            <li><a [routerLink]="'/contacto'" class="hover:underline">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="w-full">
+          <h5 class="font-bold text-lg mb-4">Compras</h5>
+          <ul>
+            <li><a [routerLink]="'/entradas'" class="hover:underline">Entradas</a></li>
+            <li><a [routerLink]="'/apadrinar'" class="hover:underline">Apadrinar</a></li>
+            @for (package of allPackages; track package.id) {
+            <li><a [routerLink]="'/paquete/'+package.id" class="hover:underline">Paquete: {{package.name}}</a></li>
+            }
+            @for (event of allEvents; track event.id) {
+            <li><a [routerLink]="'/eventos/'+event.id" class="hover:underline">Evento: {{event.name}}</a></li>
+            }
+          </ul>
+        </div>
+
+        <div class="w-full">
+          <h5 class="font-bold text-lg mb-4">Contact Info</h5>
+          <ul>
+            <li>
+              <p class="hover:underline">Calle Antonio Machado Nº23</p>
+            </li>
+            <li><a href="tel:+677765990" class="hover:underline">(+34) 677 765 990</a></li>
+            <li><a href="mailto:contact@domain.com" class="hover:underline">wildzootfg&#64;gmail.com</a></li>
+          </ul>
+        </div>
+
+        <div class="w-full">
+          <h5 class="font-bold text-lg mb-4">Haz una reserva</h5>
+          <p class="mb-6">Contacta con nuestra centralita para realizar una reserva.</p>
+          <a href="tel:+677765990" class=" bg-primary text-text py-2 px-4 rounded ">+34 677 765 990</a>
+        </div>
+      </div>
+      <div class="flex flex-col max-normal:items-center max-normal:mt-10 items-end">
+        <h5 class="font-bold text-lg mb-4">Redes sociales</h5>
+        <div class="flex gap-4 text-xl">
+          <a href="http://instagram.com"><fa-icon [icon]="instagramIcon"></fa-icon></a>
+          <a href="http://x.com"><fa-icon [icon]="twitterIcon"></fa-icon></a>
+          <a href="http://facebook.com"><fa-icon [icon]="facebookIcon"></fa-icon></a>
+          <a href="http://pinterest.com"><fa-icon [icon]="pinterestIcon"></fa-icon></a>
+        </div>
+      </div>
+    </div>
+    <div class=" flex max-normal:flex-col justify-between items-center border-t  border-white">
+      <div class="flex gap-3 items-center">
+        <h1 class="text-6xl max-normal:text-5xl font-bold">Wild</h1>
+        <div class="w-32 max-xs:w-20">
+          <img src="../../assets/img/logo.png" alt="" srcset="">
+        </div>
+      </div>
+      <p>&copy; WildZoo Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>

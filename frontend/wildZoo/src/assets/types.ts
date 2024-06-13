@@ -30,7 +30,7 @@ export type Animal = {
     name:        string;
     age:         number;
     description: string;
-    feeing:   string;
+    feeding:   string;
     weight:      number;
     continent:   Continent;
     events:      Event[];
@@ -104,7 +104,7 @@ export type User = {
     name:           string;
     firstSurname:   string;
     lastSurname:    string;
-    creditCard: CreditCard;
+    creditCard: CreditCard | null;
     tickets:        Ticket[];
     sponsors:       Sponsor[];
     packageSales:   any[];

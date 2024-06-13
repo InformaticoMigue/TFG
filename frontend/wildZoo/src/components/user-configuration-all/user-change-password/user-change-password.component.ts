@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -9,6 +9,7 @@ import { CustomSnackbarComponent } from '../../custom-snackbar/custom-snackbar.c
 import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
 import { AuthService } from '../../../service/auth/auth.service';
 import { switchMap } from 'rxjs';
+import { User } from '../../../assets/types';
 
 @Component({
   standalone: true,
@@ -20,7 +21,7 @@ import { switchMap } from 'rxjs';
 export class UserChangePasswordComponent implements OnInit {
 
   public  formChangePassword:FormGroup = new FormGroup({});
-  public  user:any;
+  @Input() public user!: User;
   private encryptedService: EncryptService = inject(EncryptService);
   private formbuilder:FormBuilder = inject(FormBuilder);
   private userService:UserService = inject(UserService);

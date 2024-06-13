@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { SponsorService } from '../../../service/zoo/sponsor.service';
 import { catchError, forkJoin, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar.service';
 import { Sponsor, SponsorAnimal, User } from '../../../assets/types';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,11 +13,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../service/auth/auth.service';
 import { UserService } from '../../../service/zoo/user.service';
 import { TitleSectionComponent } from '../../title-section/title-section.component';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sponsors',
   standalone: true,
-  imports: [HeaderComponent, FontAwesomeModule,TitleSectionComponent],
+  imports: [HeaderComponent, FontAwesomeModule, CommonModule,TitleSectionComponent, MatPaginatorModule, RouterLink],
   templateUrl: './sponsors.component.html',
   styleUrls: ['./sponsors.component.scss']
 })
@@ -32,6 +34,11 @@ export class SponsorsComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private userService: UserService = inject(UserService);
   public user!:User;
+  public currentPage: number = 0;
+  public pageSize: number = 1;
+  public length: number = 0;
+  public pagedAnimals: SponsorAnimal[] = [];
+
 
   ngOnInit() {
     this.getActuallyUser();
@@ -40,30 +47,36 @@ export class SponsorsComponent implements OnInit {
 
   initAllSuscriptions() {
     forkJoin({
-      availables: this.getAllAvailableSponsoredAnimals().pipe(
+      availables: this.sponsorService.getAllAvailableAnimals().pipe(
         catchError(() => {
-          this.router.navigate(['/'])
-          this.snackbarService.openErrorSnackbar("Error con el servidor", "Cerrar")
-          return throwError(() => "Server error")
+          this.router.navigate(['/']);
+          this.snackbarService.openErrorSnackbar("Error con el servidor", "Cerrar");
+          return throwError(() => "Server error");
         }))
     }).subscribe(res => {
-      this.allSponsorsAnimals = res.availables.data
-      
-    })
+      this.allSponsorsAnimals = res.availables.data;
+      this.length = this.allSponsorsAnimals.length;
+      this.loadPage();
+    });
   }
 
-  public openModalAdoption(sponsorAnimal: SponsorAnimal) {
-    this.matDialog.open(ModalAdoptionComponent, {
-      data: {
-        sponsorAnimal,
-        user: this.user
-      }
-    }).afterClosed().subscribe((res) => {
+  loadPage() {
+    const startIndex = this.currentPage * this.pageSize;
+    this.pagedAnimals = this.allSponsorsAnimals.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.loadPage();
+  }
+
+  openModalAdoption(sponsorAnimal: SponsorAnimal) {
+    this.matDialog.open(ModalAdoptionComponent, { data: { sponsorAnimal, user: this.user } }).afterClosed().subscribe((res) => {
       if (res) {
-        const foundSponsorAnimal = this.allSponsorsAnimals.find(sa => sa.id == res.sponsorAnimal.id)
-        console.log(foundSponsorAnimal);
-        
-        foundSponsorAnimal!.sponsor = res
+        const foundSponsorAnimal = this.allSponsorsAnimals.find(sa => sa.id === res.sponsorAnimal.id);
+        if (foundSponsorAnimal) {
+          foundSponsorAnimal.sponsor = res;
+        }
       }
     });
   }
@@ -71,16 +84,10 @@ export class SponsorsComponent implements OnInit {
   getActuallyUser() {
     this.authService.currentUser$.subscribe(tokenDecoded => {
       if (tokenDecoded && tokenDecoded.id) {
-        this.userService.find(+tokenDecoded.id).subscribe({
-          next: (fullUser) => {
-            this.user = fullUser.data;
-          },
+        this.userService.find(+tokenDecoded.id).subscribe(fullUser => {
+          this.user = fullUser.data;
         });
       }
-    })
-  }
-
-  private getAllAvailableSponsoredAnimals() {
-    return this.sponsorService.getAllAvailableAnimals()
+    });
   }
 }

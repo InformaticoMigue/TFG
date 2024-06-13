@@ -16,7 +16,7 @@
     <article>
         <div class="flex flex-wrap gap-12 justify-center mt-20">
             @for (class of listClasses; track class.id; let idx = $index) {
-                <div data-aos="fade-right" [attr.data-aos-duration]="class.dataAosDuration">
+                <div data-aos="zoom-in-down" [attr.data-aos-duration]="class.dataAosDuration">
                     <div [ngClass]="setColorOurAnimal(idx).bg" class="shadow-sm duration-500 w-[150px] h-[150px] transition-all cursor-pointer hover:-translate-y-12">
                         <a [routerLink]="'/animales/clase/'+class.id" class="cursor-pointer">
                             <app-our-animals-card [className]="setColorOurAnimal(idx).text" [Aclass]="class"></app-our-animals-card>

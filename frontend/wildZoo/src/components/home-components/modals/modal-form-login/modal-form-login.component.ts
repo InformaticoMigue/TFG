@@ -119,12 +119,16 @@ export class ModalFormLoginComponent implements OnInit {
               this.dialogRef.close();
             },
             error: (error) => {
-              this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
-              console.error("Login failed", error);
+              if (error.status == 401) {
+                this.snackbarService.openErrorSnackbar('Contraseña incorrecta', 'Cerrar')
+              }else{
+                this.snackbarService.openErrorSnackbar('Error del servidor', 'Cerrar')
+                console.error("Login failed", error);
+              }
             }
           });
         } else {
-          this.snackbarService.openErrorSnackbar('Error, no existe nadie con ese nombre de usuario', 'Cerrar')
+          this.snackbarService.openErrorSnackbar('Error, nombre de usuario incorrecto', 'Cerrar')
         }
       },
       error: (error) => {

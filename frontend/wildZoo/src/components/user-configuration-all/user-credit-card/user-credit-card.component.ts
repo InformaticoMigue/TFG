@@ -17,7 +17,7 @@ import { CustomSnackbarService } from '../../../service/snackbar/custom-snackbar
 export class UserCreditCardComponent implements OnInit {
   public isFlipped = false;
   public creditCardData!: CreditCard | null;
-  private user!: User;
+  @Input() public user!: User;
   public numberFormated!: string;
   public formCreditCard: FormGroup = new FormGroup({});
   private formBuilder: FormBuilder = inject(FormBuilder);
@@ -113,10 +113,12 @@ export class UserCreditCardComponent implements OnInit {
     this.userService.updateCreditCard(objectToRequest).subscribe({
       next: (response) => {
         this.snackbarService.openSucessSnackbar("Tarjeta de credito actualizada", "Cerrar")
-        this.creditCardData = response.data                
+        this.creditCardData = response.data 
+        this.user.creditCard = response.data               
       },
       error: (error) => {
         this.snackbarService.openErrorSnackbar("Error del servidor", "Cerrar")
+        console.error(error)
       }
     });
   }
@@ -144,6 +146,7 @@ export class UserCreditCardComponent implements OnInit {
       next: () => {
         this.resetForm();        
         this.snackbarService.openSucessSnackbar("Tarjeta de credito eliminada", "Cerrar")
+        this.user.creditCard = null;
         this.creditCardData = null;
       },
       error: () => {

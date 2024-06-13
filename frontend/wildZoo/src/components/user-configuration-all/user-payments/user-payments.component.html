@@ -1,8 +1,6 @@
-@if (allPayments.length > 0) {
-<div class="w-full py-6 flex flex-col gap-20">
-  <h1 class="text-3xl text-center">Historial de pagos</h1>
+<div class="w-full flex flex-col gap-20 mt-20">
   <div class="flex justify-center items-center gap-2 flex-col">
-    <div class="-my-2 overflow-x-auto">
+    <div class="-my-2 overflow-x-auto w-3/4">
       <div class="py-2 align-middle inline-block min-w-full ">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
           <table class="min-w-full divide-y divide-gray-200">
@@ -46,12 +44,8 @@
         </div>
       </div>
     </div>
-    <app-filter-paginator class="mt-10" (getPagedItems)="handlePagedItems($event)" [currentPage]="1"
-      [items]="allPayments" [itemsPerPage]="5"></app-filter-paginator>
+    <mat-paginator class="mt-10" showFirstLastButtons [length]="allPayments.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+      (page)="handlePageEvent($event)">
+    </mat-paginator>
   </div>
 </div>
-}@else {
-  <div class="px-20">
-    No ha realizado ninguna compra
-  </div>
-}

@@ -21,25 +21,13 @@
     </div>
     <div class="grid grid-cols-3 gap-2 max-xs:flex max-xs:flex-col max-portatil:grid-cols-2">
       @for (animal of pagedAnimals; track animal.id) {
-        <app-animals-card  [showMore]="true" @fadeInOut [animal]="animal"></app-animals-card>
+        <app-animals-card  [showMore]="true" [animal]="animal"></app-animals-card>
       }
     </div>
-    <div class="flex justify-center items-center space-x-4 max-xs:px-10 my-4">
-      <button 
-        class="px-4 py-2 text-text bg-primary disabled:bg-primarySub disabled:text-white rounded" 
-        (click)="previousPage()" 
-        [disabled]="currentPage === 1">
-        Anterior
-      </button>
-      <span class="text-sm text-text">
-        Página {{ currentPage }} de {{ totalPages }}
-      </span>
-      <button 
-        class="px-4 py-2 text-text bg-primary disabled:bg-primarySub disabled:text-white rounded" 
-        (click)="nextPage()" 
-        [disabled]="currentPage === totalPages">
-        Siguiente
-      </button>
-    </div>
+
+    <mat-paginator class="mt-10 mb-5" showFirstLastButtons [length]="animals.length" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 30]"
+      (page)="handlePageEvent($event)">
+    </mat-paginator>
+
   </article>
 </section>

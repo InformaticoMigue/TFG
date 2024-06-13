@@ -11,6 +11,10 @@ body {
     overflow-x: hidden !important;
 }
 
+.mat-mdc-paginator-container {
+    justify-content: center !important;
+}
+
 .custom-dialog-transparent .mat-mdc-dialog-container .mdc-dialog__surface {
     background-color: transparent !important;
     box-shadow: none !important;

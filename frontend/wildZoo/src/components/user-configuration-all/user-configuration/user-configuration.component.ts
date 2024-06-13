@@ -11,11 +11,13 @@ import { UserDetailsComponent } from '../user-details/user-details.component';
 import { UserCreditCardComponent } from '../user-credit-card/user-credit-card.component';
 import { UserChangePasswordComponent } from '../user-change-password/user-change-password.component';
 import { UserPaymentsComponent } from '../user-payments/user-payments.component';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-user-configuration',
   standalone: true,
-  imports: [HeaderComponent,FontAwesomeModule],
+  imports: [HeaderComponent, FontAwesomeModule, CommonModule, MatTabsModule, UserChangePasswordComponent,UserDetailsComponent,UserCreditCardComponent,UserPaymentsComponent],
   templateUrl: './user-configuration.component.html',
   styleUrls: ['./user-configuration.component.scss']
 })
@@ -24,42 +26,10 @@ export class UserConfigurationComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private userService: UserService = inject(UserService);
   public user!: User;
-  public userIcon:IconDefinition = faUserEdit
-  public creditCardIcon:IconDefinition = faCreditCard
-  public passwordIcon:IconDefinition = faKey
-  public paymentIcon:IconDefinition = faMoneyBill
-  public componentesView = {
-    userDetails: UserDetailsComponent,
-    creditCard: UserCreditCardComponent,
-    changePassword: UserChangePasswordComponent,
-    payments: UserPaymentsComponent
-  }
-  @ViewChild('dynamicContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
+  public payamentsData:any;
 
   ngOnInit() {
     this.initAllSuscriptions();
-  }
-
-  loadComponent(component: any, data?: any){
-    this.container.clear();
-    const compRef = this.container.createComponent(component);
-    this.addDataToComponent(compRef, data);
-  }
-
-  addDataToComponent(component: any, data?:any){ 
-    component.instance.user = this.user;  
-    
-    if (component.instance instanceof UserCreditCardComponent && data) { 
-      component.instance.creditCardData = data;
-    }else if(component.instance instanceof UserPaymentsComponent && data) {
-      component.instance.paymentsData = data;
-      component.instance.packageDelete.subscribe((deletedPackage:any) => {
-        this.user.packageSales = this.user.packageSales.filter(p => p.id != deletedPackage.id);
-      });
-      component.instance.ticketDelete.subscribe((deletedTicket: any) => {
-        this.user.tickets = this.user.tickets.filter(t => t.id != deletedTicket.id);
-      });
-    }
   }
 
   initAllSuscriptions() {
@@ -69,13 +39,14 @@ export class UserConfigurationComponent implements OnInit {
       })
     ).subscribe(userData => {
       const user = userData.data;
-      this.user = user;      
+      this.user = user; 
+      this.payamentsData = {
+        ticketSales: this.user.tickets,
+        packageSales: this.user.packageSales
+      }
       this.title = `Configuración de de usuario`
-      this.loadComponent(UserDetailsComponent)
-
     })
   }
-  
 
   getUserData(){
     return this.authService.currentUser$

@@ -2,32 +2,28 @@
   <article class="text-white">
     <app-header [title]="title"></app-header>
   </article>
-  <article class="pl-40 max-portatil:pl-20 max-normal:pl-10 max-xs:pl-0 flex max-normal:gap-12 max-normal:flex-col w-full">
-    <div class="flex">
-      <div class="max-normal:flex flex-wrap  max-normal:justify-center">
-        <button (click)="loadComponent(componentesView.userDetails)" class="flex p-4 hover:bg-zinc-200 transition-all duration-500 gap-3 w-full items-center max-normal:justify-center">
-          <fa-icon class="text-2xl" [icon]="userIcon"></fa-icon>
-          <span>Detalles usuario</span>
-        </button>
-        <button (click)="loadComponent(componentesView.creditCard, this.user.creditCard)" class="flex p-4 gap-3 hover:bg-zinc-200  w-full transition-all duration-500 items-center max-normal:justify-center">
-          <fa-icon class="text-2xl" [icon]="creditCardIcon"></fa-icon>
-          <span>Tarjeta de crédito</span>
-        </button>
-        <button (click)="loadComponent(componentesView.changePassword)" class="flex p-4 gap-3 hover:bg-zinc-200 transition-all  w-full duration-500 items-center max-normal:justify-center">
-          <fa-icon class="text-2xl" [icon]="passwordIcon"></fa-icon>
-          <span>Cambiar contraseña</span>
-        </button>
-        <button (click)="loadComponent(componentesView.payments, {ticketSales: user.tickets, packageSales: user.packageSales})" class="flex p-4 gap-3  w-full hover:bg-zinc-200 transition-all duration-500 items-center max-normal:justify-center">
-          <fa-icon class="text-2xl" [icon]="paymentIcon"></fa-icon>
-          <span>Pagos realizados</span>
-        </button>
-      </div>
-      <hr class="bg-black h-96 max-normal:hidden w-[1px]">
-    </div>  
-    <div class="flex-grow">
-      <div #dynamicContainer class="w-full">
-
-      </div>
-    </div>
-  </article>
+  <mat-tab-group [animationDuration]="500"  dynamicHeight *ngIf="this.user" class="px-20 max-xs:px-0 flex max-normal:gap-12 max-normal:flex-col w-full">
+    <mat-tab label="Detalles usuario">
+      <ng-template matTabContent>
+        <app-user-details [user]="user"></app-user-details>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Tarjeta de crédito">
+      <ng-template matTabContent>
+        <app-user-credit-card [user]="user"></app-user-credit-card>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Cambiar contraseña">
+      <ng-template matTabContent>
+        <app-user-change-password [user]="user"></app-user-change-password>
+      </ng-template>
+    </mat-tab>
+    @if (user.packageSales.length > 0 || user.tickets.length > 0) {
+      <mat-tab label="Pagos realizados">
+        <ng-template matTabContent>
+          <app-user-payments [paymentsData]="payamentsData" [user]="user"></app-user-payments>
+        </ng-template>
+      </mat-tab>
+    }
+  </mat-tab-group>
 </section>

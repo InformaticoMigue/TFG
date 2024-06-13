@@ -1,0 +1,17 @@
+<section class="relative before:h-full max-portatil:h-full h-[650px] flex items-end max-portatil:before:bg-transparent text-white before:w-[38%] before:block before:bg-[#f3f4f5] before:absolute before:-top-20 before:left-0 before:z-0">
+  <div class="flex gap-12 max-portatil:flex-col max-portatil:items-center max-portatil:px-10 max-xs:px-5 px-20 w-full h-full">
+    <article class="w-2/5 max-portatil:w-1/2 max-normal:w-3/4 max-xs:w-full max-xs:text-center px-3 h-full z-10 bg-[url('./assets/img/sponsor-home.jpg')] bg-cover bg-center">
+      <div class="p-7 w-full flex flex-col gap-10 h-[35em] justify-end py-16">
+        <app-title-section [preTitle]="'APADRINA'" [white]="true" [title]="'AYUDANOS MEJORA EL ZOO'"></app-title-section>
+        <p>Ayudanos a mejorar las condiciones de los animales, así como su bienestar apadrinando nuestros animales</p>
+        <button [routerLink]="'/apadrinar'" class="text-primary w-20 font-bold text-left max-xs:text-center">Apadrina!</button>
+      </div>
+    </article>
+    <article class="flex w-3/5 max-portatil:w-full flex-col gap-10">
+        <app-title-section [preTitle]="'SOBRE EL ZOO'" [title]="'PALABRAS SOBRE NUESTRO ZOO'"></app-title-section>
+        <p class="text-black">Nuestro compromiso se extiende más allá de las exhibiciones de animales; participamos activamente en programas de conservación a nivel global, apoyando proyectos que ayudan a proteger los hábitats naturales y a las especies que los habitan. Creemos que educar e inspirar a las generaciones actuales y futuras es fundamental para la preservación de nuestra biodiversidad.</p>
+        <p class="text-black">Ven a explorar los misterios de la fauna mundial, disfruta de experiencias interactivas y contribuye a nuestra misión de conservación. Cada visita apoya nuestros esfuerzos para hacer una diferencia significativa en el mundo animal.</p>
+        <button [routerLink]="'/sobre-nosotros'" class="text-black border-primary border p-4 w-60 hover:bg-primary duration-500 transition-all">Más sobre nosotros</button>
+      </article>
+  </div>
+</section>

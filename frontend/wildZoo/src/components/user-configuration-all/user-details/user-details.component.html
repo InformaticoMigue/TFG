@@ -1,5 +1,4 @@
-<div class="flex flex-col gap-20 px-20 max-normal:px-10">
-  <h1 class="text-3xl text-center">Detalles de usuario</h1>
+<div class="flex flex-col gap-20 px-20 max-normal:px-10 mt-20 mb-20">
   <form [formGroup]="formDetailsUser" (ngSubmit)="onSubmit()"
     class="grid max-normal:flex max-normal:flex-col gap-x-5 grid-cols-2 items-start">
     <mat-form-field class="w-full" appearance="outline">
@@ -63,14 +62,14 @@
             @if (user.sponsors.length == 0) {
             <span class="max-xs:hidden">No tienes ningun animal apadrinado {{user.name}}</span>
             }@else {
-              <span class="max-xs:hidden">{{ sponsorItems.title }}</span>
+              <span>{{ sponsorItems.title }}</span>
             }
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="flex flex-col flex-wrap gap-5">
           <hr>
           @for (sponsor of sponsorItems.sponsors; track sponsor.id) {
-          <div class="flex justify-between ">
+          <div class="flex justify-between items-center flex-wrap max-xs:flex-col">
             <p>{{sponsor.animal.name}}</p>
             <p>{{sponsor.date | date: 'longDate'}}</p>
             <p>{{sponsor.sponsorAnimal.price | currency:'EUR':'symbol':'1.2-2'}}</p>
@@ -93,8 +92,8 @@
         <div class="flex flex-col flex-wrap gap-5">
           <hr>
           @for (eventSale of eventSalesItems.eventsales; track eventSale.id) {
-          <div class="flex justify-between items-center flex-wrap">
-            <p class="w-[230px]">{{eventSale.event.name}}</p>
+            <div class="flex justify-between items-center flex-wrap max-xs:flex-col">
+              <p>{{eventSale.event.name}}</p>
             <p>{{eventSale.registrationDate | date: 'longDate'}}</p>
             <div class="flex gap-3">
               <p>{{ formatTime(eventSale.event.initialHour) }}</p>
